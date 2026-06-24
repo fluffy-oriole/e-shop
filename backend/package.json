@@ -2,12 +2,13 @@
   "name": "e-shop",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch src/index.js",
     "build": "tsc",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "@hono/node-server": "^2.0.6",
+    "better-sqlite3": "^12.11.1",
     "hono": "^4.12.27"
   },
   "devDependencies": {
