@@ -27,7 +27,7 @@ export default function Navbar() {
     <>
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <Link to="/">E-shop</Link>
+        <Link to="/">E-SHOP</Link>
       </div>
 
       <ul className={styles.navLinks}>
