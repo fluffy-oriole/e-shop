@@ -15,6 +15,30 @@ app.get('/api/products', async (c) => {
   return c.json(data);
 })
 
+/*
+app.get('/api/products/categories',  async (c) => {
+  const res = await fetch("https://fakestoreapi.com/products");
+  const data = await res.json();
+
+  const categories = new Set();
+  data.forEach(p => {
+    categories.add(p?.category)
+  });
+
+  if (undefined in categories) {
+    categories.delete(undefined)
+  }
+
+  return c.json([...categories]);
+}) 
+*/
+
+app.get('/api/products/categories', async (c) => {
+  const res = await fetch("https://fakestoreapi.com/products/categories");
+  const data = await res.json();
+  return c.json(data);
+});
+
 app.get('/api/product/:id', async (c) => {
   const id = c.req.param('id');
   const res = await fetch(`https://fakestoreapi.com/products/${id}`);

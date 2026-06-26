@@ -1,9 +1,12 @@
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Catalog from './Catalog.jsx'
+import { useState } from 'react'
 
 export default function Navbar() {
   const { i18n } = useTranslation();
+  const [catalogOpen, setCatalogOpen] = useState(false);
 
   function changeLanguage(event) {
     const selectedLanguage = event.target.value;
@@ -15,20 +18,25 @@ export default function Navbar() {
       i18n.changeLanguage('en')
     }
   }
+
+  function openCatalog() {
+    setCatalogOpen(!catalogOpen);
+  }
   
   return (
+    <>
     <nav className={styles.navbar}>
       <div className={styles.logo}>
         <Link to="/">E-shop</Link>
       </div>
 
       <ul className={styles.navLinks}>
-        <li><Link to="/"> {i18n.t('main')} </Link></li>
-        <li><Link to="/catalog"> {i18n.t('catalog')} </Link></li>
+        <li><Link to="/"> {i18n.t('main')} </Link></li> 
       </ul>
 
+      <button onClick={openCatalog}>{i18n.t('catalog')}</button>
       <input type="text" className={styles.searchInput} />
-
+      
       <div className={styles.navActions}>
         <Link to="/profile" className={styles.profile}>
           {i18n.t('profile')}
@@ -44,5 +52,7 @@ export default function Navbar() {
         </select>
       </div>
     </nav>
+    {catalogOpen && <Catalog />}
+    </>
   );
 }
