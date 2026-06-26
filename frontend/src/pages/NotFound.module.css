@@ -1,4 +1,18 @@
+.notFoundContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .notFound {
-    color: grey;
+    color: rgb(95, 95, 95);
     font-size: 3rem;
+}
+
+.link {
+    color: rgb(0, 153, 255);
+    text-decoration: none;
+    font-size: 1.5rem;
 }
