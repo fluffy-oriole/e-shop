@@ -52,7 +52,7 @@ export default function Navbar() {
         </select>
       </div>
     </nav>
-    {catalogOpen && <Catalog />}
+    <Catalog style={{ display: catalogOpen ? 'flex' : 'none'}} />
     </>
   );
 }

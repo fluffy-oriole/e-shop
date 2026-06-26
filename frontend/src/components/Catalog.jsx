@@ -1,8 +1,8 @@
 import styles from "./Catalog.module.css"
 import { useState, useEffect } from "react"
-import { Link } from 'react-router-dom'
+import Category from "./Category.jsx"
 
-export default function Catalog() {
+export default function Catalog({style}) {
     const [categories, setCategories] = useState([]);
     
       useEffect(() => {
@@ -12,11 +12,9 @@ export default function Catalog() {
       }, []);
     
     return (
-        <div className={styles.mainFrame}>
+        <div className={styles.mainFrame} style={style}>
             {categories.map((category) => (
-                <div key={category}>
-                <Link to={`/${category}`} >{category}</Link>
-                </div>
+                <Category key={category} category={category}/>
             ))}
         </div>
     )
