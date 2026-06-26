@@ -1,11 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import Home from "./pages/Home.jsx";
+import NotFound from "./pages/NotFound.jsx";
+import MainLayout from "./layouts/MainLayout";
+import { Routes, Route } from 'react-router-dom';
+
+
 
 function App() {
-  return <button name="square">Click me</button>
+  return (
+    <MainLayout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </MainLayout>
+  );
 }
 
-export default App
+export default App;

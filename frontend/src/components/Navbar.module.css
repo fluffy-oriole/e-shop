@@ -1,0 +1,111 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 60px;
+    padding: 0 40px;
+
+    background-color: #1e1e2e;
+    color: #fff;
+}
+
+.logo a {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navLinks {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+}
+
+.navLinks a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.navLinks a:hover {
+    color: #fff;
+}
+
+.navActions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.cartBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 16px;
+
+    background: #2563eb;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: background 0.2s;
+}
+
+.cartBtn:hover {
+    background: #1d4ed8;
+}
+
+.cartCount {
+    background: #fff;
+    color: #2563eb;
+    border-radius: 50%;
+
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 16px;
+
+    background: #2563eb;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: background 0.2s;
+}
+
+.profile:hover {
+    background: #1d4ed8;
+}
+
+.changeLanguageBtn {
+    border: 1 px solid #fff;
+}
+
+.searchInput {
+    width: 200px;
+    height: 32px;
+    background: white;
+}
