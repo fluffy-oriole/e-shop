@@ -1,0 +1,23 @@
+.mainContainer {
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.changePasswordButton {
+    width: 200px;
+    background-color: lightblue;
+    border: none;
+}
+
+.text {
+    font-size: 3em;
+}
+
+.email {
+    font-size: 20px;
+    font-weight: bold;
+}
+

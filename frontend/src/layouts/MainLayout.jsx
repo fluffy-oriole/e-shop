@@ -1,12 +1,13 @@
 import Navbar from '../components/Navbar';
 import styles from './MainLayout.module.css';
+import { Outlet } from 'react-router-dom';
 
-export default function MainLayout({ children }) {
+export default function MainLayout() {
     return (
         <div className={styles.mainLayout}>
             <Navbar />
             <div className={styles.contentBlock}>
-                { children }
+                <Outlet />
             </div>
         </div>
     )

@@ -1,18 +1,28 @@
 import Home from "./pages/Home.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import MainLayout from "./layouts/MainLayout";
-import { Routes, Route } from 'react-router-dom';
+import Profile from "./pages/Profile.jsx";
+import Registration from "./pages/Registration.jsx";
+import AuthLayout from "./layouts/AuthLayout.jsx";
+import Login from "./pages/Login.jsx";
+import { Routes, Route, Outlet } from 'react-router-dom';
 
 
 
 function App() {
   return (
-    <MainLayout>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+        
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
-    </MainLayout>
   );
 }
 
