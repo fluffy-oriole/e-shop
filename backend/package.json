@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.0.6",
+    "better-auth": "^1.6.21",
     "better-sqlite3": "^12.11.1",
     "hono": "^4.12.27"
   },
@@ -15,5 +16,9 @@
     "@types/node": "^20.11.17",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "esbuild@0.28.1": true
   }
 }

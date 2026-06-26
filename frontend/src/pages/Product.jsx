@@ -3,12 +3,11 @@ import { useParams } from 'react-router-dom';
 import styles from "./Product.module.css";
 
 export default function Product( ) {
-    const params = useParams();
-    const productId = params.id;
+    const { id } = useParams();
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/product/${productId}`)
+        fetch(`http://localhost:3000/api/product/${id}`)
         .then((res) => res.json())
         .then((data) => setProduct(data));
     }, []);
