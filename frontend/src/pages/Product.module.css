@@ -1,0 +1,23 @@
+.productContainer {
+    width: 80%;
+    height: 100%;
+    background-color: #ffffff;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.productFirstRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 20px;
+}
+
+.productImage {
+    height: 400px;
+    object-fit: cover;
+}

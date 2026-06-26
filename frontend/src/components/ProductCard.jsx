@@ -1,4 +1,5 @@
 import './ProductCard.css'
+import { Link } from 'react-router-dom';
 
 function ProductCard({ productTitle, productImage, productId, productPrice }) {
     return (
@@ -6,8 +7,8 @@ function ProductCard({ productTitle, productImage, productId, productPrice }) {
         <img src={productImage} alt={productTitle} className="product-image"/>
         <h3 className="product-title">{productTitle}</h3>
         <p className="product-price">{productPrice}$</p>
-         <button className="open">Open</button>
-         <button className="close">Add to shopping Cart</button>
+        <Link to={`/product/${productId}`} className="open">Open</Link>
+        <button className="close">Add to shopping Cart</button>
     </div>
     )
 }
