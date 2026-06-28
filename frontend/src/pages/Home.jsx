@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import "./Home.css";
+import styles from "./Home.module.css";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -12,7 +12,7 @@ function Home() {
   }, []);
 
   return (
-      <div className="products-list">
+      <div className={styles.productsList}>
         {products.map((p) => (
         <ProductCard
           key={p.id}

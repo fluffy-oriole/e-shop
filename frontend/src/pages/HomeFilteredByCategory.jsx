@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useParams } from 'react-router-dom';
-import "./Home.css";
+import styles from "./Home.module.css";
 
 
 export default function HomeFilteredByCategory() {
@@ -15,7 +15,7 @@ export default function HomeFilteredByCategory() {
   }, [category]);
 
   return (
-      <div className="products-list">
+      <div className={styles.productsList}>
         {products.map((p) => (
         <ProductCard
           key={p.id}

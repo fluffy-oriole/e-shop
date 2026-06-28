@@ -1,0 +1,18 @@
+.mainContainer {
+    margin: 80px 100px 0px 100px;
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    gap: 20px;
+}
+
+.productsContainer {
+    border-radius: 15px;
+    border: 1px solid black;
+}
+
+.buyingBlock {
+    border: 1px solid black;
+    border-radius: 15px;
+    display: grid;
+}

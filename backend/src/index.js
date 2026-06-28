@@ -36,6 +36,12 @@ app.get('/api/products/category/:category', async (c) => {
   return c.json(data);
 });
 
+app.get('/api/cart/:id', async (c) => {
+  const id = c.req.param('id');
+  const res = await fetch(`https://fakeapi.net/products?page=1&limit=5`);
+  const data = await res.json();
+  return c.json(data);
+});
 
 serve({
   fetch: app.fetch,

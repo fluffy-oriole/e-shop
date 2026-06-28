@@ -10,7 +10,7 @@ function ProductCard({ productTitle, productImage, productId, productPrice }) {
         <Link to={`/product/${productId}`}>
             <img src={productImage} alt={productTitle} className={styles.productImage}/>
             <h3 className={styles.productTitle} >{productTitle}</h3>
-            <p className={styles.productPrice}>{productPrice}$</p>
+            <p className={styles.productPrice}>{productPrice}₽</p>
             
             <button className={styles.addToCartBtn}>+</button>
         </Link>

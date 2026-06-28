@@ -43,7 +43,7 @@ export default function Navbar() {
         </Link>
         
         <Link to="/cart" className={styles.cartBtn}>
-          {i18n.t('cart')} <span className={styles.cartCount}>0</span>
+          {i18n.t('cart')}
         </Link>
 
         <select className={styles.languageSelect} onChange={changeLanguage}>
