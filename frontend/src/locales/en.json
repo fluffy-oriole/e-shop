@@ -2,5 +2,6 @@
     "main": "Main",
     "profile": "Profile",
     "cart": "Cart",
-    "catalog": "Catalog"
+    "catalog": "Catalog",
+    "login": "Войти"
 }

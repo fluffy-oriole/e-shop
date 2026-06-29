@@ -46,6 +46,10 @@ export default function Navbar() {
           {i18n.t('cart')}
         </Link>
 
+        <Link to="/login" className={styles.cartBtn}>
+          {i18n.t('login')}
+        </Link>
+
         <select className={styles.languageSelect} onChange={changeLanguage}>
           <option value="ru">RU</option>
           <option value="en">EN</option>
