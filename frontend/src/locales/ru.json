@@ -3,5 +3,8 @@
     "profile": "Профиль",
     "cart": "Корзина",
     "catalog": "Каталог",
-    "login": "Войти"
+    "login": "Войти",
+    "changePassword": "Изменить",
+    "logout": "Выйти",
+    "name": "Имя"
 }

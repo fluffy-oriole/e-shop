@@ -1,23 +1,38 @@
 .mainContainer {
-    margin-left: 80px;
-    margin-right: 80px;
-    margin-top: 20px;
+    margin: 80px 350px 0px 350px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 80px;
+    font-size: 2ch;
+}
+
+.infoBox {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.personalInfo {
+    
 }
 
 .changePasswordButton {
     width: 200px;
-    background-color: lightblue;
-    border: none;
 }
 
-.text {
-    font-size: 3em;
+.logOutBtn {
+    margin-top:80px;
+    background: none;
+    border: 1px solid red;
+    color: red;
+    border-radius: 5px;
+    width: 400px;
+    height: 45px;
+    transition: 300ms;
 }
 
-.email {
-    font-size: 20px;
-    font-weight: bold;
+.logOutBtn:hover {
+    background-color: red;
+    color: white;
 }
-
