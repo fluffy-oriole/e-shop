@@ -2,12 +2,20 @@ import { serve } from '@hono/node-server'
 import { readFileSync } from 'fs'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { auth } from './auth.js';
+
 
 const app = new Hono()
 
 app.use('/api/*', cors({
   origin: 'http://localhost:5173',
+  allowHeaders: ['Content-Type', 'Authorization'],
+  allowMethods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true,
 }));
+
+app.on(['GET', 'POST'], '/api/auth/*', (c) => auth.handler(c.req.raw));
+
 
 app.get('/api/products', async (c) => {
   const res = await fetch("https://fakeapi.net/products?page=1&limit=50"); // TODO: перелистывание страниц

@@ -1,27 +1,56 @@
 import styles from './Auth.module.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { authClient } from "../lib/authClient";
 
 export default function Registration() {
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const confirmPassword = e.target.confirmPassword.value;
+
+    if (password !== confirmPassword) {
+      setError('Пароли не совпадают');
+      return;
+    }
+
+    const { error } = await authClient.signUp.email({ name, email, password });
+
+    if (error) {
+      setError(error.message);
+      return;
+    }
+
+    navigate('/'); // после регистрации на главную
+  }
+
   return (
-    <form method="POST" className={styles.container}>
+    <form className={styles.container} onSubmit={handleSubmit}>
       <h2>Создать аккаунт</h2>
+
+      {error && <p className={styles.error}>{error}</p>}
 
       <div className={styles.form}>
         <div className={styles.field}>
           <label>Имя пользователя</label>
-          <input type="text" placeholder="nickname" />
+          <input name="name" type="text" placeholder="nickname" />
         </div>
         <div className={styles.field}>
           <label>Email</label>
-          <input type="email" placeholder="name@example.com" />
+          <input name="email" type="email" placeholder="name@example.com" />
         </div>
         <div className={styles.field}>
           <label>Пароль</label>
-          <input type="password" placeholder="Минимум 8 символов" />
+          <input name="password" type="password" placeholder="Минимум 8 символов" />
         </div>
         <div className={styles.field}>
           <label>Подтвердить пароль</label>
-          <input type="password" placeholder="Минимум 8 символов" />
+          <input name="confirmPassword" type="password" placeholder="Минимум 8 символов" />
         </div>
         <button className={styles.btn}>Зарегистрироваться</button>
       </div>
