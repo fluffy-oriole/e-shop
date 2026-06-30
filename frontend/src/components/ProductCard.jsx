@@ -1,21 +1,35 @@
-import styles from './ProductCard.module.css'
-import { Link } from 'react-router-dom';
+import styles from './ProductCard.module.css';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 function ProductCard({ productTitle, productImage, productId, productPrice }) {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
-    return (
-    <div className={styles.productCard}>
-        <Link to={`/product/${productId}`}>
-            <img src={productImage} alt={productTitle} className={styles.productImage}/>
-            <h3 className={styles.productTitle} >{productTitle}</h3>
-            <p className={styles.productPrice}>{productPrice}₽</p>
-            
-            <button className={styles.addToCartBtn}>+</button>
-        </Link>
+  const handleCardClick = () => {
+    navigate(`/product/${productId}`);
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    alert('Товар добавлен в корзину');
+  };
+
+  return (
+    <div className={styles.productCard} onClick={handleCardClick}>
+      <img src={productImage} alt={productTitle} className={styles.productImage} />
+      <h3 className={styles.productTitle}>{productTitle}</h3>
+      <p className={styles.productPrice}>{productPrice}₽</p>
+
+      <button
+        className={styles.addToCartBtn}
+        onClick={handleAddToCart}
+        type="button"
+      >
+        +
+      </button>
     </div>
-    )
+  );
 }
 
-export default ProductCard
+export default ProductCard;

@@ -4,6 +4,8 @@
     border-radius: 15px;
     padding: 80px;
     font-size: 2ch;
+    display: flex;
+    flex-direction: column;
 }
 
 .infoBox {
@@ -30,6 +32,7 @@
     width: 400px;
     height: 45px;
     transition: 300ms;
+    align-self: center;
 }
 
 .logOutBtn:hover {

@@ -26,7 +26,7 @@ export default function Registration() {
       return;
     }
 
-    navigate('/'); // после регистрации на главную
+    navigate('/');
   }
 
   return (
@@ -38,19 +38,19 @@ export default function Registration() {
       <div className={styles.form}>
         <div className={styles.field}>
           <label>Имя пользователя</label>
-          <input name="name" type="text" placeholder="nickname" />
+          <input name="name" type="text" placeholder="nickname" className={styles.input}/>
         </div>
         <div className={styles.field}>
           <label>Email</label>
-          <input name="email" type="email" placeholder="name@example.com" />
+          <input name="email" type="email" placeholder="name@example.com" className={styles.input}/>
         </div>
         <div className={styles.field}>
           <label>Пароль</label>
-          <input name="password" type="password" placeholder="Минимум 8 символов" />
+          <input name="password" type="password" placeholder="Минимум 8 символов" className={styles.input}/>
         </div>
         <div className={styles.field}>
           <label>Подтвердить пароль</label>
-          <input name="confirmPassword" type="password" placeholder="Минимум 8 символов" />
+          <input name="confirmPassword" type="password" placeholder="Минимум 8 символов" className={styles.input}/>
         </div>
         <button className={styles.btn}>Зарегистрироваться</button>
       </div>

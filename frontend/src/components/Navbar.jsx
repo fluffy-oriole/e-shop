@@ -3,8 +3,13 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Catalog from './Catalog.jsx'
 import { useState } from 'react'
+import { authClient } from "../lib/authClient";
 
 export default function Navbar() {
+  
+  const data = authClient.useSession();
+  const isLogged = (data.data === null ? false : true);
+
   const { i18n } = useTranslation();
   const [catalogOpen, setCatalogOpen] = useState(false);
 
@@ -38,17 +43,27 @@ export default function Navbar() {
       <input type="text" className={styles.searchInput} />
       
       <div className={styles.navActions}>
-        <Link to="/profile" className={styles.profile}>
-          {i18n.t('profile')}
-        </Link>
+        {isLogged ? (
+          <Link to="/profile" className={styles.profile}>
+            {i18n.t('profile')}
+          </Link>
+        ) :
+        (
+          <Link to="/login" className={styles.cartBtn}>
+            {i18n.t('login')}
+          </Link>
+        )
+        
+        }
+        
+
+        
         
         <Link to="/cart" className={styles.cartBtn}>
           {i18n.t('cart')}
         </Link>
 
-        <Link to="/login" className={styles.cartBtn}>
-          {i18n.t('login')}
-        </Link>
+        
 
         <select className={styles.languageSelect} onChange={changeLanguage}>
           <option value="ru">RU</option>

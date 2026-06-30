@@ -18,7 +18,8 @@ app.on(['GET', 'POST'], '/api/auth/*', (c) => auth.handler(c.req.raw));
 
 
 app.get('/api/products', async (c) => {
-  const res = await fetch("https://fakeapi.net/products?page=1&limit=50"); // TODO: перелистывание страниц
+  const res = await fetch("https://fakeapi.net/products/");
+  console.log(res);
   const data = await res.json();
   return c.json(data);
 })
@@ -50,6 +51,12 @@ app.get('/api/cart/:id', async (c) => {
   const data = await res.json();
   return c.json(data);
 });
+
+app.post('/api/cart/add', async (c) => {
+  const data = authClient.useSession();
+  console.log(data);
+});
+
 
 serve({
   fetch: app.fetch,

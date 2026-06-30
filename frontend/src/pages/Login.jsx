@@ -25,23 +25,21 @@ export default function Login() {
 
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
-      <h2>Войти в аккаунт</h2>
-
-      {error && <p className={styles.error}>{error}</p>}
+      <h2 className={styles.loginText}>Войти в аккаунт</h2>
 
       <div className={styles.form}>
         <div className={styles.field}>
           <label>Email</label>
-          <input name="email" type="email" placeholder="name@example.com" />
+          <input name="email" type="email" placeholder="name@example.com" className={styles.input}/>
         </div>
         <div className={styles.field}>
           <label>Пароль</label>
-          <input name="password" type="password" placeholder="Минимум 8 символов" />
+          <input name="password" type="password" placeholder="Минимум 8 символов" className={styles.input}/>
         </div>
         <button className={styles.btn}>Войти</button>
       </div>
 
-      <p className={styles.login}>Нет аккаунта? <Link to="/registration">Зарегистрироваться</Link></p>
+      <p className={styles.login}>Нет аккаунта? <Link to="/registration" className={styles.link}>Зарегистрироваться</Link></p>
     </form>
   )
 }
