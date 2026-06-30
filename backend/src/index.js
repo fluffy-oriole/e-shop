@@ -47,9 +47,9 @@ app.get('/api/products/category/:category', async (c) => {
 });
 
 app.post('/api/cart/add', async (c) => {
-  const cookies = c.req.raw.headers;
+  const headers = c.req.raw.headers;
   const session = await auth.api.getSession({
-    headers: cookies,
+    headers: headers,
   });
 
   if (!session) {
@@ -61,14 +61,27 @@ app.post('/api/cart/add', async (c) => {
 
   db.prepare('INSERT INTO cart (user_id, product_id) VALUES (?, ?)').run(userId, productId);
 
-  return c.body(null, 201);
+  return c.json({ success: true }, 201);
 });
 
-app.get('/api/cart/', async (c) => {
-  const id = c.req.param('id');
-  const res = await fetch(`https://fakeapi.net/products?page=1&limit=5`);
-  const data = await res.json();
-  return c.json(data);
+app.get('/api/cart', async (c) => {
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+
+  if (!session) {
+    return c.json({ error: 'Необходимо авторизоваться' }, 401);
+  }
+
+  const userId = session.user.id;
+  const items = db.prepare('SELECT * FROM cart WHERE user_id = ?').all(userId);
+
+  const products = await Promise.all(
+    items.map(async (item) => {
+      const res = await fetch(`https://fakeapi.net/products/${item.product_id}`);
+      return await res.json();
+    })
+  );
+
+  return c.json(products);
 });
 
 

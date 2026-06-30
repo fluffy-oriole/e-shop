@@ -6,15 +6,19 @@ export default function Cart() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/cart")
-      .then((res) => res.json())
-      .then((data) => setProducts(data.data));
-      
+    fetch("http://localhost:3000/api/cart", {
+      method: 'GET',
+      credentials: 'include',
+    }).then((res) => res.json())
+      .then((data) => setProducts(data)); 
   }, []);
+
+  console.log(products);
 
   return (
     <div className={styles.mainContainer}>
       <div className={styles.productsContainer}>
+        
         {products.length === 0 ? (
           <span>В корзине пока пусто</span>
         ) : (
