@@ -6,14 +6,11 @@ export default function Cart() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/cart/1")
+    fetch("http://localhost:3000/api/cart")
       .then((res) => res.json())
       .then((data) => setProducts(data.data));
       
   }, []);
-
-  let totalPrice = 0;
-  
 
   return (
     <div className={styles.mainContainer}>

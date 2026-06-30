@@ -1,18 +1,25 @@
 import styles from './ProductCard.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 function ProductCard({ productTitle, productImage, productId, productPrice }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [data, setData] = useState(null);
 
   const handleCardClick = () => {
     navigate(`/product/${productId}`);
   };
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.stopPropagation();
-    alert('Товар добавлен в корзину');
+    const res = await fetch('http://localhost:3000/api/cart/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ productId }),
+    });
   };
 
   return (
