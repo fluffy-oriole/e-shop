@@ -61,6 +61,7 @@ app.post('/api/cart/add', async (c) => {
 
   db.prepare('INSERT INTO cart (user_id, product_id) VALUES (?, ?)').run(userId, productId);
 
+  return c.body(null, 201);
 });
 
 app.get('/api/cart/', async (c) => {
