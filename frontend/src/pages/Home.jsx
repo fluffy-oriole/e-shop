@@ -8,8 +8,10 @@ function Home() {
   useEffect(() => {
     fetch("http://localhost:3000/api/products")
       .then((res) => res.json())
-      .then((data) => setProducts(data.data));
+      .then((data) => setProducts(data)
+    );
   }, []);
+  console.log(products);
 
   return (
       <div className={styles.productsList}>
@@ -17,7 +19,7 @@ function Home() {
         <ProductCard
           key={p.id}
           productTitle={p.title}
-          productImage={p.images}
+          productImage={p.images[0]}
           productId={p.id}
           productPrice={p.price}
         />

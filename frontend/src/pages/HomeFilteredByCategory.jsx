@@ -11,7 +11,9 @@ export default function HomeFilteredByCategory() {
   useEffect(() => {
     fetch(`http://localhost:3000/api/products/category/${category}`)
       .then((res) => res.json())
-      .then((data) => setProducts(data.data));
+      .then((data) => {
+        console.log(data);
+        setProducts(data)});
   }, [category]);
 
   return (
@@ -20,7 +22,7 @@ export default function HomeFilteredByCategory() {
         <ProductCard
           key={p.id}
           productTitle={p.title}
-          productImage={p.image}
+          productImage={p.images[0]}
           productId={p.id}
           productPrice={p.price}
         />

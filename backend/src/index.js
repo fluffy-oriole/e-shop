@@ -19,31 +19,29 @@ app.on(['GET', 'POST'], '/api/auth/*', (c) => auth.handler(c.req.raw));
 
 
 app.get('/api/products', async (c) => {
-  const res = await fetch("https://fakeapi.net/products/");
-  console.log(res);
+  const res = await fetch("https://dummyjson.com/products?limit=20&skip=77");
   const data = await res.json();
-  return c.json(data);
+  return c.json(data.products);
 })
 
 app.get('/api/products/categories', async (c) => {
-  const res = await fetch("https://fakeapi.net/products/categories");
+  const res = await fetch("https://dummyjson.com/products/category-list");
   const data = await res.json();
   return c.json(data);
 });
 
 app.get('/api/product/:id', async (c) => {
   const id = c.req.param('id');
-  const res = await fetch(`https://fakeapi.net/products/${id}`);
+  const res = await fetch(`https://dummyjson.com/products/${id}`);
   const data = await res.json();
   return c.json(data);
 })
 
-
 app.get('/api/products/category/:category', async (c) => {
   const category = c.req.param('category');
-  const res = await fetch(`https://fakeapi.net/products/category/${encodeURIComponent(category)}`);
+  const res = await fetch(`https://dummyjson.com/products/category/${encodeURIComponent(category)}`);
   const data = await res.json();
-  return c.json(data);
+  return c.json(data.products);
 });
 
 app.post('/api/cart/add', async (c) => {
@@ -76,7 +74,7 @@ app.get('/api/cart', async (c) => {
 
   const products = await Promise.all(
     items.map(async (item) => {
-      const res = await fetch(`https://fakeapi.net/products/${item.product_id}`);
+      const res = await fetch(`https://dummyjson.com/products/${item.product_id}`);
       return await res.json();
     })
   );

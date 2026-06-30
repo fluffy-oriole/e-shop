@@ -1,9 +1,11 @@
-import styles from "./Cart.module.css"
-import { useState, useEffect } from "react"
-import CartElement from "../components/CartElement.jsx"
+import styles from "./Cart.module.css";
+import { useState, useEffect } from "react";
+import CartElement from "../components/CartElement.jsx";
+import { authClient } from '../lib/authClient.js';
 
 export default function Cart() {
   const [products, setProducts] = useState([]);
+  const session = authClient.useSession();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/cart", {
@@ -13,7 +15,7 @@ export default function Cart() {
       .then((data) => setProducts(data)); 
   }, []);
 
-  console.log(products);
+  
 
   return (
     <div className={styles.mainContainer}>
@@ -26,7 +28,7 @@ export default function Cart() {
             <CartElement
               key={p.id}
               productTitle={p.title}
-              productImage={p.image}
+              productImage={p.images[0]}
               productId={p.id}
               productPrice={p.price}
             />

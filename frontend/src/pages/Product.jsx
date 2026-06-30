@@ -12,10 +12,12 @@ export default function Product( ) {
         .then((data) => setProduct(data));
     }, []);
 
+    console.log(product?.images);
+
     return (
         <div className={styles.productContainer}>
             <div className={styles.productFirstRow}>
-                <img className={styles.productImage} src={product?.image} alt={product?.title} />
+                <img className={styles.productImage} src={product?.images[0]} alt={product?.title} />
                 <h1>{product?.title}</h1>
             </div>
             <p className={styles.productDescription}>{product?.description}</p>
