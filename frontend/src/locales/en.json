@@ -6,5 +6,6 @@
     "login": "Log In",
     "changePassword": "Change",
     "logout": "Log Out",
-    "name": "Name"
+    "name": "Name",
+    "search": "Search"
 }

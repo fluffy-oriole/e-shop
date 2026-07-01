@@ -31,47 +31,39 @@ export default function Navbar() {
   return (
     <>
     <nav className={styles.navbar}>
-      <div className={styles.logo}>
-        <Link to="/">E-SHOP</Link>
-      </div>
+  <Link to="/" className={styles.logo}>
+    E-SHOP
+  </Link>
+  {/*
+  <svg className={styles.catalogButton} onClick={openCatalog} width="24" height="24" viewBox="0 0 24 24">
+    <path d="../../public/catalog.svg" fill="currentColor" />
+  </svg>
+  */}
+  <button className={styles.catalogButton} onClick={openCatalog} >{i18n.t("catalog")}</button>
+  <div className={styles.search}>
+    <input type="text" placeholder={i18n.t("search")} className={styles.searchInput}/>
+  </div>
+  <div className={styles.rightSide}>
+    <Link to="/cart" className={styles.profile}>
+      {i18n.t("cart")}
+    </Link>
+    <select className={styles.languageSelect} onChange={changeLanguage}>
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
+    {isLogged ? (
+      <Link to="/profile" className={styles.profile}>
+        {i18n.t("profile")}
+      </Link>
+    ) : (
+      <Link to="/login" className={styles.profile}>
+        {i18n.t("login")}
+      </Link>
+    )}
+  </div>
+</nav>
 
-      <ul className={styles.navLinks}>
-        <li><Link to="/"> {i18n.t('main')} </Link></li> 
-      </ul>
-
-      <button onClick={openCatalog}>{i18n.t('catalog')}</button>
-      <input type="text" className={styles.searchInput} />
-      
-      <div className={styles.navActions}>
-        {isLogged ? (
-          <Link to="/profile" className={styles.profile}>
-            {i18n.t('profile')}
-          </Link>
-        ) :
-        (
-          <Link to="/login" className={styles.cartBtn}>
-            {i18n.t('login')}
-          </Link>
-        )
-        
-        }
-        
-
-        
-        
-        <Link to="/cart" className={styles.cartBtn}>
-          {i18n.t('cart')}
-        </Link>
-
-        
-
-        <select className={styles.languageSelect} onChange={changeLanguage}>
-          <option value="ru">RU</option>
-          <option value="en">EN</option>
-        </select>
-      </div>
-    </nav>
-    <Catalog style={{ display: catalogOpen ? 'flex' : 'none'}} />
+{catalogOpen && <Catalog />}
     </>
   );
 }
