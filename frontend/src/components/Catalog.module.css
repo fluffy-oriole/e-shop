@@ -1,6 +1,67 @@
 .mainFrame {
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    flex-direction: row;
+  position: absolute;
+  top: 72px;
+  left: 0;
+  height: fit-content;
+  width: 260px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #23262f;
+  padding: 20px 0 30px 0;
+  gap: 6px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #c8cbd8;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+
+.categoryContainer {
+  width: 100%;
+  padding: 0 16px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.categoryLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  color: #c8cbd8;
+  font-size: 0.95rem;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 8px;
+  border-left: 3px solid transparent;
+  transition: all 0.15s ease;
+  background: transparent;
+}
+
+.categoryLink:hover {
+  background: #2c2f3a;
+  color: #2EF2B5;
+}
+
+/* Активная категория (выделяется зелёным) */
+.categoryLink.active {
+  background: #2c2f3a;
+  color: #2EF2B5;
+  border-left-color: #2EF2B5;
+  font-weight: 500;
+}
+
+/* Добавляем иконки перед названиями с помощью псевдоэлемента */
+.categoryLink::before {
+  content: "●"; /* можно заменить на любую иконку/эмодзи */
+  color: #6b7080;
+  font-size: 0.7rem;
+  opacity: 0.7;
+  transition: color 0.15s;
+}
+
+.categoryLink:hover::before,
+.categoryLink.active::before {
+  color: #2EF2B5;
 }

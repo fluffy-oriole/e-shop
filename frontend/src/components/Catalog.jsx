@@ -1,6 +1,7 @@
-import styles from "./Catalog.module.css"
-import { useState, useEffect } from "react"
-import Category from "./Category.jsx"
+import styles from "./Catalog.module.css";
+import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+
 
 export default function Catalog({style}) {
     const [categories, setCategories] = useState([]);
@@ -14,7 +15,10 @@ export default function Catalog({style}) {
     return (
         <div className={styles.mainFrame} style={style}>
             {categories.map((category) => (
-                <Category key={category} category={category}/>
+                
+                <div key={category} className={styles.categoryContainer}>
+                    <Link className={styles.categoryLink} to={`/products/category/${category}`} >{category}</Link>
+                </div>
             ))}
         </div>
     )

@@ -19,7 +19,7 @@ app.on(['GET', 'POST'], '/api/auth/*', (c) => auth.handler(c.req.raw));
 
 
 app.get('/api/products', async (c) => {
-  const res = await fetch("https://dummyjson.com/products?limit=20&skip=77");
+  const res = await fetch("https://dummyjson.com/products?limit=5&skip=77");
   const data = await res.json();
   return c.json(data.products);
 })

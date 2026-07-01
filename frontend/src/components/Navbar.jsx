@@ -26,6 +26,7 @@ export default function Navbar() {
 
   function openCatalog() {
     setCatalogOpen(!catalogOpen);
+    console.log("Кнопка каталога");
   }
   
   return (
@@ -34,11 +35,6 @@ export default function Navbar() {
   <Link to="/" className={styles.logo}>
     E-SHOP
   </Link>
-  {/*
-  <svg className={styles.catalogButton} onClick={openCatalog} width="24" height="24" viewBox="0 0 24 24">
-    <path d="../../public/catalog.svg" fill="currentColor" />
-  </svg>
-  */}
   <button className={styles.catalogButton} onClick={openCatalog} >{i18n.t("catalog")}</button>
   <div className={styles.search}>
     <input type="text" placeholder={i18n.t("search")} className={styles.searchInput}/>
