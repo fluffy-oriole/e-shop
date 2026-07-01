@@ -26,15 +26,10 @@ function ProductCard({ productTitle, productImage, productId, productPrice }) {
     <div className={styles.productCard} onClick={handleCardClick}>
       <img src={productImage} alt={productTitle} className={styles.productImage} />
       <h3 className={styles.productTitle}>{productTitle}</h3>
-      <p className={styles.productPrice}>{productPrice}₽</p>
-
-      <button
-        className={styles.addToCartBtn}
-        onClick={handleAddToCart}
-        type="button"
-      >
-        +
-      </button>
+      <div className={styles.priceRow}>
+        <p className={styles.productPrice}>{productPrice}₽</p>
+        <button className={styles.addToCartBtn} onClick={handleAddToCart} type="button">+</button>
+      </div>
     </div>
   );
 }

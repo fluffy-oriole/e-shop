@@ -1,65 +1,84 @@
 .productCard {
+    position: relative;
+
     display: flex;
     flex-direction: column;
+    gap: 10px;
 
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
+    background: #2b2d3a;
+    border: 1px solid #3b3d4b;
+    border-radius: 16px;
 
     overflow: hidden;
+    cursor: pointer;
 
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: 0.25s ease;
 }
 
 .productCard:hover {
-    transform: translateY(-4px);
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.12),
-        0 4px 10px rgba(0, 0, 0, 0.06);
+    transform: translateY(-6px);
+    border-color: #35f0b6;
+    box-shadow: 0 10px 30px rgba(53, 240, 182, 0.12);
 }
 
 .productImage {
     width: 100%;
-    height: 220px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
 
-    border-bottom: 1px solid #e5e7eb;
+    background: #393b48;
+}
+
+.priceRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px 10px 20px;
 }
 
 .productTitle {
-    margin: 15px;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.4;
+    margin: 18px 18px 8px;
 
-    min-height: 50px;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .productPrice {
-    margin: 0 15px 15px;
+    color: #35f0b6;
     font-size: 22px;
     font-weight: 700;
-    color: #2563eb;
 }
 
 .addToCartBtn {
-    margin-left: auto;
-    margin-right: auto;
-    padding: 12px;
+
+    width: 42px;
+    height: 42px;
 
     border: none;
-    border-radius: 8px;
+    border-radius: 50%;
 
-    font-size: 14px;
-    font-weight: 600;
+    background: #35f0b6;
+    color: #1f2029;
+
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
 
     cursor: pointer;
 
-    transition: opacity 0.2s ease;
-    width: 80%;
+    transition: 0.25s;
 }
 
 .addToCartBtn:hover {
-    opacity: 0.9;
+    transform: scale(1.1);
+    background: #4ff8c2;
+}
+
+.addToCartBtn:active {
+    transform: scale(0.95);
 }
