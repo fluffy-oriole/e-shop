@@ -7,5 +7,7 @@
     "changePassword": "Change",
     "logout": "Log Out",
     "name": "Name",
-    "search": "Search"
+    "search": "Search",
+    "password": "Password",
+    "email": "Email"
 }

@@ -1,18 +1,187 @@
 .mainContainer {
-    margin: 80px 100px 0px 100px;
-    margin-top: 80px;
-    display: grid;
-    grid-template-columns: 5fr 1fr;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: calc(100vh - 72px);
+  padding: 40px 20px;
+  background: #1a1c23;
+  font-family: 'Inter', -apple-system, sans-serif;
+  box-sizing: border-box;
+  gap: 30px;
 }
 
 .productsContainer {
-    border-radius: 15px;
-    border: 1px solid black;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.productsContainer > span {
+  color: #c8cbd8;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 40px 20px;
+  background: #23262f;
+  border-radius: 16px;
+  border: 1px solid #3a3f55;
+}
+
+.frame {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #23262f;
+  border-radius: 16px;
+  padding: 16px 24px;
+  border: 1px solid #3a3f55;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.2s;
+}
+
+.frame:hover {
+  border-color: #2EF2B5;
+}
+
+.productImg {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #1a1c23;
+  flex-shrink: 0;
+}
+
+.frame p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.frame p:first-of-type {
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.frame p:last-of-type {
+  color: #2EF2B5;
+  font-weight: 600;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.frame button {
+  background: transparent;
+  border: 1px solid #ff6b6b;
+  color: #ff6b6b;
+  padding: 6px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.frame button:hover {
+  background: #ff6b6b;
+  color: #23262f;
 }
 
 .buyingBlock {
-    border: 1px solid black;
-    border-radius: 15px;
-    display: grid;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: flex-end;
 }
+
+.buyingBlock button {
+  background: transparent;
+  border: 1px solid #2EF2B5;
+  color: #2EF2B5;
+  padding: 12px 40px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.buyingBlock button:hover {
+  background: #2EF2B5;
+  color: #23262f;
+}
+
+@media (max-width: 700px) {
+  .frame {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .productImg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .frame p {
+    font-size: 0.95rem;
+  }
+
+  .frame p:last-of-type {
+    font-size: 1rem;
+  }
+
+  .frame button {
+    font-size: 0.8rem;
+    padding: 4px 14px;
+    margin-left: auto;
+  }
+
+  .buyingBlock {
+    justify-content: center;
+  }
+
+  .buyingBlock button {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContainer {
+    padding: 20px 12px;
+    gap: 20px;
+  }
+
+  .frame {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .productImg {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+  }
+
+  .frame p {
+    text-align: center;
+  }
+
+  .frame button {
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
+  }
+}   

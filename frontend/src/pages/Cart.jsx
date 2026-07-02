@@ -1,6 +1,5 @@
 import styles from "./Cart.module.css";
 import { useState, useEffect } from "react";
-import CartElement from "../components/CartElement.jsx";
 import { authClient } from '../lib/authClient.js';
 
 export default function Cart() {
@@ -15,7 +14,6 @@ export default function Cart() {
       .then((data) => setProducts(data)); 
   }, []);
 
-  
 
   return (
     <div className={styles.mainContainer}>
@@ -25,13 +23,12 @@ export default function Cart() {
           <span>В корзине пока пусто</span>
         ) : (
           products.map((p) => (
-            <CartElement
-              key={p.id}
-              productTitle={p.title}
-              productImage={p.images[0]}
-              productId={p.id}
-              productPrice={p.price}
-            />
+            <div key={p.id} className={styles.frame}>
+                        <img src={p.images[0]} className={styles.productImg}></img>
+                        <p>{p.title}</p>
+                        <p>{p.price}₽</p>
+                        <button>Удалить</button>
+                    </div>
           ))
         )}
       </div>

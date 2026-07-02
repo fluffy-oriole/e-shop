@@ -28,12 +28,15 @@ export default function Profile() {
         <div className={styles.mainContainer}>
             {isLogged ? 
             (<><div className={styles.infoBox}>
-                <span className={styles.commonText}>{i18n.t("name")}</span>
                 <span className={styles.personalInfo}>{ userData.name }</span>
-                <span className={styles.commonText}>{i18n.t("email")}</span>
                 <span className={styles.personalInfo}>{ userData.email }</span>
-                <span>{i18n.t("password")}</span>
-                <button className={styles.changePasswordButton}>{i18n.t("changePassword")}</button>
+                <div className={styles.changePasswordBox}>
+                    <div className={styles.privacyBlock}>   
+                        <span>Безопасность</span>
+                        <span>Изменить пароль</span>
+                    </div>
+                    <button className={styles.changePasswordButton}>{i18n.t("changePassword")}</button>
+                </div>
             </div>
             <button className={styles.logOutBtn} onClick={loggingOutHandler}>{i18n.t("logout")}</button></>)
             :
