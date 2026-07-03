@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 
 export default function Catalog({style}) {
     const [categories, setCategories] = useState([]);
-    console.log(import.meta.env.API_SERVER);
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/products/categories")
+        fetch(`${import.meta.env.VITE_API_URL}/api/products/categories`)
         .then((res) => res.json())
         .then((data) => setCategories(data));
     }, []);

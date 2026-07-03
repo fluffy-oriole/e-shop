@@ -7,7 +7,7 @@ export default function Cart() {
   const session = authClient.useSession();
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/cart", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
       method: 'GET',
       credentials: 'include',
     }).then((res) => res.json())
