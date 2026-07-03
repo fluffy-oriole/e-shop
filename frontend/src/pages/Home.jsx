@@ -3,22 +3,24 @@ import ProductCard from "../components/ProductCard";
 import styles from "./Home.module.css";
 import Pagination from "../components/Pagination";
 
-function Home() {
+export default function Home() {
   const [products, setProducts] = useState([]);
   const [countOfProducts, setCountOfProducts] = useState(0);
   const productsPerPage = 20;
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/products?page=${currentPage}&limit=${productsPerPage}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log('Received:', data);
         setCountOfProducts(data.total);
         setProducts(data.products);
       });
-  }, []);
+  }, [currentPage]);
 
   let countOfPages = Math.ceil(countOfProducts / productsPerPage);
-  const [currentPage, setCurrentPage] = useState(1);
+  
 
   return (
     <div>
@@ -38,5 +40,3 @@ function Home() {
       
   );
 }
-
-export default Home

@@ -1,9 +1,11 @@
 .pagesBlock {
     display: flex;
     color: white;
-    font-size: 2.5ch;
-    justify-content: end;
+    font-size: 2ch;
+    justify-content: center;
     padding-right: 25px;
+    margin-bottom: 20px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .pageButton {
