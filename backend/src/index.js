@@ -4,6 +4,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { auth } from './auth.js';
 import db from "./db/database.js";
+import "dotenv/config";
 
 
 const app = new Hono()
@@ -17,29 +18,28 @@ app.use('/api/*', cors({
 
 app.on(['GET', 'POST'], '/api/auth/*', (c) => auth.handler(c.req.raw));
 
-
 app.get('/api/products', async (c) => {
-  const res = await fetch("https://dummyjson.com/products?limit=5&skip=77");
+  const res = await fetch(`${process.env.API_URL}products?limit=1&skip=77`);
   const data = await res.json();
   return c.json(data.products);
 })
 
 app.get('/api/products/categories', async (c) => {
-  const res = await fetch("https://dummyjson.com/products/category-list");
+  const res = await fetch(`${process.env.API_URL}/products/category-list`);
   const data = await res.json();
   return c.json(data);
 });
 
 app.get('/api/product/:id', async (c) => {
   const id = c.req.param('id');
-  const res = await fetch(`https://dummyjson.com/products/${id}`);
+  const res = await fetch(`${process.env.API_URL}/products/${id}`);
   const data = await res.json();
   return c.json(data);
 })
 
 app.get('/api/products/category/:category', async (c) => {
   const category = c.req.param('category');
-  const res = await fetch(`https://dummyjson.com/products/category/${encodeURIComponent(category)}`);
+  const res = await fetch(`${process.env.API_URL}/products/category/${encodeURIComponent(category)}`);
   const data = await res.json();
   return c.json(data.products);
 });
@@ -74,7 +74,7 @@ app.get('/api/cart', async (c) => {
 
   const products = await Promise.all(
     items.map(async (item) => {
-      const res = await fetch(`https://dummyjson.com/products/${item.product_id}`);
+      const res = await fetch(`${process.env.API_URL}/products/${item.product_id}`);
       return await res.json();
     })
   );
@@ -87,7 +87,7 @@ app.get('/api/cart', async (c) => {
 
 serve({
   fetch: app.fetch,
-  port: 3000
+  port: process.env.PORT,
 }, (info) => {
   console.log(`Server is running on http://localhost:${info.port}`)
 })

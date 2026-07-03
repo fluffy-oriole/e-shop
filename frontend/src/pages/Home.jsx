@@ -11,7 +11,6 @@ function Home() {
       .then((data) => setProducts(data)
     );
   }, []);
-  console.log(products);
 
   return (
       <div className={styles.productsList}>

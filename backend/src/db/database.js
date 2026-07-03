@@ -1,5 +1,6 @@
 import Database from "better-sqlite3";
+import 'dotenv/config';
 
-const db = new Database("../data/e-shop.db");
+const db = new Database(process.env.DB_FILE);
 
 export default db;

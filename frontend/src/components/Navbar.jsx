@@ -26,7 +26,6 @@ export default function Navbar() {
 
   function openCatalog() {
     setCatalogOpen(!catalogOpen);
-    console.log("Кнопка каталога");
   }
   
   return (
