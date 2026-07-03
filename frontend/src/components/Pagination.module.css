@@ -1,0 +1,21 @@
+.pagesBlock {
+    display: flex;
+    color: white;
+    font-size: 2.5ch;
+    justify-content: end;
+    padding-right: 25px;
+}
+
+.pageButton {
+    padding: 10px;
+}
+
+.pageButton:hover {
+    cursor: pointer;
+}
+
+.currentPageButton {
+    background-color: #2EF2B5;
+    color: black;
+    border-radius: 25%;
+}

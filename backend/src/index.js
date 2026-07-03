@@ -19,9 +19,13 @@ app.use('/api/*', cors({
 app.on(['GET', 'POST'], '/api/auth/*', (c) => auth.handler(c.req.raw));
 
 app.get('/api/products', async (c) => {
-  const res = await fetch(`${process.env.API_URL}products?limit=1&skip=77`);
+  const page = Number(c.req.query('page')) - 1 || 1;
+  const limit = Number(c.req.query('limit')) || 20;
+  const skip = (page - 1) * limit;
+  const res = await fetch(`${process.env.API_URL}products?limit=${limit}&skip=${page*limit}`);
   const data = await res.json();
-  return c.json(data.products);
+  console.log("data", data);
+  return c.json(data);
 })
 
 app.get('/api/products/categories', async (c) => {

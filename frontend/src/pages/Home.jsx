@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import styles from "./Home.module.css";
+import Pagination from "../components/Pagination";
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const [countOfProducts, setCountOfProducts] = useState(0);
+  const productsPerPage = 20;
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/products?page=${currentPage}&limit=${productsPerPage}`)
       .then((res) => res.json())
-      .then((data) => setProducts(data)
-    );
+      .then((data) => {
+        setCountOfProducts(data.total);
+        setProducts(data.products);
+      });
   }, []);
 
+  let countOfPages = Math.ceil(countOfProducts / productsPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
+
   return (
+    <div>
       <div className={styles.productsList}>
         {products.map((p) => (
         <ProductCard
@@ -24,6 +33,9 @@ function Home() {
         />
       ))}
       </div>
+        <Pagination countOfPages={countOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+    </div>
+      
   );
 }
 
