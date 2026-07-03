@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 
 export default function Catalog({style}) {
     const [categories, setCategories] = useState([]);
-    
-      useEffect(() => {
+    console.log(import.meta.env.API_SERVER);
+
+    useEffect(() => {
         fetch("http://localhost:3000/api/products/categories")
-          .then((res) => res.json())
-          .then((data) => setCategories(data));
-      }, []);
+        .then((res) => res.json())
+        .then((data) => setCategories(data));
+    }, []);
     
     return (
         <div className={styles.mainFrame} style={style}>
