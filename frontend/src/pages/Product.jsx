@@ -5,6 +5,7 @@ import EButton from '../components/EButton.jsx';
 import { useTranslation } from 'react-i18next';
 import redButton from '../components/RedButton.jsx';
 import RedButton from "../components/RedButton.jsx";
+import { Star } from 'lucide-react';
 
 export default function Product( ) {
     const { i18n } = useTranslation();
@@ -56,7 +57,7 @@ export default function Product( ) {
     }
 
     if (!product) {
-        return <div>Загрузка...</div>
+        return <div className={styles.productContainer}>Загрузка...</div>
     }
 
     return (
@@ -118,7 +119,18 @@ export default function Product( ) {
                             <div className={styles.specItem + " " + styles.reviewerName}>{review?.reviewerName}</div>
                             <div className={styles.specItem}>{new Date(review?.date).toLocaleDateString('ru-RU')}</div>
                         </div>
-                        <div className={styles.specItem}>Рейтинг: {review?.rating}</div>
+                        <div>
+                            {Array.from({ length: 5 }, (_, i) => (
+                                <span key={i}>
+                                    {i < review?.rating ? 
+                                        <Star fill="#f5a623" color="#f5a623" size={16} />
+                                        :
+                                        <Star fill="#d6d6d6" color="#d6d6d6" size={16} />
+                                    }
+                                </span>
+                                
+                            ))}
+                        </div>
                         <div className={styles.specItem}>{review?.comment}</div>
                     </div>
                 ))}
