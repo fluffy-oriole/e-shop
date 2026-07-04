@@ -9,16 +9,18 @@
     margin-bottom: 100px;
     display: flex;
     flex-direction: column;
+    gap: var(--big-gap);
     font-family: var(--font);
     color: var(--main-text-color);
     padding: 50px;
     font-size: 1.2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.541);
 }
 
 .mainInformation {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
-    gap: var(--gap);
+    gap: 40px;
 }
 
 .productImage {
@@ -29,23 +31,23 @@
     border-radius: var(--small-border-radius);
 }
 
-.productDescription {
-    border-radius: var(--big-border-radius);
-}
-
-
 .productInfo {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px;
 }
+
 .title {
     font-weight: 550;
+    font-size: var(--title-size);
+    margin: 0;
+    color: var(--accent-color)
 }
 
 .brand {
     font-weight: 400;
-    font-size: 1.4rem;
+    font-size: 1rem;
+    margin: 0;
     color: var(--second-text-color);
 }
 
@@ -57,12 +59,96 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap);
+    width: 250px;
 }
 
 .stockInformation{
     color: var(--second-text-color);
+    margin: 0;
 }
 
-.descriptionBlock {
+.price {
+    margin: 0;
+    color: var(--accent-color);
+}
 
+
+.meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.badge {
+    font-size: 13px;
+    color: var(--second-text-color);
+    background: var(--main-color);
+    padding: 3px 10px;
+    border-radius: var(--small-border-radius);
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--second-text-color);
+}
+
+.specsLabel {
+    font-size: 12px;
+    color: var(--second-text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px;
+}
+
+.specsGrid {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    height: 100%;
+}
+
+.specItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 0.5px solid var(--border-color);
+}
+
+.specItem:last-child {
+    border-bottom: none;
+}
+
+.specItem p:first-child {
+    font-size: 14px;
+    color: var(--second-text-color);
+    margin: 0;
+}
+
+.specItem p:last-child {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.description {
+    text-align: justify;
+}
+
+.reviewsBox {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+}
+
+.review {
+    border-radius: var(--small-border-radius);
+    background-color: var(--second-color);
+    width: 100%;
+    height: fit-content;
+    padding: var(--small-padding);
 }

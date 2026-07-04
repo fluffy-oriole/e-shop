@@ -8,11 +8,16 @@
     --third-color: #373943;
 
     --gap: 20px;
+    --big-gap: 50px;
     --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
     --big-border-radius: 30px;
     --small-border-radius: 15px;
 
     --big-padding: 50px;
+    --small-padding: 20px;
+
+    --title-size: 2.5ch;
+
     --small-padding: 20px;
 }

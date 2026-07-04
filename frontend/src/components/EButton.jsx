@@ -1,8 +1,8 @@
 import styles from './EButton.module.css';
 
-export default function EButton({text, onClick}) {
+export default function EButton({text, onClick, width}) {
     return (
-        <button type='button' onClick={onClick} className={styles.eButton}>
+        <button style={{width}}type='button' onClick={onClick} className={styles.eButton}>
             {text}
         </button>
     );

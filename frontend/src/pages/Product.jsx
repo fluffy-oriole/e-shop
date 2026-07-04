@@ -29,7 +29,6 @@ export default function Product( ) {
         });
       }
       
-
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/api/product/${id}`)
         .then((res) => res.json())
@@ -43,44 +42,83 @@ export default function Product( ) {
             credentials: 'include',
             body: JSON.stringify({ productId: product?.id }),
         });
+        setCart([...cart, product]);
     };
 
     const handleRemoveFromCart = async () => {
-        console.log("Удален из корзины");
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/remove`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify({ productId: product?.id }),
         });
+        setCart(cart.filter(item => item.id !== product.id));
+    }
+
+    if (!product) {
+        return <div>Загрузка...</div>
     }
 
     return (
         <div className={styles.productContainer}>
             <div className={styles.mainInformation}>
                 <img className={styles.productImage} src={product?.images[0]} alt={product?.title} />
+                
                 <div className={styles.productInfo}>
-                    <h1 className={styles.title}>{product?.title}</h1>
-                    <p className={styles.brand}>{product?.brand}</p>
-                    <p className={styles.category}>{product?.category}</p>
-                    <p>Rating {product?.rating}</p>
+                    <p className={styles.title}>{product?.title}</p>
+                    
+                    <div className={styles.meta}>
+                        <span className={styles.badge}>{product?.category}</span>
+                        <span className={styles.brand}>{product?.brand}</span>
+                    </div>
+
+                    <div className={styles.rating}>
+                        <span>Рейтинг: </span>
+                        <span>{product?.rating} / 5</span>
+                    </div>
+
+                    <p className={styles.description}>{product?.description}</p>
+
+                    
+                    <p className={styles.specsLabel}>Характеристики</p>
+                    <div className={styles.specsGrid}>
+                        <div className={styles.specItem}>
+                            <p>Вес</p><p>{product?.weight} г</p>
+                        </div>
+                        <div className={styles.specItem}>
+                            <p>Размеры</p>
+                            <p>{product?.dimensions?.width} × {product?.dimensions?.height} × {product?.dimensions?.depth}</p>
+                        </div>
+                        <div className={styles.specItem}>
+                            <p>Возврат</p><p>{product?.returnPolicy}</p>
+                        </div>
+                        <div className={styles.specItem}>
+                            <p>SKU</p><p>{product?.sku}</p>
+                        </div>
+                        <div className={styles.specItem}>
+                            <p>Гарантия</p><p>{product?.warrantyInformation}</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div className={styles.buyingBlock}>
-                    <div>{product?.price}₽</div>
-                    <div className={styles.stockInformation}>В наличии: {product?.stock}</div>
-                    {isAddedToCart ? <RedButton text={"Удалить из корзины"} onClick={handleRemoveFromCart} /> : <EButton text={`Добавить в корзину`} onClick={handleAddToCart} />}
+                    <p className={styles.price}>{product?.price} ₽</p>
+                    <p className={styles.stockInformation}>В наличии: {product?.stock}</p>
+                    {isAddedToCart ?
+                        <RedButton width="100%" text={"Удалить из корзины"} onClick={handleRemoveFromCart} />
+                        : <EButton width="100%" text={`Добавить в корзину`} onClick={handleAddToCart} />
+                    }
                 </div>
             </div>
-                
-            <div className={styles.descriptionBlock}>
-
-            </div>
-            <p className={styles.productDescription}>{product?.description}</p>
-            <div>
+            <div className={styles.reviewsBox}>
                 <h3>Отзывы</h3>
+                {product.reviews.map((review, index) => (
+                    <div key={index} className={styles.review}>
+                        <div className={styles.specItem}>{review?.reviewerName}</div>
+                        <div className={styles.specItem}>Рейтинг: {review?.rating} / 5</div>
+                    </div>
+                ))}
             </div>
-            
         </div>
-    )
+    );
 }

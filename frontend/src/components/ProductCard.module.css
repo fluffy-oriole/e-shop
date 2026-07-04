@@ -16,7 +16,6 @@
 }
 
 .productCard:hover {
-    /* transform: translateY(-6px); */
     border-color: #35f0b6;
     box-shadow: 0 10px 30px rgba(53, 240, 182, 0.12);
 }

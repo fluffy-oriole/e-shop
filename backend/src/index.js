@@ -70,6 +70,24 @@ app.post('/api/cart/add', async (c) => {
   return c.json({ success: true }, 201);
 });
 
+app.post('api/cart/remove', async (c) => {
+  const headers = c.req.raw.headers;
+  const session = await auth.api.getSession({
+    headers: headers,
+  });
+
+  if (!session) {
+    return c.json({ error: 'Необходимо авторизоваться' }, 401);
+  }
+
+  const userId = session.user.id;
+  const { productId } = await c.req.json();
+
+  db.prepare('DELETE FROM cart WHERE product_id = ?').run(productId);
+
+  return c.json({ success: true }, 201);
+}); 
+
 app.get('/api/cart', async (c) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
 
@@ -89,8 +107,6 @@ app.get('/api/cart', async (c) => {
 
   return c.json(products);
 });
-
-
 
 
 serve({
