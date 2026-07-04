@@ -7,8 +7,6 @@ export default function Pagination({ countOfPages, currentPage, setCurrentPage }
         pages.push(i);
     }
 
-    console.log(currentPage);
-
     function reduceCurrentPage() {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);

@@ -64,8 +64,9 @@ app.post('/api/cart/add', async (c) => {
 
   const userId = session.user.id;
   const { productId } = await c.req.json();
+  const date = new Date().toISOString();
 
-  db.prepare('INSERT INTO cart (user_id, product_id) VALUES (?, ?)').run(userId, productId);
+  db.prepare('INSERT INTO cart (user_id, product_id, date) VALUES (?, ?, ?)').run(userId, productId, date);
 
   return c.json({ success: true }, 201);
 });
@@ -96,7 +97,7 @@ app.get('/api/cart', async (c) => {
   }
 
   const userId = session.user.id;
-  const items = db.prepare('SELECT * FROM cart WHERE user_id = ?').all(userId);
+  const items = db.prepare('SELECT * FROM cart WHERE user_id = ? ORDER BY date ASC').all(userId);
 
   const products = await Promise.all(
     items.map(async (item) => {

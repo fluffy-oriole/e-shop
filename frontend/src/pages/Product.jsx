@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import redButton from '../components/RedButton.jsx';
 import RedButton from "../components/RedButton.jsx";
 import { Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Product( ) {
     const { i18n } = useTranslation();
@@ -69,7 +70,7 @@ export default function Product( ) {
                     <p className={styles.title}>{product?.title}</p>
                     
                     <div className={styles.meta}>
-                        <span className={styles.badge}>{product?.category}</span>
+                        <Link to={`/products/category/${product?.category}`} className={styles.badge}>{product?.category}</Link>
                         <span className={styles.brand}>{product?.brand}</span>
                     </div>
 

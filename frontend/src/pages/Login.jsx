@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
-import { authClient } from "../lib/authClient"
-import styles from './Auth.module.css'
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { authClient } from "../lib/authClient";
+import styles from './Auth.module.css';
 
 export default function Login() {
   const navigate = useNavigate();

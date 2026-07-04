@@ -20,7 +20,7 @@ export default function Home() {
 
   let countOfPages = Math.ceil(countOfProducts / productsPerPage);
   
-  if (products === undefined) {
+  if (!products) {
     return (
       <div className={styles.productsList}>
         <p>Загрузка...</p>
