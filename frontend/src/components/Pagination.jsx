@@ -1,4 +1,5 @@
 import styles from "./Pagination.module.css";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Pagination({ countOfPages, currentPage, setCurrentPage }) {
     
@@ -21,13 +22,13 @@ export default function Pagination({ countOfPages, currentPage, setCurrentPage }
 
     return (
         <div className={styles.pagesBlock}>
-            <div className={styles.pageButton} onClick={reduceCurrentPage}>&lt;</div>
+            <div className={styles.pageButton} onClick={reduceCurrentPage}><ChevronLeft /></div>
             {pages.map((page, index) => (
                 <div key={page} className={styles.pageButton + (page === currentPage ? ' ' + styles.currentPageButton : '')} onClick={() => setCurrentPage(page)}>
                     {page}
                 </div>
             ))}
-            <div className={styles.pageButton} onClick={increaseCurrentPage}>&gt;</div>
+            <div className={styles.pageButton} onClick={increaseCurrentPage}><ChevronRight /></div>
         </div>
     )
 }
