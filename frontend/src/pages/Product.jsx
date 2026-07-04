@@ -111,11 +111,15 @@ export default function Product( ) {
                 </div>
             </div>
             <div className={styles.reviewsBox}>
-                <h3>Отзывы</h3>
+                <h3 className={styles.reviewsLabel}>Отзывы</h3>
                 {product.reviews.map((review, index) => (
                     <div key={index} className={styles.review}>
-                        <div className={styles.specItem}>{review?.reviewerName}</div>
-                        <div className={styles.specItem}>Рейтинг: {review?.rating} / 5</div>
+                        <div className={styles.reviewInformation}>
+                            <div className={styles.specItem + " " + styles.reviewerName}>{review?.reviewerName}</div>
+                            <div className={styles.specItem}>{new Date(review?.date).toLocaleDateString('ru-RU')}</div>
+                        </div>
+                        <div className={styles.specItem}>Рейтинг: {review?.rating}</div>
+                        <div className={styles.specItem}>{review?.comment}</div>
                     </div>
                 ))}
             </div>

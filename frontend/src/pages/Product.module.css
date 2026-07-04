@@ -19,13 +19,14 @@
 
 .mainInformation {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 2fr 3fr 1fr;
     gap: 40px;
 }
 
 .productImage {
-    width: 400px;
-    height: 500px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
     object-fit: cover;
     background-color: var(--main-color);
     border-radius: var(--small-border-radius);
@@ -117,6 +118,7 @@
     align-items: center;
     padding: 10px 0;
     border-bottom: 0.5px solid var(--border-color);
+    font-size: 1.7ch;
 }
 
 .specItem:last-child {
@@ -124,13 +126,11 @@
 }
 
 .specItem p:first-child {
-    font-size: 14px;
     color: var(--second-text-color);
     margin: 0;
 }
 
 .specItem p:last-child {
-    font-size: 14px;
     font-weight: 500;
     margin: 0;
 }
@@ -148,7 +148,22 @@
 .review {
     border-radius: var(--small-border-radius);
     background-color: var(--second-color);
-    width: 100%;
     height: fit-content;
     padding: var(--small-padding);
+}
+
+.reviewsLabel {
+    margin-bottom: 0;
+    padding-left: 10px;
+    color: var(--accent-color);
+}
+
+.reviewInformation {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap);
+}
+
+.reviewerName {
+    color: var(--accent-color);
 }
