@@ -43,10 +43,6 @@ export default function Navbar() {
         <Link to="/cart" className={styles.profile}>
           {i18n.t("cart")}
         </Link>
-        <select className={styles.languageSelect} onChange={changeLanguage}>
-          <option value="ru">RU</option>
-          <option value="en">EN</option>
-        </select>
         {isLogged ? (
           <Link to="/profile" className={styles.profile}>
             {i18n.t("profile")}
@@ -56,6 +52,10 @@ export default function Navbar() {
             {i18n.t("login")}
           </Link>
         )}
+        <select className={styles.languageSelect} onChange={changeLanguage}>
+          <option value="ru">RU</option>
+          <option value="en">EN</option>
+        </select>
       </div>
     </nav>
     {catalogOpen && <Catalog />}

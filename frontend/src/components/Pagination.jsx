@@ -18,7 +18,6 @@ export default function Pagination({ countOfPages, currentPage, setCurrentPage }
             setCurrentPage(currentPage + 1);
         }
     }
-    console.log(currentPage);
 
     return (
         <div className={styles.pagesBlock}>

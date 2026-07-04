@@ -93,15 +93,17 @@
 }
 
 .profile {
-    color: white;
     text-decoration: none;
     background: #30313c;
     padding: 10px 18px;
     border-radius: 10px;
     transition: .2s;
+    background: var(--accent-color);
+    color: var(--main-color);
+    border: 1px solid var(--accent-color);
 }
 
 .profile:hover {
-    background: #2EF2B5;
-    color: #23242d;
+    color: var(--accent-color);
+    background-color: transparent;
 }

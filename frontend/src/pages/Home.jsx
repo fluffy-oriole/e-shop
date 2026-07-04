@@ -6,7 +6,7 @@ import Pagination from "../components/Pagination";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [countOfProducts, setCountOfProducts] = useState(0);
-  const productsPerPage = 20;
+  const productsPerPage = 50;
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
