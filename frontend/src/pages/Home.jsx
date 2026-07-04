@@ -13,7 +13,6 @@ export default function Home() {
     fetch(`${import.meta.env.VITE_API_URL}/api/products?page=${currentPage}&limit=${productsPerPage}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log('Received:', data);
         setCountOfProducts(data.total);
         setProducts(data.products);
       });
@@ -21,6 +20,13 @@ export default function Home() {
 
   let countOfPages = Math.ceil(countOfProducts / productsPerPage);
   
+  if (products === undefined) {
+    return (
+      <div className={styles.productsList}>
+        <p>Загрузка...</p>
+      </div>
+    );
+  }
 
   return (
     <div>

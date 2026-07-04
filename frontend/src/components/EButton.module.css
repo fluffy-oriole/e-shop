@@ -1,0 +1,19 @@
+.eButton {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 250px;
+}
+
+.eButton:hover {
+  background: #2EF2B5;
+  color: #23262f;
+}

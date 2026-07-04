@@ -31,34 +31,33 @@ export default function Navbar() {
   return (
     <>
     <nav className={styles.navbar}>
-  <Link to="/" className={styles.logo}>
-    E-SHOP
-  </Link>
-  <button className={styles.catalogButton} onClick={openCatalog} >{i18n.t("catalog")}</button>
-  <div className={styles.search}>
-    <input type="text" placeholder={i18n.t("search")} className={styles.searchInput}/>
-  </div>
-  <div className={styles.rightSide}>
-    <Link to="/cart" className={styles.profile}>
-      {i18n.t("cart")}
-    </Link>
-    <select className={styles.languageSelect} onChange={changeLanguage}>
-      <option value="ru">RU</option>
-      <option value="en">EN</option>
-    </select>
-    {isLogged ? (
-      <Link to="/profile" className={styles.profile}>
-        {i18n.t("profile")}
-      </Link>
-    ) : (
-      <Link to="/login" className={styles.profile}>
-        {i18n.t("login")}
-      </Link>
-    )}
-  </div>
-</nav>
+      <Link to="/" className={styles.logo}>E-SHOP</Link>
 
-{catalogOpen && <Catalog />}
+      <div className={styles.search}>
+        <button className={styles.catalogButton} onClick={openCatalog} >{i18n.t("catalog")}</button>
+        <input type="text" placeholder={i18n.t("search")} className={styles.searchInput}/>
+      </div>
+
+      <div className={styles.rightSide}>
+        <Link to="/cart" className={styles.profile}>
+          {i18n.t("cart")}
+        </Link>
+        <select className={styles.languageSelect} onChange={changeLanguage}>
+          <option value="ru">RU</option>
+          <option value="en">EN</option>
+        </select>
+        {isLogged ? (
+          <Link to="/profile" className={styles.profile}>
+            {i18n.t("profile")}
+          </Link>
+        ) : (
+          <Link to="/login" className={styles.profile}>
+            {i18n.t("login")}
+          </Link>
+        )}
+      </div>
+    </nav>
+    {catalogOpen && <Catalog />}
     </>
   );
 }
