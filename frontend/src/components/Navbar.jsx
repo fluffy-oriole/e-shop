@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Catalog from './Catalog.jsx'
 import { useState } from 'react'
-import { authClient } from "../lib/authClient";
+import { authClient } from '../lib/authClient';
+import { Menu } from 'lucide-react';
 
 export default function Navbar() {
   
@@ -34,7 +35,7 @@ export default function Navbar() {
       <Link to="/" className={styles.logo}>E-SHOP</Link>
 
       <div className={styles.search}>
-        <button className={styles.catalogButton} onClick={openCatalog} >{i18n.t("catalog")}</button>
+        <button className={styles.catalogButton} onClick={openCatalog} ><Menu size={30}/></button>
         <input type="text" placeholder={i18n.t("search")} className={styles.searchInput}/>
       </div>
 
