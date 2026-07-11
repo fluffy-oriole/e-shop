@@ -5,6 +5,7 @@ import Catalog from './Catalog.jsx'
 import { useState } from 'react'
 import { authClient } from '../lib/authClient';
 import { Menu } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Navbar() {
   
@@ -14,15 +15,13 @@ export default function Navbar() {
   const { i18n } = useTranslation();
   const [catalogOpen, setCatalogOpen] = useState(false);
 
-  function changeLanguage(event) {
-    const selectedLanguage = event.target.value;
+  const [langOpen, setLangOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState('RU');
 
-    if (selectedLanguage === 'ru') {
-      i18n.changeLanguage('ru')
-    }
-    else if (selectedLanguage === 'en') {
-      i18n.changeLanguage('en')
-    }
+  function handleLangSelect(lang) {
+      setCurrentLang(lang);
+      i18n.changeLanguage(lang.toLowerCase());
+      setLangOpen(false);
   }
 
   function openCatalog() {
@@ -52,10 +51,18 @@ export default function Navbar() {
             {i18n.t("login")}
           </Link>
         )}
-        <select className={styles.languageSelect} onChange={changeLanguage}>
-          <option value="ru">RU</option>
-          <option value="en">EN</option>
-        </select>
+        <div className={styles.langSelector}>
+          <button className={styles.langButton} onClick={() => setLangOpen(!langOpen)}>
+            {currentLang}
+            {langOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          </button>
+          {langOpen && (
+              <div className={styles.langDropdown}>
+                  <div className={styles.langOption} onClick={() => handleLangSelect('RU')}>RU</div>
+                  <div className={styles.langOption} onClick={() => handleLangSelect('EN')}>EN</div>
+              </div>
+          )}
+        </div>
       </div>
     </nav>
     {catalogOpen && <Catalog />}

@@ -107,3 +107,50 @@
     color: var(--accent-color);
     background-color: transparent;
 }
+
+.langSelector {
+    position: relative;
+}
+
+.langButton {
+    background: #30313c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    height: 42px;
+    width: 55px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.langButton:hover {
+    background: #3d3e4a;
+}
+
+.langDropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: #30313c;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.langOption {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.langOption:hover {
+    background: #3d3e4a;
+    color: #2EF2B5;
+}
