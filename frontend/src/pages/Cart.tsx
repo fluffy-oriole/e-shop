@@ -61,6 +61,12 @@ export default function Cart() {
     ).filter(item => item.quantity > 0));
   }
 
+  let total = 0;
+  products.forEach(product => {
+    total += product.price * product.quantity;
+  });
+  total = Number(total.toFixed(2));
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.productsContainer}>
@@ -86,6 +92,7 @@ export default function Cart() {
         )}
       </div>
       <div className={styles.buyingBlock}>
+        <div>{total} ₽</div>
         <button className={styles.payBtn}>Оплатить</button>
       </div>
     </div>
