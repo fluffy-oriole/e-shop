@@ -5,7 +5,7 @@ export default function NotFound() {
     return (
         <div className={styles.notFoundContainer}>
             <h1 className={styles.notFound}>Такой страницы не существует</h1>
-            <Link to="/" className={styles.link}>Вернуться на главную</Link>
+            <Link to="/home" className={styles.link}>Вернуться на главную</Link>
         </div>
     )
 }

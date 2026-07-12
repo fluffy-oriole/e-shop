@@ -5,29 +5,30 @@ import { authClient } from "../lib/authClient";
 
 export default function Registration() {
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    const confirmPassword = e.target.confirmPassword.value;
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+    const confirmPassword = (form.elements.namedItem('confirmPassword') as HTMLInputElement).value;
 
     if (password !== confirmPassword) {
-      setError('Пароли не совпадают');
-      return;
+        setError('Пароли не совпадают');
+        return;
     }
 
     const { error } = await authClient.signUp.email({ name, email, password });
 
     if (error) {
-      setError(error.message);
-      return;
+        setError(error.message ?? 'Неизвестная ошибка');
+        return;
     }
 
     navigate('/');
-  }
+}
 
   return (
     <form className={styles.container} onSubmit={handleSubmit}>

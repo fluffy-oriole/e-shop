@@ -17,6 +17,9 @@ export default function Profile() {
         )
     }
     
+    if (data.isPending) return <div>Загрузка...</div>;
+    if (!data.data) return <div>Вы не вошли в аккаунт</div>;
+
     const userData = data.data.user;
     
     function loggingOutHandler() {
@@ -41,7 +44,7 @@ export default function Profile() {
             <button className={styles.logOutBtn} onClick={loggingOutHandler}>{i18n.t("logout")}</button></>)
             :
             (<span>Войдите в аккаунт для того, чтобы просматривать профиль <Link to="/login">{i18n.t("login")}</Link></span>)
-        } 
+            } 
         </div>
     )
 }

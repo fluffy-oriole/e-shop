@@ -1,14 +1,13 @@
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Catalog from './Catalog.jsx'
-import { useState } from 'react'
+import Catalog from './Catalog.tsx';
+import { useState } from 'react';
 import { authClient } from '../lib/authClient';
 import { Menu } from 'lucide-react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Navbar() {
-  
   const data = authClient.useSession();
   const isLogged = (data.data === null ? false : true);
 
@@ -18,7 +17,7 @@ export default function Navbar() {
   const [langOpen, setLangOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState('RU');
 
-  function handleLangSelect(lang) {
+  function handleLangSelect(lang: string) {
       setCurrentLang(lang);
       i18n.changeLanguage(lang.toLowerCase());
       setLangOpen(false);

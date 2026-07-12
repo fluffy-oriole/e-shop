@@ -3,8 +3,15 @@ import ProductCard from "../components/ProductCard";
 import styles from "./Home.module.css";
 import Pagination from "../components/Pagination";
 
+interface Products {
+  id: number;
+  title: string;
+  images: string[];
+  price: number;
+}
+
 export default function Home() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Products[]>([]);
   const [countOfProducts, setCountOfProducts] = useState(0);
   const productsPerPage = 50;
   const [currentPage, setCurrentPage] = useState(1);

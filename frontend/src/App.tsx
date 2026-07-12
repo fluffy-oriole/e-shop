@@ -1,14 +1,14 @@
-import Home from "./pages/Home.jsx";
-import NotFound from "./pages/NotFound.jsx";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import MainLayout from "./layouts/MainLayout";
-import Profile from "./pages/Profile.jsx";
-import Registration from "./pages/Registration.jsx";
-import AuthLayout from "./layouts/AuthLayout.jsx";
-import Login from "./pages/Login.jsx";
-import Product from "./pages/Product.jsx";
-import Cart from "./pages/Cart.jsx";
-import HeroPage from "./pages/HeroPage.js";
-import HomeFilteredByCategory from "./pages/HomeFilteredByCategory.jsx";
+import Profile from "./pages/Profile";
+import Registration from "./pages/Registration";
+import AuthLayout from "./layouts/AuthLayout";
+import Login from "./pages/Login";
+import Product from "./pages/Product";
+import Cart from "./pages/Cart";
+// import HeroPage from "./pages/HeroPage";
+import HomeFilteredByCategory from "./pages/HomeFilteredByCategory";
 import { Routes, Route, Outlet } from 'react-router-dom';
 
 
@@ -22,7 +22,7 @@ function App() {
         </Route>
         
         <Route element={<MainLayout />}>
-          <Route path="/" element={<HeroPage />} />
+          {/* <Route path="/" element={<HeroPage />} /> */}
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/product/:id" element={<Product />} />

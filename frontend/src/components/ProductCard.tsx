@@ -3,7 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
-function ProductCard({ productTitle, productImage, productId, productPrice }) {
+interface ProductCardProps {
+  productTitle: string;
+  productImage: string;
+  productId: number;
+  productPrice: number;
+}
+
+function ProductCard({ productTitle, productImage, productId, productPrice }: ProductCardProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
@@ -12,7 +19,7 @@ function ProductCard({ productTitle, productImage, productId, productPrice }) {
     navigate(`/product/${productId}`);
   };
 
-  const handleAddToCart = async (e) => {
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/add`, {
       method: 'POST',

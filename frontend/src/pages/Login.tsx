@@ -7,21 +7,21 @@ export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    const form = e.currentTarget;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
 
     const { error } = await authClient.signIn.email({ email, password });
 
     if (error) {
-      setError(error.message);
       return;
     }
 
     navigate('/');
-  }
+}
 
   return (
     <form className={styles.container} onSubmit={handleSubmit}>

@@ -1,10 +1,17 @@
 import styles from "./Cart.module.css";
 import { useState, useEffect } from "react";
-import { authClient } from '../lib/authClient.js';
-import RedButton from '../components/RedButton.jsx';
+import { authClient } from '../lib/authClient';
+import RedButton from '../components/RedButton';
+
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  images: string[];
+}
 
 export default function Cart() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const session = authClient.useSession();
 
   useEffect(() => {
@@ -12,10 +19,10 @@ export default function Cart() {
       method: 'GET',
       credentials: 'include',
     }).then((res) => res.json())
-      .then((data) => setProducts(data)); 
+      .then((data) => setProducts(data));
   }, []);
 
-  const handleRemoveFromCart = async (productId) => {
+  const handleRemoveFromCart = async (productId: number) => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/remove`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

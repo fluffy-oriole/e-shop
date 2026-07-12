@@ -1,7 +1,13 @@
 import styles from "./Pagination.module.css";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function Pagination({ countOfPages, currentPage, setCurrentPage }) {
+interface PaginationProps {
+  countOfPages: number;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+}
+
+export default function Pagination({ countOfPages, currentPage, setCurrentPage }: PaginationProps) {
     
     let pages = [];
     for (let i = 1; i <= countOfPages; i++) {

@@ -3,10 +3,16 @@ import ProductCard from "../components/ProductCard";
 import { useParams } from 'react-router-dom';
 import styles from "./Home.module.css";
 
+interface Products {
+  id: number;
+  title: string;
+  images: string[];
+  price: number;
+}
 
 export default function HomeFilteredByCategory() {
   const { category } = useParams();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Products[]>([]);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/products/category/${category}`)

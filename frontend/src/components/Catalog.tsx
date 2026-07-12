@@ -1,9 +1,10 @@
 import styles from "./Catalog.module.css";
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { CSSProperties } from 'react';
 
 
-export default function Catalog({style}) {
+export default function Catalog({ style }: { style?: CSSProperties }) {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {

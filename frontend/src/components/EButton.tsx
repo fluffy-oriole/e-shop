@@ -1,6 +1,12 @@
 import styles from './EButton.module.css';
 
-export default function EButton({text, onClick, width}) {
+interface EButtonProps {
+    text: string;
+    onClick: () => void;
+    width?: string;
+}
+
+export default function EButton({text, onClick, width}: EButtonProps) {
     return (
         <button style={{width}}type='button' onClick={onClick} className={styles.eButton}>
             {text}
