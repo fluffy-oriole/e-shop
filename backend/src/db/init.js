@@ -12,6 +12,8 @@ db.exec(`
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id TEXT NOT NULL,
         product_id INTEGER NOT NULL,
+        date TEXT,
+        quantity INTEGER DEFAULT 1,
         UNIQUE(user_id, product_id)
     );
 `)

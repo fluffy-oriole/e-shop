@@ -66,7 +66,11 @@ app.post('/api/cart/add', async (c) => {
   const { productId } = await c.req.json();
   const date = new Date().toISOString();
 
-  db.prepare('INSERT INTO cart (user_id, product_id, date) VALUES (?, ?, ?)').run(userId, productId, date);
+
+  const insertRequest = "INSERT INTO cart (user_id, product_id, date, quantity) VALUES (?, ?, ?, 1)" + 
+                         "ON CONFLICT(user_id, product_id)" +
+                         "DO UPDATE SET quantity = quantity + 1, date = excluded.date;";
+  db.prepare(insertRequest).run(userId, productId, date);
 
   return c.json({ success: true }, 201);
 });
@@ -102,11 +106,52 @@ app.get('/api/cart', async (c) => {
   const products = await Promise.all(
     items.map(async (item) => {
       const res = await fetch(`${process.env.API_URL}/products/${item.product_id}`);
-      return await res.json();
+      const product = await res.json();
+      return { ...product, quantity: item.quantity };
     })
   );
 
   return c.json(products);
+});
+
+app.post('/api/cart/increase', async (c) => {
+    const session = await auth.api.getSession({ headers: c.req.raw.headers });
+    if (!session) return c.json({ error: 'Не авторизован' }, 401);
+
+    const { productId, stock } = await c.req.json(); // pass stock from frontend
+
+    const item = db.prepare('SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?')
+        .get(session.user.id, productId);
+
+    if (item.quantity >= stock) {
+        return c.json({ error: 'Недостаточно товара на складе' }, 400);
+    }
+
+    db.prepare('UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?')
+        .run(session.user.id, productId);
+
+    return c.json({ success: true });
+});
+
+app.post('/api/cart/decrease', async (c) => {
+    const session = await auth.api.getSession({ headers: c.req.raw.headers });
+    if (!session) return c.json({ error: 'Не авторизован' }, 401);
+
+    const { productId } = await c.req.json();
+    const item = db.prepare('SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?')
+        .get(session.user.id, productId);
+
+    if (!item) return c.json({ error: 'Товар не найден' }, 404);
+
+    if (item.quantity <= 1) {
+        db.prepare('DELETE FROM cart WHERE user_id = ? AND product_id = ?')
+            .run(session.user.id, productId);
+    } else {
+        db.prepare('UPDATE cart SET quantity = quantity - 1 WHERE user_id = ? AND product_id = ?')
+            .run(session.user.id, productId);
+    }
+
+    return c.json({ success: true });
 });
 
 

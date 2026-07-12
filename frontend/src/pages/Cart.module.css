@@ -74,7 +74,7 @@
   white-space: nowrap;
 }
 
-.frame button {
+.delBtn {
   background: transparent;
   border: 1px solid #ff6b6b;
   color: #ff6b6b;
@@ -88,7 +88,7 @@
   flex-shrink: 0;
 }
 
-.frame button:hover {
+.delBtn:hover {
   background: #ff6b6b;
   color: #23262f;
 }
@@ -100,7 +100,7 @@
   justify-content: flex-end;
 }
 
-.buyingBlock button {
+.payBtn {
   background: transparent;
   border: 1px solid #2EF2B5;
   color: #2EF2B5;
@@ -114,7 +114,7 @@
   letter-spacing: 0.5px;
 }
 
-.buyingBlock button:hover {
+.payBtn:hover {
   background: #2EF2B5;
   color: #23262f;
 }
@@ -184,4 +184,42 @@
     width: 100%;
     max-width: 200px;
   }
-}   
+}
+
+.changeQuantityBlock {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+
+    color: var(--main-text-color);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.changeQuantityBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: var(--third-color);
+    color: var(--main-text-color);
+
+    cursor: pointer;
+    transition: 0.02s ease;
+}
+
+.changeQuantityBtn:hover {
+    background: var(--second-text-color);
+    color: var(--main-color);
+}
+
+.changeQuantityBtn:active {
+    background: var(--main-text-color);
+}
