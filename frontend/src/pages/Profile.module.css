@@ -1,133 +1,194 @@
-.mainContainer {
-  flex: 1;
-  width: 100%;
-  min-height: 0;
+  .mainContainer {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+    background: #1a1c23;
+    font-family: 'Inter', -apple-system, sans-serif;
+    box-sizing: border-box;
+  }
+
+  .infoBox {
+    width: 100%;
+    max-width: 480px;
+    background: #23262f;
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    border: 1px solid #3a3f55;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .personalInfo {
+    display: block;
+    color: #ffffff;
+    line-height: 1.6;
+  }
+
+  .personalInfo:first-child {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .personalInfo:last-child {
+    color: #8e92a3;
+    font-size: 0.95rem;
+    margin-top: -8px;
+  }
+
+  .changePasswordBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid #3a3f55;
+    margin-top: 4px;
+  }
+
+  .privacyBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .privacyBlock span:first-child {
+    color: #8e92a3;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+  }
+
+  .privacyBlock span:last-child {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .changePasswordButton {
+    background: transparent;
+    border: 1px solid #2EF2B5;
+    color: #2EF2B5;
+    padding: 6px 18px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .changePasswordButton:hover {
+    background: #2EF2B5;
+    color: #23262f;
+  }
+
+  .logOutBtn {
+    background: transparent;
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+    padding: 10px 32px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 20px;
+    width: auto;
+    min-width: 160px;
+  }
+
+  .logOutBtn:hover {
+    background: #ff6b6b;
+    color: #23262f;
+  }
+
+  .mainContainer > span {
+    color: #c8cbd8;
+    font-size: 1rem;
+    text-align: center;
+    max-width: 400px;
+    line-height: 1.6;
+  }
+
+  .mainContainer > span a {
+    color: #2EF2B5;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .mainContainer > span a:hover {
+    border-bottom-color: #2EF2B5;
+  }
+
+  .changePasswordBlock {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 14px;
 
-  padding: 40px 20px;
-  background: #1a1c23;
-  font-family: 'Inter', -apple-system, sans-serif;
-  box-sizing: border-box;
-}
+  margin-top: -6px;
+  padding-top: 20px;
 
-.infoBox {
-  width: 100%;
-  max-width: 480px;
-  background: #23262f;
-  border-radius: 16px;
-  padding: 32px 28px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  border: 1px solid #3a3f55;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.personalInfo {
-  display: block;
-  color: #ffffff;
-  line-height: 1.6;
-}
-
-.personalInfo:first-child {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.personalInfo:last-child {
-  color: #8e92a3;
-  font-size: 0.95rem;
-  margin-top: -8px;
-}
-
-.changePasswordBox {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 16px;
   border-top: 1px solid #3a3f55;
-  margin-top: 4px;
 }
 
-.privacyBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+.passwordInput {
+  width: 100%;
+  box-sizing: border-box;
 
-.privacyBlock span:first-child {
-  color: #8e92a3;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  font-weight: 600;
-}
+  padding: 12px 14px;
 
-.privacyBlock span:last-child {
+  background: #1a1c23;
+  border: 1px solid #3a3f55;
+  border-radius: 10px;
+
   color: #ffffff;
   font-size: 0.95rem;
-  font-weight: 500;
+
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.changePasswordButton {
+.passwordInput::placeholder {
+  color: #8e92a3;
+}
+
+.passwordInput:focus {
+  border-color: #2EF2B5;
+  box-shadow: 0 0 0 3px rgba(46, 242, 181, 0.15);
+}
+
+.submitBtn {
+  margin-top: 8px;
+
+  align-self: flex-end;
+
   background: transparent;
   border: 1px solid #2EF2B5;
   color: #2EF2B5;
-  padding: 6px 18px;
+
+  padding: 10px 24px;
+
   border-radius: 10px;
-  font-size: 0.8rem;
-  font-weight: 500;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
   cursor: pointer;
   transition: all 0.2s ease;
-  white-space: nowrap;
 }
 
-.changePasswordButton:hover {
+.submitBtn:hover {
   background: #2EF2B5;
   color: #23262f;
-}
-
-.logOutBtn {
-  background: transparent;
-  border: 1px solid #ff6b6b;
-  color: #ff6b6b;
-  padding: 10px 32px;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 20px;
-  width: auto;
-  min-width: 160px;
-}
-
-.logOutBtn:hover {
-  background: #ff6b6b;
-  color: #23262f;
-}
-
-/* Сообщение для незалогиненного пользователя */
-.mainContainer > span {
-  color: #c8cbd8;
-  font-size: 1rem;
-  text-align: center;
-  max-width: 400px;
-  line-height: 1.6;
-}
-
-.mainContainer > span a {
-  color: #2EF2B5;
-  text-decoration: none;
-  font-weight: 500;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
-}
-
-.mainContainer > span a:hover {
-  border-bottom-color: #2EF2B5;
 }

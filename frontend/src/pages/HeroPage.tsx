@@ -14,33 +14,21 @@ export default function HeroPage() {
         <>
             <div className={styles.hero}>
                 <div className={styles.heroContent}>
-                    <h1 className={styles.title}>
-                        {i18n.t("heroPageTitle")}
-                    </h1>
-
-                    <p className={styles.subtitle}>
-                        {i18n.t("heroPageDescription")}
-                    </p>
-
+                    <h1 className={styles.title}> {i18n.t("heroPageTitle")} </h1>
+                    <p className={styles.subtitle}> {i18n.t("heroPageDescription")}</p>
                     <div className={styles.actions}>
                         <GreenButton
                             text={i18n.t("goShopping")}
                             onClick={() => {navigate("/home")}}
                         />
-
                         <EButton
                             text={i18n.t("register")}
                             onClick={() => navigate("/registration")}
                         />
                     </div>
                 </div>
-
                 <div className={styles.imageBlock}>
-                    <img 
-                        className={styles.heroImage}
-                        src={indexImg}
-                        alt="index image"
-                    />
+                    <img className={styles.heroImage} src={indexImg} alt="index image"/>
                 </div>
             </div>
         </>

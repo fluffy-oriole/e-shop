@@ -4,7 +4,6 @@
     "cart": "Корзина",
     "catalog": "Каталог",
     "login": "Войти",
-    "changePassword": "Изменить",
     "logout": "Выйти",
     "name": "Имя",
     "search": "Поиск",
@@ -18,5 +17,11 @@
     
     "orderSuccess": "Оплата прошла успешно",
     "thanks": "Сасибо за покупку",
-    "goHome": "На главную страницу"
+    "goHome": "На главную страницу",
+
+
+
+    "changePassword": "Изменить",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль"
 }

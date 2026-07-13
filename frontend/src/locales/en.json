@@ -4,7 +4,6 @@
     "cart": "Cart",
     "catalog": "Catalog",
     "login": "Log In",
-    "changePassword": "Change",
     "logout": "Log Out",
     "name": "Name",
     "search": "Search",
@@ -20,5 +19,10 @@
     
     "orderSuccess": "The payment was successful",
     "thanks": "Thanks for the purchase",
-    "goHome": "Go back to the main page"
+    "goHome": "Go back to the main page",
+
+
+    "changePassword": "Change",
+    "currentPassword": "Current password",
+    "newPassword": "New password"
 }
