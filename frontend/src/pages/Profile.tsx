@@ -69,20 +69,27 @@ export default function Profile() {
             (<><div className={styles.infoBox}>
                 <span className={styles.personalInfo}>{ userData.name }</span>
                 <span className={styles.personalInfo}>{ userData.email }</span>
-                <div className={styles.changePasswordBox}>
-                    <div className={styles.privacyBlock}>   
-                        <span>Безопасность</span>
-                        <span>Изменить пароль</span>
+                {
+                    !isChangePasswordOpened &&
+                    <div className={styles.changePasswordBox}>
+                        <div className={styles.privacyBlock}>   
+                            <span>Безопасность</span>
+                            <span>Изменить пароль</span>
+                        </div>
+                        <button className={styles.changePasswordButton} onClick={openChangePassword}>{i18n.t("changePassword")}</button>
                     </div>
-                    <button className={styles.changePasswordButton} onClick={openChangePassword}>{i18n.t("changePassword")}</button>
-                </div>
+                }
                 {
                     isChangePasswordOpened &&
                     <form className={styles.changePasswordBlock} onSubmit={changePasswordHandler}>
+                        <h3 className={styles.changePasswordTitle}>Изменить пароль</h3>
                         <input type="password" placeholder={i18n.t("currentPassword")} className={styles.passwordInput} onChange={(e) => setCurrentPassword(e.target.value)}/>
                         <input type="password" placeholder={i18n.t("newPassword")} className={styles.passwordInput} onChange={(e) => setNewPassword(e.target.value)}/>
                         <input type="password" placeholder={i18n.t("newPassword")} className={styles.passwordInput} onChange={(e) => setRepeatPassword(e.target.value)}/>
-                        <button type='submit' className={styles.submitBtn}>{i18n.t("changePassword")}</button>
+                        <div className={styles.btnLine}>
+                            <button type='button' className={`${styles.submitBtn} ${styles.redBtn}`} onClick={openChangePassword}>{i18n.t("cancel")}</button>
+                            <button type='submit' className={styles.submitBtn}>{i18n.t("changePassword")}</button>
+                        </div>
                     </form>
                 }
                 

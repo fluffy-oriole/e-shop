@@ -23,5 +23,6 @@
 
     "changePassword": "Изменить",
     "currentPassword": "Текущий пароль",
-    "newPassword": "Новый пароль"
+    "newPassword": "Новый пароль",
+    "cancel": "Отменить"
 }
