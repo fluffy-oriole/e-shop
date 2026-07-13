@@ -1,19 +1,19 @@
 .btn {
     text-decoration: none;
-    background: #30313c;
     padding: 10px 18px;
     border-radius: 10px;
     transition: .2s;
-    background: #2EF2B5;
-    color: #23242d;
+    background: var(--accent-color);
+    color: var(--main-color);
     height: 50px;
     border: 1px solid var(--accent-color);
     font-size: 1.8ch;
-    font-weight: 520;
+    font-weight: 540;
 }
 
 .btn:hover {
     color: var(--accent-color);
     background: transparent;
     border: 1px solid var(--accent-color);
+    cursor: pointer;
 }

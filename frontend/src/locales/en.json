@@ -11,11 +11,13 @@
     "password": "Password",
     "email": "Email",
 
-    "heroPageTitle": "Games, eSIM, subscriptions, and gift cards all in one place",
+
+    "heroPageTitle": "Games, eSIM, and subscriptions all in one place",
+    "heroPageDescription": "Everything you need in one place. Explore the product collection, find what you need, and buy in a few clicks",
     "register": "Register",
     "hoShopping": "Go shopping",
 
-
+    
     "orderSuccess": "The payment was successful",
     "thanks": "Thanks for the purchase",
     "goHome": "Go back to the main page"
