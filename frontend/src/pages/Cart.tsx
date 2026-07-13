@@ -2,6 +2,7 @@ import styles from "./Cart.module.css";
 import { useState, useEffect } from "react";
 import { authClient } from '../lib/authClient';
 import { Plus, Minus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface Product {
   id: number;
@@ -76,7 +77,7 @@ export default function Cart() {
           products.map((p) => (
             <div key={p.id} className={styles.frame}>
               <img src={p.images[0]} className={styles.productImg}></img>
-              <p>{p.title}</p>
+              <Link className={styles.title} to={`/product/${p.id}`}>{p.title}</Link>
               <p>{p.price}₽</p>
               <div className={styles.changeQuantityBlock}>
                 <button className={styles.changeQuantityBtn} onClick={() => handleDecrease(p.id)} ><Minus color="white" size={16} /></button>

@@ -223,3 +223,12 @@
 .changeQuantityBtn:active {
     background: var(--main-text-color);
 }
+
+.title {
+  color: var(--main-text-color);
+  text-decoration: none;  
+}
+
+.title:hover {
+  cursor: pointer;
+}
