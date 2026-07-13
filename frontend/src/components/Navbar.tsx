@@ -2,10 +2,11 @@ import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Catalog from './Catalog.tsx';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { authClient } from '../lib/authClient';
 import { Menu } from 'lucide-react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useSearchParams } from "react-router-dom";
 
 export default function Navbar() {
   const data = authClient.useSession();
@@ -26,6 +27,20 @@ export default function Navbar() {
   function openCatalog() {
     setCatalogOpen(!catalogOpen);
   }
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("q") ?? "");
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("ent");
+    e.preventDefault();
+
+    const params = new URLSearchParams(searchParams);
+    params.set("q", search);
+    params.set("page", "1");
+
+    setSearchParams(params);
+  }
   
   return (
     <>
@@ -34,8 +49,11 @@ export default function Navbar() {
 
       <div className={styles.search}>
         <button className={styles.catalogButton} onClick={openCatalog} ><Menu size={30}/></button>
-        <input type="text" placeholder={i18n.t("search")} className={styles.searchInput}/>
+        <form onSubmit={handleSearch}>
+        <input type="text" value={search} placeholder={i18n.t("search")} className={styles.searchInput} onChange={(e) => setSearch(e.target.value)}/>
+      </form>
       </div>
+      
 
       <div className={styles.rightSide}>
         <Link to="/cart" className={styles.profile}>

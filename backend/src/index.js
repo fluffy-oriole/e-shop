@@ -23,14 +23,20 @@ app.get('/api/products', async (c) => {
     const page = Number(c.req.query('page')) || 1;
     const limit = Number(c.req.query('limit')) || 20;
     const skip = (page - 1) * limit;
-    const res = await fetch(`${process.env.API_URL}products?limit=${limit}&skip=${skip}`);
+    const q = c.req.query('q') ?? "";
+
+    const apiUrl = q
+      ? `${process.env.API_URL}products/search?q=${encodeURIComponent(q)}&limit=${limit}&skip=${skip}`
+      : `${process.env.API_URL}products?limit=${limit}&skip=${skip}`;
+
+    const res = await fetch(apiUrl);
     const data = await res.json();
+
     return c.json(data);
-  }
-  catch (error) {
+  } catch {
     return c.json({ error: 'Failed to fetch products' }, 500);
   }
-})
+});
 
 app.get('/api/products/categories', async (c) => {
   const res = await fetch(`${process.env.API_URL}/products/category-list`);
@@ -186,6 +192,9 @@ app.post('/api/cart/purchase', async (c) => {
 
     return c.json({ success: true });
 });
+
+
+
 
 
 serve({
