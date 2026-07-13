@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { authClient } from '../lib/authClient';
 import { Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -16,6 +17,7 @@ interface Product {
 export default function Cart() {
   const [products, setProducts] = useState<Product[]>([]);
   const session = authClient.useSession();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
@@ -70,6 +72,7 @@ export default function Cart() {
         credentials: 'include',
         body: JSON.stringify({ products }),
       });
+      navigate('/cart/order-success');
     }
   }
 
@@ -105,7 +108,7 @@ export default function Cart() {
       </div>
       <div className={styles.buyingBlock}>
         <div>{total} ₽</div>
-        <Link to="/cart/order-success"><button className={styles.payBtn} onClick={handlePurcahse}>Оплатить</button></Link>
+        <button className={styles.payBtn} onClick={handlePurcahse}>Оплатить</button>
       </div>
     </div>
   )
