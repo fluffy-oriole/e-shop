@@ -6,9 +6,14 @@
     transition: .2s;
     background: #2EF2B5;
     color: #23242d;
+    height: 50px;
+    border: 1px solid var(--accent-color);
+    font-size: 1.8ch;
+    font-weight: 520;
 }
 
 .btn:hover {
-    color: white;
+    color: var(--accent-color);
     background: transparent;
+    border: 1px solid var(--accent-color);
 }
