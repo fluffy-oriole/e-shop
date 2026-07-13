@@ -9,5 +9,14 @@
     "name": "Name",
     "search": "Search",
     "password": "Password",
-    "email": "Email"
+    "email": "Email",
+
+    "heroPageTitle": "Games, eSIM, subscriptions, and gift cards all in one place",
+    "register": "Register",
+    "hoShopping": "Go shopping",
+
+
+    "orderSuccess": "The payment was successful",
+    "thanks": "Thanks for the purchase",
+    "goHome": "Go back to the main page"
 }

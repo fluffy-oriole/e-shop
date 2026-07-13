@@ -118,7 +118,7 @@ app.post('/api/cart/increase', async (c) => {
     const session = await auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) return c.json({ error: 'Не авторизован' }, 401);
 
-    const { productId, stock } = await c.req.json(); // pass stock from frontend
+    const { productId, stock } = await c.req.json();
 
     const item = db.prepare('SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?')
         .get(session.user.id, productId);
@@ -150,6 +150,39 @@ app.post('/api/cart/decrease', async (c) => {
         db.prepare('UPDATE cart SET quantity = quantity - 1 WHERE user_id = ? AND product_id = ?')
             .run(session.user.id, productId);
     }
+
+    return c.json({ success: true });
+});
+
+
+app.post('/api/cart/purchase', async (c) => {
+    const session = await auth.api.getSession({
+        headers: c.req.raw.headers,
+    });
+
+    if (!session) {
+        return c.json({ error: 'Не авторизован' }, 401);
+    }
+
+    const { products } = await c.req.json();
+
+    const date = new Date().toISOString();
+
+    const transaction = db.transaction((products) => {
+        for (const p of products) {
+            db.prepare(`
+                INSERT INTO orders (user_id, product_id, quantity, date)
+                VALUES (?, ?, ?, ?)
+            `).run(session.user.id, p.id, p.quantity, date);
+
+            db.prepare(`
+                DELETE FROM cart
+                WHERE user_id = ? AND product_id = ?
+            `).run(session.user.id, p.id);
+        }
+    });
+
+    transaction(products);
 
     return c.json({ success: true });
 });

@@ -62,6 +62,17 @@ export default function Cart() {
     ).filter(item => item.quantity > 0));
   }
 
+  const handlePurcahse = async () => {
+    if (products.length > 0) {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/purchase`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ products }),
+      });
+    }
+  }
+
   let total = 0;
   products.forEach(product => {
     total += product.price * product.quantity;
@@ -94,7 +105,7 @@ export default function Cart() {
       </div>
       <div className={styles.buyingBlock}>
         <div>{total} ₽</div>
-        <button className={styles.payBtn}>Оплатить</button>
+        <Link to="/cart/order-success"><button className={styles.payBtn} onClick={handlePurcahse}>Оплатить</button></Link>
       </div>
     </div>
   )
