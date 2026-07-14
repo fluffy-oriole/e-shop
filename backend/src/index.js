@@ -194,8 +194,23 @@ app.post('/api/cart/purchase', async (c) => {
 });
 
 
+app.post('/api/admin', async (c) => {
+    const session = await auth.api.getSession({
+        headers: c.req.raw.headers,
+    });
 
+    if (!session) {
+        return c.json({ error: 'Not authorized' }, 401);
+    }
 
+    const isAdmin = session.data?.user.role === "admin";
+
+    if (!isAdmin) {
+      return c.json({ error: 'Not admin' }, 401);
+    }
+
+    
+});
 
 serve({
   fetch: app.fetch,
