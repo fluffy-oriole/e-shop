@@ -4,6 +4,8 @@ import { authClient } from '../lib/authClient';
 import { Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { useTransition } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Product {
   id: number;
@@ -18,6 +20,7 @@ export default function Cart() {
   const [products, setProducts] = useState<Product[]>([]);
   const session = authClient.useSession();
   const navigate = useNavigate();
+  const i18n = useTranslation();
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
@@ -86,7 +89,7 @@ export default function Cart() {
     <div className={styles.mainContainer}>
       <div className={styles.productsContainer}>
         {products.length === 0 ? (
-          <span>В корзине пока пусто</span>
+          <span>{i18n.t("cartIsEmpty")}</span>
         ) : (
           products.map((p) => (
             <div key={p.id} className={styles.frame}>
@@ -108,7 +111,7 @@ export default function Cart() {
       </div>
       <div className={styles.buyingBlock}>
         <div>{total} ₽</div>
-        <button className={styles.payBtn} onClick={handlePurcahse}>Оплатить</button>
+        <button className={styles.payBtn} onClick={handlePurcahse}>{i18n.t("pay")}</button>
       </div>
     </div>
   )

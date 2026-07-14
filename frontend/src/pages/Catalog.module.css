@@ -3,4 +3,16 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 24px;
     margin: 80px;
+    margin-top: 40px;
+}
+
+.categoryTitle {
+    font-size: 5ch;
+    font-weight: 600;
+    margin: 24px 0;
+    padding-bottom: 12px;
+    color: var(--main-text-color);
+    margin-left: 80px;
+    margin-top: 80px;
+    text-transform: capitalize;
 }

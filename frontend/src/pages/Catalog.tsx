@@ -4,6 +4,7 @@
   import Pagination from "../components/Pagination";
   import { useSearchParams } from "react-router-dom";
   import { useParams } from "react-router-dom";
+  import { useTranslation } from "react-i18next";
 
   interface Products {
     id: number;
@@ -13,11 +14,13 @@
   }
 
   export default function Catalog() {
+    const i18n = useTranslation();
     const [products, setProducts] = useState<Products[]>([]);
     const [countOfProducts, setCountOfProducts] = useState(0);
     const productsPerPage = 50;
     const [searchParams, setSearchParams] = useSearchParams();
     const { category } = useParams();
+
 
     const currentPage = Number(searchParams.get("page") ?? "1");
     const searchQuery = searchParams.get("q") ?? "";
@@ -53,13 +56,14 @@
     if (!products) {
       return (
         <div className={styles.productsList}>
-          <p>Загрузка...</p>
+          <p>{i18n.t("loading")}</p>
         </div>
       );
     }
 
     return (
       <div>
+        <div className={styles.categoryTitle}>{category}</div>
         <div className={styles.productsList}>
           {products.map((p) => (
           <ProductCard

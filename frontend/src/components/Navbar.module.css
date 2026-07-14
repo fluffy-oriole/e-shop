@@ -60,7 +60,7 @@
 }
 
 .searchInput:focus {
-    outline: 1px solid #2EF2B5;
+    outline: 1px solid var(--accent-color);
 }
 
 .rightSide {
@@ -86,7 +86,7 @@
 
 .languageSelect {
     background: #30313c;
-    color: white;
+    color: var(--main-text-color);
     border: none;
     border-radius: 10px;
     height: 42px;
@@ -101,6 +101,9 @@
     background: var(--accent-color);
     color: var(--main-color);
     border: 1px solid var(--accent-color);
+    width: 60px;
+    display: flex;
+    justify-content: center;
 }
 
 .profile:hover {
@@ -114,7 +117,7 @@
 
 .langButton {
     background: #30313c;
-    color: white;
+    color: var(--main-text-color);
     border: none;
     border-radius: 10px;
     height: 42px;
@@ -145,12 +148,12 @@
 .langOption {
     padding: 10px 20px;
     font-size: 14px;
-    color: white;
+    color: var(--main-text-color);
     cursor: pointer;
     transition: .2s;
 }
 
 .langOption:hover {
     background: #3d3e4a;
-    color: #2EF2B5;
+    color: var(--accent-color);
 }

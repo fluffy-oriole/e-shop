@@ -1,13 +1,14 @@
 {
     "main": "Main",
     "profile": "Profile",
-    "admin": "Admin panel",
+    "admin": "Admin",
     "cart": "Cart",
     "catalog": "Catalog",
     "login": "Log In",
     "logout": "Log Out",
     "name": "Name",
     "search": "Search",
+
     "password": "Password",
     "email": "Email",
 
@@ -19,7 +20,7 @@
     "heroPageTitle": "Games, eSIM, and subscriptions all in one place",
     "heroPageDescription": "Everything you need in one place. Explore the product collection, find what you need, and buy in a few clicks",
     "register": "Register",
-    "hoShopping": "Go shopping",
+    "goShopping": "Go shopping",
 
     
     "orderSuccess": "The payment was successful",
@@ -27,8 +28,31 @@
     "goHome": "Go back to the main page",
 
 
-    "changePassword": "Change",
+    "safety": "Safety",
+    "changePassword": "Change password",
+    "change": "Change",
     "currentPassword": "Current password",
     "newPassword": "New password",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+
+
+    "cartIsEmpty": "The cart is empty yet",
+    "pay": "Pay",
+
+    "loading": "Loading...",
+    "rating": "Rating",
+    "specifications": "Specifications",
+    "weight": "Weight",
+    "dimensions": "Dimensions",
+    "return": "Return",
+    "sku": "SKU",
+    "warranty": "Warranty",
+    "inStock": "In stock",
+    "addToCart": "Add to cart",
+    "removeFromCart": "Remove from cart",
+    "price": "Price",
+    "reviews": "Reviews",
+    "category": "Category",
+    "brand": "Brand",
+    "grams": "g"
 }
