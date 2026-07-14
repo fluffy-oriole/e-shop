@@ -8,7 +8,6 @@ import Login from "./pages/Login";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import HeroPage from "./pages/HeroPage";
-import HomeFilteredByCategory from "./pages/HomeFilteredByCategory";
 import OrderSuccess from "./pages/OrderSucces";
 import AdminLayout from "./layouts/AdminLayout";
 import Admin from "./pages/Admin";

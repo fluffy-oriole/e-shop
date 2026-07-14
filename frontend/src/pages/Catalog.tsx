@@ -23,19 +23,29 @@
     const searchQuery = searchParams.get("q") ?? "";
 
     useEffect(() => {
-      const url = `${import.meta.env.VITE_API_URL}/api/products?
-                    page=${currentPage}&limit=${productsPerPage}
-                    &q=${encodeURIComponent(searchQuery)}
-                    ${category ? `&category=${encodeURIComponent(category)}` : ""}`;
+      const params = new URLSearchParams();
+
+      params.set("page", currentPage.toString());
+      params.set("limit", productsPerPage.toString());
+
+      if (searchQuery) {
+        params.set("q", searchQuery);
+      }
+
+      if (category) {
+        params.set("category", category);
+      }
+
+      const url = `${import.meta.env.VITE_API_URL}/api/products?${params.toString()}`;
 
       fetch(url)
-          .then((res) => res.json())
-          .then((data) => {
-              setCountOfProducts(data.total);
-              setProducts(data.products);
-          });
+        .then((res) => res.json())
+        .then((data) => {
+          setCountOfProducts(data.total);
+          setProducts(data.products);
+        });
 
-      }, [currentPage, searchQuery, category]);
+    }, [currentPage, searchQuery, category]);
 
     let countOfPages = Math.ceil(countOfProducts / productsPerPage);
     const isPagesMoreThanOne = (countOfPages > 1);

@@ -6,9 +6,10 @@ import React, { useState } from 'react';
 import { authClient } from '../lib/authClient';
 import { Menu } from 'lucide-react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const data = authClient.useSession();
   const isLogged = (data.data === null ? false : true);
   const isAdmin = data.data?.user.role === "admin";
@@ -39,8 +40,8 @@ export default function Navbar() {
     const params = new URLSearchParams(searchParams);
     params.set("q", search);
     params.set("page", "1");
-
-    setSearchParams(params);
+  
+    navigate(`/catalog?${params.toString()}`);
   }
   
   return (
