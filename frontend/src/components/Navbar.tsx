@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 export default function Navbar() {
   const data = authClient.useSession();
   const isLogged = (data.data === null ? false : true);
+  const isAdmin = data.data?.user.role === "admin";
 
   const { i18n } = useTranslation();
   const [catalogOpen, setCatalogOpen] = useState(false);
@@ -56,6 +57,11 @@ export default function Navbar() {
       
 
       <div className={styles.rightSide}>
+        {isAdmin && 
+        <Link to="/admin" className={styles.profile}>
+          {i18n.t("admin")}
+        </Link>
+        }
         <Link to="/cart" className={styles.profile}>
           {i18n.t("cart")}
         </Link>

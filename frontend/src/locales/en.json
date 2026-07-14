@@ -1,6 +1,7 @@
 {
     "main": "Main",
     "profile": "Profile",
+    "admin": "Admin panel",
     "cart": "Cart",
     "catalog": "Catalog",
     "login": "Log In",

@@ -2,7 +2,7 @@ import styles from './HeroPage.module.css';
 import { useTranslation } from 'react-i18next';
 import GreenButton from '../components/GreenButton';
 import EButton from '../components/EButton';
-import indexImg from '../assets/indeximg.jpg';
+import indexImg from '../assets/indeximg.png';
 import { useNavigate } from "react-router-dom";
 
 
@@ -27,9 +27,11 @@ export default function HeroPage() {
                         />
                     </div>
                 </div>
+                {/*
                 <div className={styles.imageBlock}>
                     <img className={styles.heroImage} src={indexImg} alt="index image"/>
                 </div>
+                */}
             </div>
         </>
     )

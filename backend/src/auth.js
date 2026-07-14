@@ -1,4 +1,5 @@
 import { betterAuth } from 'better-auth';
+import { admin } from 'better-auth/plugins';
 import Database from 'better-sqlite3';
 import 'dotenv/config';
 
@@ -9,4 +10,5 @@ export const auth = betterAuth({
     enabled: true,
   },
   trustedOrigins: [process.env.TRUSTED_ORIGINS],
+  plugins: [admin()]
 });

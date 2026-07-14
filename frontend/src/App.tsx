@@ -10,7 +10,9 @@ import Cart from "./pages/Cart";
 import HeroPage from "./pages/HeroPage";
 import HomeFilteredByCategory from "./pages/HomeFilteredByCategory";
 import OrderSuccess from "./pages/OrderSucces";
-import { Routes, Route, Outlet } from 'react-router-dom';
+import AdminLayout from "./layouts/AdminLayout";
+import Admin from "./pages/Admin";
+import { Routes, Route } from 'react-router-dom';
 
 
 
@@ -31,6 +33,10 @@ function App() {
           <Route path="/products/category/:category" element={<HomeFilteredByCategory />} />
           <Route path="/cart/order-success" element={<OrderSuccess />} />
           <Route path="*" element={<NotFound />} />
+        </Route>
+
+        <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<Admin />} />
         </Route>
       </Routes>
   );

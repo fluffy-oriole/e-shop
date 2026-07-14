@@ -1,6 +1,6 @@
 .hero {
     width: 100%;
-    min-height: calc(100vh - 72px);
+    
 
     display: flex;
     align-items: center;
@@ -10,7 +10,19 @@
 
     padding: 60px 80px;
 
-    background: #1a1c23;
+    /* background: #1a1c23; */
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 0.7) 25%,
+            rgba(0, 0, 0, 0.35) 50%,
+            rgba(0, 0, 0, 0) 75%
+        ),
+        url("../assets/indeximg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     box-sizing: border-box;
 
     font-family: 'Inter', -apple-system, sans-serif;
@@ -44,7 +56,7 @@
 
     max-width: 520px;
 
-    color: var(--second-text-color);
+    color: var(--main-text-color);
 
     font-size: 20px;
     line-height: 1.6;
