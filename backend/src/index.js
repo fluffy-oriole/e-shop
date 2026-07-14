@@ -24,10 +24,21 @@ app.get('/api/products', async (c) => {
     const limit = Number(c.req.query('limit')) || 20;
     const skip = (page - 1) * limit;
     const q = c.req.query('q') ?? "";
+    const category = c.req.query('category') ?? "";
 
-    const apiUrl = q
-      ? `${process.env.API_URL}products/search?q=${encodeURIComponent(q)}&limit=${limit}&skip=${skip}`
-      : `${process.env.API_URL}products?limit=${limit}&skip=${skip}`;
+    let apiUrl;
+      if (category) {
+        apiUrl =
+          `${process.env.API_URL}products/category/${category}?limit=${limit}&skip=${skip}`;
+      } 
+      else if (q) {
+        apiUrl =
+          `${process.env.API_URL}products/search?q=${encodeURIComponent(q)}&limit=${limit}&skip=${skip}`;
+      } 
+      else {
+        apiUrl =
+          `${process.env.API_URL}products?limit=${limit}&skip=${skip}`;
+      }
 
     const res = await fetch(apiUrl);
     const data = await res.json();

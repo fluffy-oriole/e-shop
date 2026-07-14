@@ -19,7 +19,7 @@ export default function HeroPage() {
                     <div className={styles.actions}>
                         <GreenButton
                             text={i18n.t("goShopping")}
-                            onClick={() => {navigate("/home")}}
+                            onClick={() => {navigate("/catalog")}}
                         />
                         <EButton
                             text={i18n.t("register")}

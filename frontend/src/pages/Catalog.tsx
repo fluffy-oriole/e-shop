@@ -1,8 +1,9 @@
   import { useEffect, useState } from "react";
   import ProductCard from "../components/ProductCard";
-  import styles from "./Home.module.css";
+  import styles from "./Catalog.module.css";
   import Pagination from "../components/Pagination";
   import { useSearchParams } from "react-router-dom";
+  import { useParams } from "react-router-dom";
 
   interface Products {
     id: number;
@@ -11,18 +12,21 @@
     price: number;
   }
 
-  export default function Home() {
+  export default function Catalog() {
     const [products, setProducts] = useState<Products[]>([]);
     const [countOfProducts, setCountOfProducts] = useState(0);
     const productsPerPage = 50;
     const [searchParams, setSearchParams] = useSearchParams();
+    const { category } = useParams();
 
     const currentPage = Number(searchParams.get("page") ?? "1");
     const searchQuery = searchParams.get("q") ?? "";
 
     useEffect(() => {
-      const url =
-      `${import.meta.env.VITE_API_URL}/api/products?page=${currentPage}&limit=${productsPerPage}&q=${encodeURIComponent(searchQuery)}`;
+      const url = `${import.meta.env.VITE_API_URL}/api/products?
+                    page=${currentPage}&limit=${productsPerPage}
+                    &q=${encodeURIComponent(searchQuery)}
+                    ${category ? `&category=${encodeURIComponent(category)}` : ""}`;
 
       fetch(url)
           .then((res) => res.json())
@@ -31,9 +35,10 @@
               setProducts(data.products);
           });
 
-      }, [currentPage, searchQuery]);
+      }, [currentPage, searchQuery, category]);
 
     let countOfPages = Math.ceil(countOfProducts / productsPerPage);
+    const isPagesMoreThanOne = (countOfPages > 1);
     
     if (!products) {
       return (
@@ -56,6 +61,7 @@
           />
         ))}
         </div>
+        {isPagesMoreThanOne && 
           <Pagination
             currentPage={currentPage}
             countOfPages={countOfPages}
@@ -67,6 +73,7 @@
               setSearchParams(params);
             }}
           />
+        }
       </div>
         
     );

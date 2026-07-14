@@ -1,4 +1,4 @@
-import Home from "./pages/Home";
+import Catalog from "./pages/Catalog";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./layouts/MainLayout";
 import Profile from "./pages/Profile";
@@ -26,11 +26,11 @@ function App() {
         
         <Route element={<MainLayout />}>
           <Route path="/" element={<HeroPage />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/catalog" element={<Catalog />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart/" element={<Cart />} />
-          <Route path="/products/category/:category" element={<HomeFilteredByCategory />} />
+          <Route path="/catalog/:category" element={<Catalog />} />
           <Route path="/cart/order-success" element={<OrderSuccess />} />
           <Route path="*" element={<NotFound />} />
         </Route>

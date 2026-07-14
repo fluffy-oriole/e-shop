@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CSSProperties } from 'react';
 
 
+
 export default function Catalog({ style }: { style?: CSSProperties }) {
     const [categories, setCategories] = useState([]);
 
@@ -18,7 +19,7 @@ export default function Catalog({ style }: { style?: CSSProperties }) {
             {categories.map((category) => (
                 
                 <div key={category} className={styles.categoryContainer}>
-                    <Link className={styles.categoryLink} to={`/products/category/${category}`} >{category}</Link>
+                    <Link className={styles.categoryLink} to={`/catalog/${category}`} >{category}</Link>
                 </div>
             ))}
         </div>
