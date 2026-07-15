@@ -10,7 +10,7 @@ import "dotenv/config";
 const app = new Hono()
 
 app.use('/api/*', cors({
-  origin: process.env.TRUSTED_ORIGINS,
+  origin: 'http://localhost:5173',
   allowHeaders: ['Content-Type', 'Authorization'],
   allowMethods: ['GET', 'POST', 'OPTIONS'],
   credentials: true,

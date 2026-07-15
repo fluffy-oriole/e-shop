@@ -33,13 +33,21 @@ export default function Catalog() {
     fetch(`${import.meta.env.VITE_API_URL}/api/products?${params.toString()}`)
       .then((res) => res.json())
       .then((data) => {
-        setCountOfProducts(data.total);
-        setProducts(data.products);
+        // Безопасное извлечение
+        const items = Array.isArray(data.products) ? data.products : [];
+        const total = typeof data.total === 'number' ? data.total : 0;
+        setProducts(items);
+        setCountOfProducts(total);
+      })
+      .catch(() => {
+        setProducts([]);
+        setCountOfProducts(0);
       });
   }, [currentPage, searchQuery, category]);
 
   const countOfPages = Math.ceil(countOfProducts / productsPerPage);
   const isPagesMoreThanOne = countOfPages > 1;
+
 
   if (!products.length && countOfProducts === 0) {
     return (

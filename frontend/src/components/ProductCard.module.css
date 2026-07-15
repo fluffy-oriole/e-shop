@@ -13,10 +13,7 @@
 
 .card:hover {
   box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.2);
-  border-color: var(--color-signal-violet);
-  /* градиентная обводка при наведении */
-  border-image: linear-gradient(135deg, var(--color-signal-violet), var(--color-live-wire)) 1;
-  /* обрезаем border-radius вместе с border-image */
+  /* border-color: var(--color-signal-violet); */
   border-radius: var(--radius-cards);
 }
 
