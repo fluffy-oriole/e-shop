@@ -59,7 +59,7 @@ export default function Navbar() {
 
       <div className={styles.rightSide}>
         {isAdmin && 
-        <Link to="/admin" className={styles.profile}>
+        <Link to="/admin/users" className={styles.profile}>
           {i18n.t("admin")}
         </Link>
         }

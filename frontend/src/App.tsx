@@ -10,7 +10,9 @@ import Cart from "./pages/Cart";
 import HeroPage from "./pages/HeroPage";
 import OrderSuccess from "./pages/OrderSucces";
 import AdminLayout from "./layouts/AdminLayout";
-import Admin from "./pages/Admin";
+import Users from "./pages/admin/Users";
+import Orders from "./pages/admin/Orders";
+import Carts from "./pages/admin/Users";
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -35,7 +37,9 @@ function App() {
         </Route>
 
         <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/carts" element={<Carts />} />
         </Route>
       </Routes>
   );

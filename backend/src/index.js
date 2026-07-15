@@ -178,7 +178,7 @@ app.post('/api/cart/purchase', async (c) => {
     });
 
     if (!session) {
-        return c.json({ error: 'Не авторизован' }, 401);
+        return c.json({ error: 'Not authtorized' }, 401);
     }
 
     const { products } = await c.req.json();
@@ -186,18 +186,21 @@ app.post('/api/cart/purchase', async (c) => {
     const date = new Date().toISOString();
 
     const transaction = db.transaction((products) => {
-        for (const p of products) {
-            db.prepare(`
-                INSERT INTO orders (user_id, product_id, quantity, date)
-                VALUES (?, ?, ?, ?)
-            `).run(session.user.id, p.id, p.quantity, date);
+    const order = db.prepare(`
+        INSERT INTO orders (user_id, date)
+        VALUES (?, ?)
+    `).run(session.user.id, date);
 
-            db.prepare(`
-                DELETE FROM cart
-                WHERE user_id = ? AND product_id = ?
-            `).run(session.user.id, p.id);
-        }
-    });
+    for (const p of products) {
+        db.prepare(`
+            INSERT INTO order_items (order_id, product_id, quantity, price)
+            VALUES (?, ?, ?, ?)
+        `).run(order.lastInsertRowid, p.id, p.quantity, p.price);
+
+        db.prepare(`DELETE FROM cart WHERE user_id = ? AND product_id = ?`)
+            .run(session.user.id, p.id);
+    }
+});
 
     transaction(products);
 
@@ -205,7 +208,7 @@ app.post('/api/cart/purchase', async (c) => {
 });
 
 
-app.post('/api/admin', async (c) => {
+app.get('/api/admin/users', async (c) => {
     const session = await auth.api.getSession({
         headers: c.req.raw.headers,
     });
@@ -214,14 +217,119 @@ app.post('/api/admin', async (c) => {
         return c.json({ error: 'Not authorized' }, 401);
     }
 
-    const isAdmin = session.data?.user.role === "admin";
+    const isAdmin = session.user.role === "admin";
 
     if (!isAdmin) {
       return c.json({ error: 'Not admin' }, 401);
     }
 
-    
+    const users = db.prepare('SELECT * FROM user').all();
+
+
+    return c.json({users});
 });
+
+
+app.get('/api/admin/carts', async (c) => {
+    const session = await auth.api.getSession({
+        headers: c.req.raw.headers,
+    });
+
+    if (!session) {
+        return c.json({ error: 'Not authorized' }, 401);
+    }
+
+    const isAdmin = session.user.role === "admin";
+
+    if (!isAdmin) {
+      return c.json({ error: 'Not admin' }, 401);
+    }
+
+    const users = db.prepare('SELECT * FROM cart').all();
+
+
+    return c.json({users});
+});
+
+app.get('/api/admin/orders', async (c) => {
+    const session = await auth.api.getSession({
+        headers: c.req.raw.headers,
+    });
+
+    if (!session) {
+        return c.json({ error: 'Not authorized' }, 401);
+    }
+
+    const isAdmin = session.user.role === "admin";
+
+    if (!isAdmin) {
+        return c.json({ error: 'Not admin' }, 401);
+    }
+
+    const orders = db.prepare(`
+        SELECT
+            orders.id AS order_id,
+            orders.date,
+            orders.status,
+
+            user.id AS user_id,
+            user.name AS user_name,
+            user.email AS user_email,
+
+            order_items.product_id,
+            order_items.quantity,
+            order_items.price AS product_price
+
+        FROM orders
+
+        JOIN user
+            ON orders.user_id = user.id
+
+        JOIN order_items
+            ON orders.id = order_items.order_id
+
+        ORDER BY orders.date DESC;
+    `).all();
+
+
+    const groupedOrders = Object.values(
+    orders.reduce((acc, order) => {
+        if (!acc[order.order_id]) {
+            acc[order.order_id] = {
+                id: order.order_id,
+                date: order.date,
+                status: order.status,
+
+                user: {
+                    id: order.user_id,
+                    name: order.user_name,
+                    email: order.user_email,
+                },
+
+                totalPrice: 0,
+                items: []
+            };
+        }
+
+        acc[order.order_id].items.push({
+            productId: order.product_id,
+            quantity: order.quantity,
+            price: order.product_price,
+        });
+
+        acc[order.order_id].totalPrice += 
+            order.product_price * order.quantity;
+
+        return acc;
+    }, {})
+);
+
+
+    return c.json({ orders: groupedOrders });
+});
+
+
+
 
 serve({
   fetch: app.fetch,

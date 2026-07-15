@@ -54,5 +54,11 @@
     "reviews": "Reviews",
     "category": "Category",
     "brand": "Brand",
-    "grams": "g"
+    "grams": "g",
+
+
+
+    "users": "Users",
+    "orders": "Orders",
+    "carts": "Carts"
 }
