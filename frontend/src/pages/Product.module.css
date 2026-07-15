@@ -176,8 +176,9 @@
 
 .priceRow {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
 }
 
 .price {
@@ -200,11 +201,6 @@
     letter-spacing: 0.02em;
 }
 
-.actions {
-    display: flex;
-    gap: var(--spacing-16);
-}
-
 .addBtn,
 .removeBtn {
     display: flex;
@@ -219,6 +215,7 @@
     font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: background 0.2s, box-shadow 0.2s;
+    width: 100%;   /* кнопка растягивается */
 }
 
 .addBtn {

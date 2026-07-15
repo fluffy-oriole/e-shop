@@ -26,14 +26,18 @@ app.get('/api/products', async (c) => {
     const skip = (page - 1) * limit;
     const q = c.req.query('q') ?? "";
     const category = c.req.query('category') ?? "";
+    const sortBy = c.req.query('sortBy') ?? "";
+    const order = c.req.query('order') ?? "";
+
+    const sortParams = sortBy ? `&sortBy=${sortBy}&order=${order || 'asc'}` : "";
 
     let apiUrl;
     if (category) {
-      apiUrl = `${process.env.API_URL}products/category/${category}?limit=${limit}&skip=${skip}`;
+      apiUrl = `${process.env.API_URL}products/category/${category}?limit=${limit}&skip=${skip}${sortParams}`;
     } else if (q) {
-      apiUrl = `${process.env.API_URL}products/search?q=${encodeURIComponent(q)}&limit=${limit}&skip=${skip}`;
+      apiUrl = `${process.env.API_URL}products/search?q=${encodeURIComponent(q)}&limit=${limit}&skip=${skip}${sortParams}`;
     } else {
-      apiUrl = `${process.env.API_URL}products?limit=${limit}&skip=${skip}`;
+      apiUrl = `${process.env.API_URL}products?limit=${limit}&skip=${skip}${sortParams}`;
     }
 
     const res = await fetch(apiUrl);

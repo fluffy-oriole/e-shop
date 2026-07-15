@@ -8,6 +8,14 @@
     "logout": "Log Out",
     "name": "Name",
     "search": "Search",
+    "searchResults": "search by query",
+
+
+    "byDefault": "By default",
+    "moreExpensive": "More expensive",
+    "cheaper": "Сheaper",
+    "byRate": "Highest Rated",
+
 
     "password": "Password",
     "email": "Email",

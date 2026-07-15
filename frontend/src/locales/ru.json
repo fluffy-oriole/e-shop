@@ -8,6 +8,12 @@
     "logout": "Выйти",
     "name": "Имя",
     "search": "Поиск",
+    "searchResults": "Поиск по запросу",
+
+    "byDefault": "По умолчанию",
+    "moreExpensive": "Дороже",
+    "cheaper": "Дешевле",
+    "byRate": "Наивысший рейтинг",
 
     
     "password": "Password",

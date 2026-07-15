@@ -35,3 +35,82 @@
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--spacing-24);
 }
+
+.sortSelector {
+  position: relative;
+  display: inline-block;
+  width: 170px;
+}
+
+.sortTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-buttons);
+  background: var(--color-live-wire);
+  color: var(--color-void-black);
+  font-family: var(--font-tt-hoves-medium);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  box-shadow: var(--shadow-subtle-2);
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.sortTrigger:hover {
+  background: #f4f770;
+}
+
+.sortChevron {
+  transition: transform 0.2s;
+  color: var(--color-void-black);
+  flex-shrink: 0;
+}
+
+.sortChevronOpen {
+  transform: rotate(180deg);
+}
+
+.sortDropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: var(--color-obsidian);
+  border: 0.5px solid var(--color-ash);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-subtle-3);
+  overflow: hidden;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+}
+
+.sortOption {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: var(--color-cloud);
+  font-family: var(--font-tt-hoves-medium);
+  font-size: var(--text-body-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+  width: 100%;
+  text-align: left;
+}
+
+.sortOption:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sortActiveOption {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-paper-white);
+}

@@ -159,20 +159,17 @@ export default function Product() {
                                 {t("inStock")}: {product.stock}
                             </span>
                         </div>
-
-                        <div className={styles.actions}>
-                            {isAddedToCart ? (
-                                <button className={styles.removeBtn} onClick={handleRemoveFromCart}>
-                                    <Minus size={16} strokeWidth={2} />
-                                    {t("removeFromCart")}
-                                </button>
-                            ) : (
-                                <button className={styles.addBtn} onClick={handleAddToCart}>
-                                    <Plus size={16} strokeWidth={2} />
-                                    {t("addToCart")}
-                                </button>
-                            )}
-                        </div>
+                        {isAddedToCart ? (
+                            <button className={styles.removeBtn} onClick={handleRemoveFromCart}>
+                                <Minus size={16} strokeWidth={2} />
+                                {t("removeFromCart")}
+                            </button>
+                        ) : (
+                            <button className={styles.addBtn} onClick={handleAddToCart}>
+                                <Plus size={16} strokeWidth={2} />
+                                {t("addToCart")}
+                            </button>
+                        )}
                     </div>
 
                     <div className={styles.specs}>
