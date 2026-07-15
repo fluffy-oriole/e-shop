@@ -5,6 +5,7 @@ import { cors } from 'hono/cors';
 import { auth } from './auth.js';
 import db from "./db/database.js";
 import "dotenv/config";
+import { encodeId, decodeId } from './utils/hashids.js';
 
 
 const app = new Hono()
@@ -27,23 +28,21 @@ app.get('/api/products', async (c) => {
     const category = c.req.query('category') ?? "";
 
     let apiUrl;
-      if (category) {
-        apiUrl =
-          `${process.env.API_URL}products/category/${category}?limit=${limit}&skip=${skip}`;
-      } 
-      else if (q) {
-        apiUrl =
-          `${process.env.API_URL}products/search?q=${encodeURIComponent(q)}&limit=${limit}&skip=${skip}`;
-      } 
-      else {
-        apiUrl =
-          `${process.env.API_URL}products?limit=${limit}&skip=${skip}`;
-      }
+    if (category) {
+      apiUrl = `${process.env.API_URL}products/category/${category}?limit=${limit}&skip=${skip}`;
+    } else if (q) {
+      apiUrl = `${process.env.API_URL}products/search?q=${encodeURIComponent(q)}&limit=${limit}&skip=${skip}`;
+    } else {
+      apiUrl = `${process.env.API_URL}products?limit=${limit}&skip=${skip}`;
+    }
 
     const res = await fetch(apiUrl);
     const data = await res.json();
 
-    return c.json(data);
+    return c.json({
+      ...data,
+      products: data.products.map(p => ({ ...p, id: encodeId(p.id) }))
+    });
   } catch {
     return c.json({ error: 'Failed to fetch products' }, 500);
   }
@@ -56,66 +55,61 @@ app.get('/api/products/categories', async (c) => {
 });
 
 app.get('/api/product/:id', async (c) => {
-  const id = c.req.param('id');
+  const hash = c.req.param('id');
+  const id = decodeId(hash);
+
+  if (!id) return c.json({ error: 'Invalid product id' }, 400);
+
   const res = await fetch(`${process.env.API_URL}/products/${id}`);
   const data = await res.json();
-  return c.json(data);
-})
+
+  return c.json({ ...data, id: encodeId(data.id) });
+});
 
 app.get('/api/products/category/:category', async (c) => {
   const category = c.req.param('category');
   const res = await fetch(`${process.env.API_URL}/products/category/${encodeURIComponent(category)}`);
   const data = await res.json();
-  return c.json(data.products);
+
+  return c.json(data.products.map(p => ({ ...p, id: encodeId(p.id) })));
 });
 
 app.post('/api/cart/add', async (c) => {
-  const headers = c.req.raw.headers;
-  const session = await auth.api.getSession({
-    headers: headers,
-  });
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  if (!session) return c.json({ error: 'Необходимо авторизоваться' }, 401);
 
-  if (!session) {
-    return c.json({ error: 'Необходимо авторизоваться' }, 401);
-  }
+  const { productId: productHash } = await c.req.json();
+  const productId = decodeId(productHash);
+  if (!productId) return c.json({ error: 'Invalid product id' }, 400);
 
   const userId = session.user.id;
-  const { productId } = await c.req.json();
   const date = new Date().toISOString();
 
-
-  const insertRequest = "INSERT INTO cart (user_id, product_id, date, quantity) VALUES (?, ?, ?, 1)" + 
-                         "ON CONFLICT(user_id, product_id)" +
-                         "DO UPDATE SET quantity = quantity + 1, date = excluded.date;";
+  const insertRequest = "INSERT INTO cart (user_id, product_id, date, quantity) VALUES (?, ?, ?, 1)" +
+                        "ON CONFLICT(user_id, product_id)" +
+                        "DO UPDATE SET quantity = quantity + 1, date = excluded.date;";
   db.prepare(insertRequest).run(userId, productId, date);
 
   return c.json({ success: true }, 201);
 });
 
 app.post('api/cart/remove', async (c) => {
-  const headers = c.req.raw.headers;
-  const session = await auth.api.getSession({
-    headers: headers,
-  });
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  if (!session) return c.json({ error: 'Необходимо авторизоваться' }, 401);
 
-  if (!session) {
-    return c.json({ error: 'Необходимо авторизоваться' }, 401);
-  }
+  const { productId: productHash } = await c.req.json();
+  const productId = decodeId(productHash);
+  if (!productId) return c.json({ error: 'Invalid product id' }, 400);
 
   const userId = session.user.id;
-  const { productId } = await c.req.json();
-
-  db.prepare('DELETE FROM cart WHERE product_id = ?').run(productId);
+  db.prepare('DELETE FROM cart WHERE user_id = ? AND product_id = ?').run(userId, productId);
 
   return c.json({ success: true }, 201);
-}); 
+});
 
 app.get('/api/cart', async (c) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
-
-  if (!session) {
-    return c.json({ error: 'Необходимо авторизоваться' }, 401);
-  }
+  if (!session) return c.json({ error: 'Необходимо авторизоваться' }, 401);
 
   const userId = session.user.id;
   const items = db.prepare('SELECT * FROM cart WHERE user_id = ? ORDER BY date ASC').all(userId);
@@ -124,7 +118,7 @@ app.get('/api/cart', async (c) => {
     items.map(async (item) => {
       const res = await fetch(`${process.env.API_URL}/products/${item.product_id}`);
       const product = await res.json();
-      return { ...product, quantity: item.quantity };
+      return { ...product, id: encodeId(product.id), quantity: item.quantity };
     })
   );
 
@@ -132,79 +126,74 @@ app.get('/api/cart', async (c) => {
 });
 
 app.post('/api/cart/increase', async (c) => {
-    const session = await auth.api.getSession({ headers: c.req.raw.headers });
-    if (!session) return c.json({ error: 'Не авторизован' }, 401);
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  if (!session) return c.json({ error: 'Не авторизован' }, 401);
 
-    const { productId, stock } = await c.req.json();
+  const { productId: productHash, stock } = await c.req.json();
+  const productId = decodeId(productHash);
+  if (!productId) return c.json({ error: 'Invalid product id' }, 400);
 
-    const item = db.prepare('SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?')
-        .get(session.user.id, productId);
+  const item = db.prepare('SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?')
+    .get(session.user.id, productId);
 
-    if (item.quantity >= stock) {
-        return c.json({ error: 'Недостаточно товара на складе' }, 400);
-    }
+  if (item.quantity >= stock) return c.json({ error: 'Недостаточно товара на складе' }, 400);
 
-    db.prepare('UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?')
-        .run(session.user.id, productId);
+  db.prepare('UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?')
+    .run(session.user.id, productId);
 
-    return c.json({ success: true });
+  return c.json({ success: true });
 });
 
 app.post('/api/cart/decrease', async (c) => {
-    const session = await auth.api.getSession({ headers: c.req.raw.headers });
-    if (!session) return c.json({ error: 'Не авторизован' }, 401);
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  if (!session) return c.json({ error: 'Не авторизован' }, 401);
 
-    const { productId } = await c.req.json();
-    const item = db.prepare('SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?')
-        .get(session.user.id, productId);
+  const { productId: productHash } = await c.req.json();
+  const productId = decodeId(productHash);
+  if (!productId) return c.json({ error: 'Invalid product id' }, 400);
 
-    if (!item) return c.json({ error: 'Товар не найден' }, 404);
+  const item = db.prepare('SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?')
+    .get(session.user.id, productId);
 
-    if (item.quantity <= 1) {
-        db.prepare('DELETE FROM cart WHERE user_id = ? AND product_id = ?')
-            .run(session.user.id, productId);
-    } else {
-        db.prepare('UPDATE cart SET quantity = quantity - 1 WHERE user_id = ? AND product_id = ?')
-            .run(session.user.id, productId);
-    }
+  if (!item) return c.json({ error: 'Товар не найден' }, 404);
 
-    return c.json({ success: true });
+  if (item.quantity <= 1) {
+    db.prepare('DELETE FROM cart WHERE user_id = ? AND product_id = ?')
+      .run(session.user.id, productId);
+  } else {
+    db.prepare('UPDATE cart SET quantity = quantity - 1 WHERE user_id = ? AND product_id = ?')
+      .run(session.user.id, productId);
+  }
+
+  return c.json({ success: true });
 });
 
 
 app.post('/api/cart/purchase', async (c) => {
-    const session = await auth.api.getSession({
-        headers: c.req.raw.headers,
-    });
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  if (!session) return c.json({ error: 'Not authorized' }, 401);
 
-    if (!session) {
-        return c.json({ error: 'Not authtorized' }, 401);
-    }
+  const { products } = await c.req.json();
+  const date = new Date().toISOString();
 
-    const { products } = await c.req.json();
-
-    const date = new Date().toISOString();
-
-    const transaction = db.transaction((products) => {
-    const order = db.prepare(`
-        INSERT INTO orders (user_id, date)
-        VALUES (?, ?)
-    `).run(session.user.id, date);
+  const transaction = db.transaction((products) => {
+    const order = db.prepare(`INSERT INTO orders (user_id, date) VALUES (?, ?)`)
+      .run(session.user.id, date);
 
     for (const p of products) {
-        db.prepare(`
-            INSERT INTO order_items (order_id, product_id, quantity, price)
-            VALUES (?, ?, ?, ?)
-        `).run(order.lastInsertRowid, p.id, p.quantity, p.price);
+      const productId = decodeId(p.id);
+      if (!productId) continue;
 
-        db.prepare(`DELETE FROM cart WHERE user_id = ? AND product_id = ?`)
-            .run(session.user.id, p.id);
+      db.prepare(`INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)`)
+        .run(order.lastInsertRowid, productId, p.quantity, p.price);
+
+      db.prepare(`DELETE FROM cart WHERE user_id = ? AND product_id = ?`)
+        .run(session.user.id, productId);
     }
-});
+  });
 
-    transaction(products);
-
-    return c.json({ success: true });
+  transaction(products);
+  return c.json({ success: true });
 });
 
 
