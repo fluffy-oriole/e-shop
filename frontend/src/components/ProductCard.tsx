@@ -1,7 +1,7 @@
 import styles from './ProductCard.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { Plus } from 'lucide-react';
 
 interface ProductCardProps {
   productTitle: string;
@@ -13,7 +13,6 @@ interface ProductCardProps {
 function ProductCard({ productTitle, productImage, productId, productPrice }: ProductCardProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
 
   const handleCardClick = () => {
     navigate(`/product/${productId}`);
@@ -21,7 +20,7 @@ function ProductCard({ productTitle, productImage, productId, productPrice }: Pr
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/add`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/api/cart/add`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -30,12 +29,23 @@ function ProductCard({ productTitle, productImage, productId, productPrice }: Pr
   };
 
   return (
-    <div className={styles.productCard} onClick={handleCardClick}>
-      <img src={productImage} alt={productTitle} className={styles.productImage} />
-      <h3 className={styles.productTitle}>{productTitle}</h3>
-      <div className={styles.priceRow}>
-        <p className={styles.productPrice}>{productPrice}₽</p>
-        <button className={styles.addToCartBtn} onClick={handleAddToCart} type="button">+</button>
+    <div className={styles.card} onClick={handleCardClick}>
+      <div className={styles.imageWrapper}>
+        <img src={productImage} alt={productTitle} className={styles.image} />
+      </div>
+      <div className={styles.info}>
+        <h3 className={styles.title}>{productTitle}</h3>
+        <div className={styles.priceRow}>
+          <span className={styles.price}>{productPrice} ₽</span>
+          <button
+            className={styles.addBtn}
+            onClick={handleAddToCart}
+            type="button"
+            aria-label={t('addToCart')}
+          >
+            <Plus size={16} strokeWidth={2.5} />
+          </button>
+        </div>
       </div>
     </div>
   );

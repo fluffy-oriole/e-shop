@@ -1,6 +1,8 @@
 import styles from './Admin.module.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 interface Cart {
     user_id: string;
     name: string;
@@ -12,11 +14,11 @@ interface CartsResponse {
     carts: Cart[];
 }
 
-export default function Admin() {
+export default function AdminCarts() {
     const [carts, setCarts] = useState<CartsResponse | null>(null);
     const [error, setError] = useState("");
     const navigate = useNavigate();
-
+    const { t } = useTranslation();
 
     useEffect(() => {
         const getAdminData = async () => {
@@ -27,46 +29,36 @@ export default function Admin() {
                     credentials: "include",
                 }
             );
-
             const data = await response.json();
-
             if (!response.ok) {
                 setError(data.error);
                 return;
             }
-
             setCarts(data);
         };
-
         getAdminData();
     }, []);
 
-
     if (error) {
-        return <p>{error}</p>;
+        return <div className={styles.wrapper}><p className={styles.error}>{error}</p></div>;
     }
 
-
     return (
-        <div>
-            <h1 className={styles.title}>
-                Корзины пользователей
-            </h1>
-
+        <div className={styles.wrapper}>
+            <h1 className={styles.pageTitle}>{t("userCarts")}</h1>
             {carts && (
                 <table className={styles.table}>
                     <thead>
                         <tr className={styles.tableHead}>
-                            <th>User ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Products count</th>
+                            <th>{t("userId")}</th>
+                            <th>{t("name")}</th>
+                            <th>{t("email")}</th>
+                            <th>{t("productsCount")}</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         {carts.carts.map((cart) => (
-                            <tr 
+                            <tr
                                 key={cart.user_id}
                                 className={styles.tableRow}
                                 onClick={() => navigate(`/admin/carts/${cart.user_id}`)}

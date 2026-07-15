@@ -1,83 +1,79 @@
-.productCard {
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    background: #2b2d3a;
-    border: 1px solid #3b3d4b;
-    border-radius: 16px;
-
-    overflow: hidden;
-    cursor: pointer;
-
-    transition: 0.25s ease;
+.card {
+  background: var(--color-obsidian);
+  border-radius: var(--radius-cards);
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
-.productCard:hover {
-    border-color: #35f0b6;
-    box-shadow: 0 10px 30px rgba(53, 240, 182, 0.12);
+.card:hover {
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.2);
 }
 
-.productImage {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
+.imageWrapper {
+  aspect-ratio: 1 / 1;
+  background: var(--color-carbon);
+  overflow: hidden;
+}
 
-    background: #393b48;
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.info {
+  padding: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  flex: 1;
+}
+
+.title {
+  font-family: var(--font-tt-hoves-medium);
+  font-size: var(--text-body-sm);
+  color: var(--color-paper-white);
+  margin: 0;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .priceRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 20px 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
 }
 
-.productTitle {
-    margin: 18px 18px 8px;
-
-    color: white;
-    font-size: 20px;
-    font-weight: 600;
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.price {
+  font-family: var(--font-basis-grotesque-mono-pro);
+  font-size: var(--text-body-sm);
+  color: var(--color-silver);
 }
 
-.productPrice {
-    color: #35f0b6;
-    font-size: 22px;
-    font-weight: 700;
+.addBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-live-wire);
+  color: var(--color-void-black);
+  cursor: pointer;
+  box-shadow: var(--shadow-subtle-2);
+  transition: background 0.2s;
+  flex-shrink: 0;
 }
 
-.addToCartBtn {
-
-    width: 42px;
-    height: 42px;
-
-    border: none;
-    border-radius: 50%;
-
-    background: #35f0b6;
-    color: #1f2029;
-
-    font-size: 28px;
-    font-weight: bold;
-    line-height: 1;
-
-    cursor: pointer;
-
-    transition: 0.25s;
-}
-
-.addToCartBtn:hover {
-    transform: scale(1.1);
-    background: #4ff8c2;
-}
-
-.addToCartBtn:active {
-    transform: scale(0.95);
+.addBtn:hover {
+  background: #f4f770;
 }

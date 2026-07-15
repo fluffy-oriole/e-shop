@@ -9,6 +9,10 @@
     "name": "Имя",
     "search": "Поиск",
 
+    
+    "password": "Password",
+    "email": "Email",
+
     "pleaseLogIn": "Пожалуйста войдите в аккаунт для проверки возможности доступа к данной странице",
     "adminOnly": "Данная страница доступна только для администраторов сайта",
 
@@ -34,6 +38,10 @@
 
     "cartIsEmpty": "В корзине пока пусто",
     "pay": "Оплатить",
+    "cartTitle": "Корзина",
+    "delete": "Удалить",
+    "totalAmount": "Итого",
+    "continueShopping": "Перейти в каталог",
 
 
     "loading": "Загрузка...",
@@ -52,9 +60,31 @@
     "category": "Категория",
     "brand": "Бренд",
     "grams": "г",
+    "pieces": "шт.",
 
 
     "users": "Пользователи",
     "orders": "Заказы",
-    "carts": "Корзины"
+    "carts": "Корзины",
+
+    "pageNotFound": "Страница не найдена",
+    "pageNotFoundTitle": "Такой страницы не существует",
+    "pageNotFoundDescription": "Возможно, ссылка устарела, страница была удалена или адрес введен неверно.",
+    "backToHome": "Вернуться на главную",
+    "backToSite": "На сайт",
+
+    "signIn": "Войти в аккаунт",
+    "emailPlaceholder": "name@example.com",
+    "passwordPlaceholder": "Минимум 8 символов",
+    "signInButton": "Войти",
+    "noAccount": "Нет аккаунта?",
+    "authError": "Ошибка авторизации",
+
+    "createAccount": "Создать аккаунт",
+    "username": "Имя пользователя",
+    "usernamePlaceholder": "nickname",
+    "confirmPassword": "Подтвердить пароль",
+    "registerButton": "Зарегистрироваться",
+    "haveAccount": "Уже есть аккаунт?",
+    "unknownError": "Неизвестная ошибка"
 }

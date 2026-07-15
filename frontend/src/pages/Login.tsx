@@ -1,14 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { authClient } from "../lib/authClient";
+import { useTranslation } from "react-i18next";
 import styles from './Auth.module.css';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const { t } = useTranslation();
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
 
     const form = e.currentTarget;
     const email = (form.elements.namedItem('email') as HTMLInputElement).value;
@@ -17,29 +20,54 @@ export default function Login() {
     const { error } = await authClient.signIn.email({ email, password });
 
     if (error) {
+      setError(error.message || t("authError"));
       return;
     }
 
     navigate('/');
-}
+  }
 
   return (
-    <form className={styles.container} onSubmit={handleSubmit}>
-      <h2 className={styles.loginText}>Войти в аккаунт</h2>
+    <div className={styles.page}>
+      <form className={styles.card} onSubmit={handleSubmit}>
+        <h2 className={styles.title}>{t("signIn")}</h2>
 
-      <div className={styles.form}>
-        <div className={styles.field}>
-          <label>Email</label>
-          <input name="email" type="email" placeholder="name@example.com" className={styles.input}/>
-        </div>
-        <div className={styles.field}>
-          <label>Пароль</label>
-          <input name="password" type="password" placeholder="Минимум 8 символов" className={styles.input}/>
-        </div>
-        <button className={styles.btn}>Войти</button>
-      </div>
+        {error && <p className={styles.error}>{error}</p>}
 
-      <p className={styles.login}>Нет аккаунта? <Link to="/registration" className={styles.link}>Зарегистрироваться</Link></p>
-    </form>
-  )
+        <div className={styles.field}>
+          <label className={styles.label}>{t("email")}</label>
+          <input
+            name="email"
+            type="email"
+            placeholder={t("emailPlaceholder")}
+            className={styles.input}
+            required
+          />
+        </div>
+
+        <div className={styles.field}>
+          <label className={styles.label}>{t("password")}</label>
+          <input
+            name="password"
+            type="password"
+            placeholder={t("passwordPlaceholder")}
+            className={styles.input}
+            required
+            minLength={8}
+          />
+        </div>
+
+        <button className={styles.btn} type="submit">
+          {t("signInButton")}
+        </button>
+
+        <p className={styles.footer}>
+          {t("noAccount")}{" "}
+          <Link to="/registration" className={styles.link}>
+            {t("register")}
+          </Link>
+        </p>
+      </form>
+    </div>
+  );
 }

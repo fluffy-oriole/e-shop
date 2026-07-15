@@ -1,163 +1,109 @@
 .hero {
-    width: 100%;
-    
-
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-64);
     align-items: center;
-    justify-content: space-between;
-
-    gap: 60px;
-
-    padding: 60px 80px;
-
-    /* background: #1a1c23; */
-    background:
-        linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.9) 0%,
-            rgba(0, 0, 0, 0.7) 25%,
-            rgba(0, 0, 0, 0.35) 50%,
-            rgba(0, 0, 0, 0) 75%
-        ),
-        url("../assets/indeximg.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    box-sizing: border-box;
-
-    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: calc(100vh - 80px - 80px); /* вычитаем высоту хедера и отступы */
+    padding: var(--spacing-80) 0;
 }
 
-
-.heroContent {
-    max-width: 600px;
-
+.content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-
-    gap: 24px;
+    gap: var(--spacing-24);
 }
-
 
 .title {
+    font-family: var(--font-tt-hoves-light);
+    font-size: var(--text-display);
+    font-weight: var(--font-weight-light);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    color: var(--color-paper-white);
     margin: 0;
-
-    color: var(--main-text-color);
-
-    font-size: 56px;
-    line-height: 1.15;
-    font-weight: 800;
 }
-
 
 .subtitle {
+    font-family: var(--font-tt-hoves-regular);
+    font-size: var(--text-subheading);
+    line-height: var(--leading-subheading);
+    color: var(--color-silver);
+    max-width: 480px;
     margin: 0;
-
-    max-width: 520px;
-
-    color: var(--main-text-color);
-
-    font-size: 20px;
-    line-height: 1.6;
 }
-
 
 .actions {
     display: flex;
-    align-items: center;
-
-    gap: 24px;
-
-    margin-top: 15px;
+    gap: var(--spacing-16);
+    margin-top: var(--spacing-16);
 }
 
-
-.registerLink {
-    color: #2EF2B5;
-
-    font-size: 16px;
-    font-weight: 600;
-
-    text-decoration: none;
-
-    padding: 12px 24px;
-
-    border: 1px solid #2EF2B5;
-    border-radius: 10px;
-
-    transition: 0.2s ease;
+.primaryBtn {
+    padding: 12px 32px;
+    border: none;
+    border-radius: var(--radius-buttons);
+    background: var(--color-live-wire);
+    color: var(--color-void-black);
+    font-family: var(--font-tt-hoves-medium);
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    box-shadow: var(--shadow-subtle-2);
+    transition: background 0.2s;
 }
 
-
-.registerLink:hover {
-    background: #2EF2B5;
-    color: #23262f;
+.primaryBtn:hover {
+    background: #f4f770;
 }
 
+.secondaryBtn {
+    padding: 12px 32px;
+    border: 0.5px solid var(--color-ash);
+    border-radius: var(--radius-buttons);
+    background: transparent;
+    color: var(--color-paper-white);
+    font-family: var(--font-tt-hoves-medium);
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    box-shadow: var(--shadow-subtle);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-.imageBlock {
-    flex: 1;
+.secondaryBtn:hover {
+    border-color: var(--color-signal-violet);
+    box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.2);
+}
 
+.illustration {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-
-.heroImage {
+.illustration svg {
     width: 100%;
-    max-width: 520px;
-
-    object-fit: contain;
-
-    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.4));
+    max-width: 400px;
+    height: auto;
 }
 
-
-/* Адаптация под планшеты */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .hero {
-        flex-direction: column;
-        justify-content: center;
-
-        padding: 40px 25px;
-
-        text-align: center;
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: var(--spacing-40) 0;
+        gap: var(--spacing-40);
     }
 
-    .heroContent {
-        align-items: center;
+    .illustration {
+        order: -1;
     }
 
-    .title {
-        font-size: 42px;
-    }
-
-    .subtitle {
-        font-size: 18px;
-    }
-
-    .heroImage {
-        max-width: 400px;
-    }
-}
-
-
-/* Мобильные устройства */
-@media (max-width: 480px) {
-    .title {
-        font-size: 34px;
+    .illustration svg {
+        max-width: 280px;
     }
 
     .actions {
         flex-direction: column;
-        width: 100%;
-    }
-
-    .registerLink {
-        width: 100%;
-        text-align: center;
-        box-sizing: border-box;
     }
 }

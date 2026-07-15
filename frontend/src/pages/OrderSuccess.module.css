@@ -1,49 +1,58 @@
-.container {
+.page {
     flex: 1;
-    min-height: 0;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-    padding: 40px;
-    background: #1a1c23;
+    padding: var(--spacing-40);
 }
 
 .card {
     width: 100%;
-    max-width: 650px;
-
+    max-width: 520px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
-
-    padding: 60px 50px;
-
-    background: #23262f;
-    border: 1px solid #3a3f55;
-    border-radius: 18px;
-
+    gap: var(--spacing-20);
+    padding: var(--spacing-64) var(--spacing-48);
+    background: var(--color-obsidian);
+    border: 1px solid var(--color-ash);
+    border-radius: var(--radius-cards);
     text-align: center;
-
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-subtle);
 }
 
-.card h1 {
+.title {
     margin: 0;
-    color: var(--main-text-color);
-    font-size: 38px;
-    font-weight: 700;
+    font-family: var(--font-tt-hoves-light);
+    font-size: var(--text-heading);
+    font-weight: var(--font-weight-light);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+    color: var(--color-paper-white);
 }
 
-.card p {
-    margin: 0 0 12px;
-    color: var(--second-text-color);
-    font-size: 18px;
-    line-height: 1.6;
+.text {
+    margin: 0 0 var(--spacing-8);
+    font-family: var(--font-tt-hoves-regular);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    color: var(--color-silver);
 }
 
-.card a {
+.homeLink {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--color-live-wire);
+    color: var(--color-void-black);
+    border-radius: var(--radius-buttons);
+    font-family: var(--font-tt-hoves-medium);
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-medium);
     text-decoration: none;
+    box-shadow: var(--shadow-subtle-2);
+    transition: background 0.2s;
+}
+
+.homeLink:hover {
+    background: #f4f770;
 }

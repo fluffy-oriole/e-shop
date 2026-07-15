@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import styles from "./Product.module.css";
-import EButton from "../components/EButton.tsx";
 import { useTranslation } from "react-i18next";
-import RedButton from "../components/RedButton.tsx";
-import { Star } from "lucide-react";
+import { Star, ShieldCheck, RotateCcw, Truck, Minus, Plus } from "lucide-react";
 
 interface Dimensions {
     width: number;
@@ -39,7 +37,7 @@ interface Product {
 }
 
 export default function Product() {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { id } = useParams();
 
     const [product, setProduct] = useState<Product | null>(null);
@@ -55,12 +53,9 @@ export default function Product() {
     }, []);
 
     let isAddedToCart = false;
-
     if (product) {
         cart.forEach((element) => {
-            if (element.id === product.id) {
-                isAddedToCart = true;
-            }
+            if (element.id === product.id) isAddedToCart = true;
         });
     }
 
@@ -73,196 +68,156 @@ export default function Product() {
     const handleAddToCart = async () => {
         await fetch(`${import.meta.env.VITE_API_URL}/api/cart/add`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({
-                productId: product?.id,
-            }),
+            body: JSON.stringify({ productId: product?.id }),
         });
-
-        if (product) {
-            setCart([...cart, product]);
-        }
+        if (product) setCart([...cart, product]);
     };
 
     const handleRemoveFromCart = async () => {
         await fetch(`${import.meta.env.VITE_API_URL}/api/cart/remove`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({
-                productId: product?.id,
-            }),
+            body: JSON.stringify({ productId: product?.id }),
         });
-
-        if (product) {
-            setCart(cart.filter((item) => item.id !== product.id));
-        }
+        if (product) setCart(cart.filter((item) => item.id !== product.id));
     };
 
     if (!product) {
         return (
-            <div className={styles.productContainer}>
-                {i18n.t("loading")}
+            <div className={styles.page}>
+                <div className={styles.statusMessage}>{t("loading")}</div>
             </div>
         );
     }
 
     return (
-        <div className={styles.productContainer}>
-            <div className={styles.mainInformation}>
-                <img
-                    className={styles.productImage}
-                    src={product.images[0]}
-                    alt={product.title}
-                />
+        <div className={styles.page}>
+            <nav className={styles.breadcrumbs}>
+                <Link to="/">{t("home")}</Link>
+                <span className={styles.separator}>/</span>
+                <Link to="/catalog">{t("catalog")}</Link>
+                <span className={styles.separator}>/</span>
+                <span className={styles.current}>{product.title}</span>
+            </nav>
 
-                <div className={styles.productInfo}>
-                    <p className={styles.title}>{product.title}</p>
-
-                    <div className={styles.meta}>
-                        <Link
-                            to={`/catalog/${product.category}`}
-                            className={styles.badge}
-                        >
-                            {product.category}
-                        </Link>
-
-                        <span className={styles.brand}>
-                            {product.brand}
-                        </span>
-                    </div>
-
-                    <div className={styles.rating}>
-                        <span>{i18n.t("rating")}: </span>
-                        <span>{product.rating} / 5</span>
-                    </div>
-
-                    <p className={styles.description}>
-                        {product.description}
-                    </p>
-
-                    <p className={styles.specsLabel}>
-                        {i18n.t("specifications")}
-                    </p>
-
-                    <div className={styles.specsGrid}>
-                        <div className={styles.specItem}>
-                            <p>{i18n.t("weight")}</p>
-                            <p>
-                                {product.weight} {i18n.t("grams")}
-                            </p>
-                        </div>
-
-                        <div className={styles.specItem}>
-                            <p>{i18n.t("dimensions")}</p>
-                            <p>
-                                {product.dimensions.width} ×{" "}
-                                {product.dimensions.height} ×{" "}
-                                {product.dimensions.depth}
-                            </p>
-                        </div>
-
-                        <div className={styles.specItem}>
-                            <p>{i18n.t("return")}</p>
-                            <p>{product.returnPolicy}</p>
-                        </div>
-
-                        <div className={styles.specItem}>
-                            <p>{i18n.t("sku")}</p>
-                            <p>{product.sku}</p>
-                        </div>
-
-                        <div className={styles.specItem}>
-                            <p>{i18n.t("warranty")}</p>
-                            <p>{product.warrantyInformation}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={styles.buyingBlock}>
-                    <p className={styles.price}>
-                        {product.price} ₽
-                    </p>
-
-                    <p className={styles.stockInformation}>
-                        {i18n.t("inStock")}: {product.stock}
-                    </p>
-
-                    {isAddedToCart ? (
-                        <RedButton
-                            width="100%"
-                            text={i18n.t("removeFromCart")}
-                            onClick={handleRemoveFromCart}
-                        />
-                    ) : (
-                        <EButton
-                            width="100%"
-                            text={i18n.t("addToCart")}
-                            onClick={handleAddToCart}
-                        />
-                    )}
-                </div>
-            </div>
-
-            <div className={styles.reviewsBox}>
-                <h3 className={styles.reviewsLabel}>
-                    {i18n.t("reviews")}
-                </h3>
-
-                {product.reviews.map((review, index) => (
-                    <div
-                        key={index}
-                        className={styles.review}
-                    >
-                        <div className={styles.reviewInformation}>
-                            <div
-                                className={
-                                    styles.specItem +
-                                    " " +
-                                    styles.reviewerName
-                                }
-                            >
-                                {review.reviewerName}
-                            </div>
-
-                            <div className={styles.specItem}>
-                                {new Date(review.date).toLocaleDateString(
-                                    "ru-RU"
-                                )}
-                            </div>
-                        </div>
-
-                        <div>
-                            {Array.from({ length: 5 }, (_, i) => (
-                                <span key={i}>
-                                    {i < review.rating ? (
-                                        <Star
-                                            fill="#f5a623"
-                                            color="#f5a623"
-                                            size={16}
-                                        />
-                                    ) : (
-                                        <Star
-                                            fill="#d6d6d6"
-                                            color="#d6d6d6"
-                                            size={16}
-                                        />
-                                    )}
-                                </span>
+            <div className={styles.mainGrid}>
+                <div className={styles.gallery}>
+                    <img
+                        className={styles.mainImage}
+                        src={product.images[0]}
+                        alt={product.title}
+                    />
+                    {product.images.length > 1 && (
+                        <div className={styles.thumbs}>
+                            {product.images.slice(1, 4).map((img, idx) => (
+                                <button key={idx} className={styles.thumb}>
+                                    <img src={img} alt="" />
+                                </button>
                             ))}
                         </div>
+                    )}
+                </div>
 
-                        <div className={styles.specItem}>
-                            {review.comment}
+                <div className={styles.details}>
+                    <h1 className={styles.title}>{product.title}</h1>
+
+                    <div className={styles.meta}>
+                        <span className={styles.brand}>{product.brand}</span>
+                        <Link to={`/catalog/${product.category}`} className={styles.category}>
+                            {product.category}
+                        </Link>
+                    </div>
+
+                    <div className={styles.ratingRow}>
+                        <div className={styles.stars}>
+                            {Array.from({ length: 5 }, (_, i) => (
+                                <Star
+                                    key={i}
+                                    fill={i < Math.round(product.rating) ? "var(--color-signal-violet)" : "var(--color-graphite)"}
+                                    color={i < Math.round(product.rating) ? "var(--color-signal-violet)" : "var(--color-graphite)"}
+                                    size={16}
+                                />
+                            ))}
+                        </div>
+                        <span className={styles.ratingValue}>{product.rating} / 5</span>
+                    </div>
+
+                    <p className={styles.description}>{product.description}</p>
+
+                    <div className={styles.buyBox}>
+                        <div className={styles.priceRow}>
+                            <p className={styles.price}>{product.price} ₽</p>
+                            <span className={styles.stockBadge}>
+                                {t("inStock")}: {product.stock}
+                            </span>
+                        </div>
+
+                        <div className={styles.actions}>
+                            {isAddedToCart ? (
+                                <button className={styles.removeBtn} onClick={handleRemoveFromCart}>
+                                    <Minus size={16} strokeWidth={2} />
+                                    {t("removeFromCart")}
+                                </button>
+                            ) : (
+                                <button className={styles.addBtn} onClick={handleAddToCart}>
+                                    <Plus size={16} strokeWidth={2} />
+                                    {t("addToCart")}
+                                </button>
+                            )}
                         </div>
                     </div>
-                ))}
+
+                    <div className={styles.specs}>
+                        <h3 className={styles.specsTitle}>{t("specifications")}</h3>
+                        <dl className={styles.specsList}>
+                            <div className={styles.specRow}>
+                                <dt>{t("weight")}</dt>
+                                <dd>{product.weight} {t("grams")}</dd>
+                            </div>
+                            <div className={styles.specRow}>
+                                <dt>{t("dimensions")}</dt>
+                                <dd>{product.dimensions.width} × {product.dimensions.height} × {product.dimensions.depth} см</dd>
+                            </div>
+                            <div className={styles.specRow}>
+                                <dt>{t("sku")}</dt>
+                                <dd>{product.sku}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
             </div>
+
+            <section className={styles.reviews}>
+                <h2 className={styles.reviewsTitle}>{t("reviews")}</h2>
+                {product.reviews.length === 0 ? (
+                    <p className={styles.noReviews}>{t("noReviews", "Пока нет отзывов")}</p>
+                ) : (
+                    product.reviews.map((review, index) => (
+                        <div key={index} className={styles.reviewCard}>
+                            <div className={styles.reviewHeader}>
+                                <span className={styles.reviewer}>{review.reviewerName}</span>
+                                <time className={styles.date}>
+                                    {new Date(review.date).toLocaleDateString(i18n.language)}
+                                </time>
+                            </div>
+                            <div className={styles.stars}>
+                                {Array.from({ length: 5 }, (_, i) => (
+                                    <Star
+                                        key={i}
+                                        fill={i < review.rating ? "var(--color-signal-violet)" : "var(--color-graphite)"}
+                                        color={i < review.rating ? "var(--color-signal-violet)" : "var(--color-graphite)"}
+                                        size={14}
+                                    />
+                                ))}
+                            </div>
+                            <p className={styles.comment}>{review.comment}</p>
+                        </div>
+                    ))
+                )}
+            </section>
         </div>
     );
 }

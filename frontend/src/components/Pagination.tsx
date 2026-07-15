@@ -8,33 +8,39 @@ interface PaginationProps {
 }
 
 export default function Pagination({ countOfPages, currentPage, setCurrentPage }: PaginationProps) {
-    
-    let pages = [];
-    for (let i = 1; i <= countOfPages; i++) {
-        pages.push(i);
-    }
+  const pages = Array.from({ length: countOfPages }, (_, i) => i + 1);
 
-    function reduceCurrentPage() {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    }
+  return (
+    <nav className={styles.pagination}>
+      <button
+        className={styles.arrowBtn}
+        onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+        disabled={currentPage === 1}
+        aria-label="Предыдущая страница"
+      >
+        <ChevronLeft size={16} />
+      </button>
 
-    function increaseCurrentPage() {
-        if (currentPage < countOfPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    }
+      {pages.map((page) => (
+        <button
+          key={page}
+          className={`${styles.pageBtn} ${page === currentPage ? styles.active : ""}`}
+          onClick={() => setCurrentPage(page)}
+          aria-label={`Страница ${page}`}
+          aria-current={page === currentPage ? "page" : undefined}
+        >
+          {page}
+        </button>
+      ))}
 
-    return (
-        <div className={styles.pagesBlock}>
-            <div className={styles.pageButton} onClick={reduceCurrentPage}><ChevronLeft /></div>
-            {pages.map((page, index) => (
-                <div key={page} className={styles.pageButton + (page === currentPage ? ' ' + styles.currentPageButton : '')} onClick={() => setCurrentPage(page)}>
-                    {page}
-                </div>
-            ))}
-            <div className={styles.pageButton} onClick={increaseCurrentPage}><ChevronRight /></div>
-        </div>
-    )
+      <button
+        className={styles.arrowBtn}
+        onClick={() => currentPage < countOfPages && setCurrentPage(currentPage + 1)}
+        disabled={currentPage === countOfPages}
+        aria-label="Следующая страница"
+      >
+        <ChevronRight size={16} />
+      </button>
+    </nav>
+  );
 }

@@ -38,6 +38,9 @@
 
     "cartIsEmpty": "The cart is empty yet",
     "pay": "Pay",
+    "delete": "Delete",
+    "totalAmount": "Total",
+    "continueShopping": "Continue shopping",
 
     "loading": "Loading...",
     "rating": "Rating",
@@ -55,10 +58,34 @@
     "category": "Category",
     "brand": "Brand",
     "grams": "g",
+    "pieces": "pcs.",
 
 
 
     "users": "Users",
     "orders": "Orders",
-    "carts": "Carts"
+    "carts": "Carts",
+    "cartTitle": "Cart",
+  
+
+    "pageNotFound": "Page not found",
+    "pageNotFoundTitle": "There is no such page",
+    "pageNotFoundDescription": "The link may be outdated, the page has been deleted, or the address entered incorrectly",
+    "backToHome": "Go back to the main page",
+    "backToSite": "Back to site",
+
+    "signIn": "Sign In",
+    "emailPlaceholder": "name@example.com",
+    "passwordPlaceholder": "At least 8 characters",
+    "signInButton": "Sign In",
+    "noAccount": "Don't have an account?",
+    "authError": "Authentication error",
+
+    "createAccount": "Create account",
+    "username": "Username",
+    "usernamePlaceholder": "nickname",
+    "confirmPassword": "Confirm password",
+    "registerButton": "Sign Up",
+    "haveAccount": "Already have an account?",
+    "unknownError": "Unknown error"
 }

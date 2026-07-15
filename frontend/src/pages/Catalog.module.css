@@ -1,18 +1,37 @@
-.productsList {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 24px;
-    margin: 80px;
-    margin-top: 40px;
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-40);
+}
+
+.statusMessage {
+  text-align: center;
+  padding: var(--spacing-200) 0;
+  font-family: var(--font-tt-hoves-regular);
+  font-size: var(--text-body);
+  color: var(--color-cloud);
 }
 
 .categoryTitle {
-    font-size: 5ch;
-    font-weight: 600;
-    margin: 24px 0;
-    padding-bottom: 12px;
-    color: var(--main-text-color);
-    margin-left: 80px;
-    margin-top: 80px;
-    text-transform: capitalize;
+  font-family: var(--font-tt-hoves-light);
+  font-size: var(--text-heading);
+  font-weight: var(--font-weight-light);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  color: var(--color-paper-white);
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.searchInfo {
+  font-family: var(--font-tt-hoves-regular);
+  font-size: var(--text-body);
+  color: var(--color-silver);
+  margin: 0;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--spacing-24);
 }

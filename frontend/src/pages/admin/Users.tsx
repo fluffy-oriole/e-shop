@@ -21,11 +21,10 @@ interface UsersResponse {
     users: User[];
 }
 
-export default function Admin() {
+export default function AdminUsers() {
     const [users, setUsers] = useState<UsersResponse | null>(null);
     const [error, setError] = useState("");
     const { t } = useTranslation();
-
 
     useEffect(() => {
         const getAdminData = async () => {
@@ -36,58 +35,60 @@ export default function Admin() {
                     credentials: "include",
                 }
             );
-
             const data = await response.json();
-            console.log("data" + data);
-
             if (!response.ok) {
                 setError(data.error);
                 return;
             }
-
             setUsers(data);
         };
-
         getAdminData();
     }, []);
 
     if (error) {
-        return <p>{error}</p>;
+        return <div className={styles.wrapper}><p className={styles.error}>{error}</p></div>;
     }
 
     return (
-        <div>
-            <h1 className={styles.title}>Пользователи</h1>
+        <div className={styles.wrapper}>
+            <h1 className={styles.pageTitle}>{t("users")}</h1>
             {users && (
                 <table className={styles.table}>
                     <thead>
                         <tr className={styles.tableHead}>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Verified</th>
-                            <th>Banned</th>
-                            <th>Created</th>
-                            <th>Updated</th>
+                            <th>{t("name")}</th>
+                            <th>{t("email")}</th>
+                            <th>{t("role")}</th>
+                            <th>{t("verified")}</th>
+                            <th>{t("banned")}</th>
+                            <th>{t("created")}</th>
+                            <th>{t("updated")}</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        {users.users.map((user: any) => (
+                        {users.users.map((user) => (
                             <tr key={user.id} className={styles.tableRow}>
                                 <td>{user.id}</td>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
-                                <td>{user.emailVerified ? <Check size={10}></Check> : <X size={14}></X>}</td>
-                                <td>{user.banned ? <Check size={10}></Check> : <X size={14}></X>}</td>
                                 <td>
-                                    {new Date(user.createdAt).toLocaleString()}
+                                    {user.emailVerified ? (
+                                        <Check size={14} className={styles.iconVerified} />
+                                    ) : (
+                                        <X size={14} className={styles.iconNotVerified} />
+                                    )}
                                 </td>
                                 <td>
-                                    {new Date(user.updatedAt).toLocaleString()}
+                                    {user.banned ? (
+                                        <Check size={14} className={styles.iconVerified} />
+                                    ) : (
+                                        <X size={14} className={styles.iconNotVerified} />
+                                    )}
                                 </td>
+                                <td>{new Date(user.createdAt).toLocaleString()}</td>
+                                <td>{new Date(user.updatedAt).toLocaleString()}</td>
                             </tr>
                         ))}
                     </tbody>

@@ -1,67 +1,56 @@
 .mainFrame {
-  position: absolute;
-  top: 72px;
-  left: 0;
-  height: fit-content;
-  width: 260px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #23262f;
-  padding: 20px 0 30px 0;
-  gap: 6px;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #c8cbd8;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-}
-
-
-.categoryContainer {
-  width: 100%;
-  padding: 0 16px;
-  margin: 0;
-  box-sizing: border-box;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-obsidian);
+    border-right: 1px solid var(--color-ash);
+    box-shadow: var(--shadow-subtle);
+    padding: var(--spacing-12) 0;
+    gap: var(--spacing-4);
+    z-index: 1000;
 }
 
 .categoryLink {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-  color: #c8cbd8;
-  font-size: 0.95rem;
-  font-weight: 400;
-  text-decoration: none;
-  border-radius: 8px;
-  border-left: 3px solid transparent;
-  transition: all 0.15s ease;
-  background: transparent;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-12);
+    padding: var(--spacing-8) var(--spacing-16);
+    margin: 0 var(--spacing-8);
+    border-radius: var(--radius-md);
+    font-family: var(--font-tt-hoves-medium);
+    font-size: var(--text-body-sm);
+    color: var(--color-cloud);
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all 0.15s ease;
+}
+
+.categoryLink::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-fog);
+    flex-shrink: 0;
+    transition: background 0.15s;
 }
 
 .categoryLink:hover {
-  background: #2c2f3a;
-  color: #2EF2B5;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-paper-white);
 }
 
-/* Активная категория (выделяется зелёным) */
-.categoryLink.active {
-  background: #2c2f3a;
-  color: #2EF2B5;
-  border-left-color: #2EF2B5;
-  font-weight: 500;
+.categoryLink:hover::before {
+    background: var(--color-signal-violet);
 }
 
-/* Добавляем иконки перед названиями с помощью псевдоэлемента */
-.categoryLink::before {
-  content: "●"; /* можно заменить на любую иконку/эмодзи */
-  color: #6b7080;
-  font-size: 0.7rem;
-  opacity: 0.7;
-  transition: color 0.15s;
-}
-
-.categoryLink:hover::before,
-.categoryLink.active::before {
-  color: #2EF2B5;
+.empty {
+    font-family: var(--font-tt-hoves-regular);
+    font-size: var(--text-body-sm);
+    color: var(--color-fog);
+    text-align: center;
+    padding: var(--spacing-24);
 }

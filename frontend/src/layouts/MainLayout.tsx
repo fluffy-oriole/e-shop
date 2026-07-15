@@ -6,10 +6,14 @@ export default function MainLayout() {
     return (
         <div className={styles.mainLayout}>
             <Navbar />
-            <div className={styles.contentBlock}>
-                <Outlet />
-            </div>
-        </div>
-    )
 
+            <main className={styles.page}>
+                <div className={styles.container}>
+                    <Outlet />
+                </div>
+            </main>
+
+            {/* Footer */}
+        </div>
+    );
 }
