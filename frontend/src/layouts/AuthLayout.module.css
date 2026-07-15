@@ -1,7 +1,5 @@
 .goBackButton {
-    position: absolute;
-    top: 20px;
-    left: 20px;
+    position: static;
 }
 
 .mainContainer {
@@ -14,6 +12,9 @@
     height: 600px;
 }
 
-.goBackIco {
-    width: 2ch;
+.topRow {
+    display: flex;
+    padding: 40px;
+    flex-direction: row;
+    justify-content: space-between;
 }

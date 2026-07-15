@@ -1,9 +1,11 @@
 import styles from './AdminLayout.module.css';
 import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { authClient } from '../lib/authClient';
 import { ChevronLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import LanguageSelector from '../components/LandSelector';
 
 
 export default function AdminLayout() {
@@ -27,10 +29,37 @@ export default function AdminLayout() {
     return (
         <div className={styles.container}>
             <div className={styles.sideBar}>
-                <Link to="/" className={styles.link}><ChevronLeft size={14}/> {t("goHome")}</Link>
-                <Link to="admin/users" className={styles.link}>{t("users")}</Link>
-                <Link to="admin/orders" className={styles.link}>{t("orders")}</Link>
-                <Link to="admin/carts" className={styles.link}>{t("carts")}</Link>
+                <div className={styles.topRow}>   
+                    <Link className={styles.link} to={"/"}><ChevronLeft size={16}></ChevronLeft>На сайт</Link>
+                    <LanguageSelector />
+                </div>
+                
+                <NavLink 
+                    to="/admin/users" 
+                    className={({ isActive }) => 
+                        isActive ? styles.active_link : styles.link
+                    }
+                >
+                    {t("users")}
+                </NavLink>
+
+                <NavLink 
+                    to="/admin/orders" 
+                    className={({ isActive }) => 
+                        isActive ? styles.active_link : styles.link
+                    }
+                >
+                    {t("orders")}
+                </NavLink>
+
+                <NavLink 
+                    to="/admin/carts" 
+                    className={({ isActive }) => 
+                        isActive ? styles.active_link : styles.link
+                    }
+                >
+                    {t("carts")}
+                </NavLink>
             </div>
             <div className={styles.contentContainer}>
                 <Outlet />

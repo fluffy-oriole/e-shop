@@ -19,7 +19,14 @@
     height: 100vh;
 }
 
+.topRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .link {
+    padding: 10px;
     color: var(--main-text-color);
     text-decoration: none;
     transition: 200ms;
@@ -31,7 +38,9 @@
 }
 
 .active_link {
-    border-radius: 10px;
+    border-radius: 5px;
+    padding: 10px;
     background-color: var(--accent-color);
-    color: var(--main-text-color);
+    color: var(--main-color);
+    text-decoration: none;
 }
