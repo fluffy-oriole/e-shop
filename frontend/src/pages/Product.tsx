@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import styles from "./Product.module.css";
 import { useTranslation } from "react-i18next";
-import { Star, ShieldCheck, RotateCcw, Truck, Minus, Plus } from "lucide-react";
+import { Star, Minus, Plus } from "lucide-react";
+import { authClient } from "../lib/authClient";
 
 interface Dimensions {
     width: number;
@@ -39,17 +40,22 @@ interface Product {
 export default function Product() {
     const { t, i18n } = useTranslation();
     const { id } = useParams();
+    const { data: session } = authClient.useSession();
 
     const [product, setProduct] = useState<Product | null>(null);
     const [cart, setCart] = useState<Product[]>([]);
 
     useEffect(() => {
+        if (!session) return;
         fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
-            method: "GET",
-            credentials: "include",
+            method: 'GET',
+            credentials: 'include',
         })
-            .then((res) => res.json())
-            .then((data) => setCart(data));
+        .then((res) => {
+            if (!res.ok) return [];
+            return res.json();
+        })
+        .then((data) => setCart(Array.isArray(data) ? data : []));
     }, []);
 
     let isAddedToCart = false;
@@ -96,8 +102,7 @@ export default function Product() {
     return (
         <div className={styles.page}>
             <nav className={styles.breadcrumbs}>
-                <Link to="/">{t("home")}</Link>
-                <span className={styles.separator}>/</span>
+
                 <Link to="/catalog">{t("catalog")}</Link>
                 <span className={styles.separator}>/</span>
                 <span className={styles.current}>{product.title}</span>
