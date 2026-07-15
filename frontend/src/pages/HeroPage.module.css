@@ -1,10 +1,13 @@
 .hero {
+    margin-top: calc(-1 * var(--spacing-40)); 
+    margin-bottom: calc(-1 * var(--spacing-80));
+    height: calc(100vh - 65px);
+    padding: 0;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-64);
     align-items: center;
-    min-height: calc(100vh - 80px - 80px); /* вычитаем высоту хедера и отступы */
-    padding: var(--spacing-80) 0;
 }
 
 .content {
@@ -90,9 +93,9 @@
 @media (max-width: 768px) {
     .hero {
         grid-template-columns: 1fr;
-        min-height: auto;
+        height: auto;
+        margin: 0;
         padding: var(--spacing-40) 0;
-        gap: var(--spacing-40);
     }
 
     .illustration {
