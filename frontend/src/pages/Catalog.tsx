@@ -11,6 +11,9 @@ interface Products {
   title: string;
   images: string[];
   price: number;
+  discountPercentage: number;
+  category: string;
+  brand: string;
 }
 
 export default function Catalog() {
@@ -145,6 +148,9 @@ export default function Catalog() {
             productImage={p.images[0]}
             productId={p.id}
             productPrice={p.price}
+            discount={p.discountPercentage}
+            category={p.category}
+            brand={p.brand}
           />
         ))}
       </div>

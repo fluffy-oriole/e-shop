@@ -13,7 +13,6 @@
 
 .card:hover {
   box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.2);
-  /* border-color: var(--color-signal-violet); */
   border-radius: var(--radius-cards);
 }
 
@@ -36,6 +35,8 @@
   transform: scale(1.03);
 }
 
+
+
 .card:hover .imageOverlay {
   opacity: 0.4;
 }
@@ -44,7 +45,7 @@
   padding: var(--spacing-16);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-12);
+  gap: var(--spacing-8);
   flex: 1;
 }
 
@@ -59,17 +60,71 @@
   white-space: nowrap;
 }
 
-.priceRow {
+.metaRow {
   display: flex;
   align-items: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-tt-hoves-regular);
+  font-size: var(--text-caption);
+  color: var(--color-fog);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.brand {
+  color: var(--color-cloud);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.metaSep {
+  color: var(--color-fog);
+}
+
+.categoryLabel {
+  color: var(--color-signal-violet);
+  text-transform: lowercase;
+}
+
+.priceRow {
+  display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   margin-top: auto;
+}
+
+.prices {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--spacing-8);
 }
 
 .price {
   font-family: var(--font-basis-grotesque-mono-pro);
   font-size: var(--text-body);
   color: var(--color-paper-white);
+  white-space: nowrap;
+}
+
+.oldPrice {
+  font-family: var(--font-basis-grotesque-mono-pro);
+  font-size: var(--text-body-sm);
+  color: var(--color-fog);
+  text-decoration: line-through;
+  white-space: nowrap;
+}
+
+.discountBadge {
+  font-family: var(--font-tt-hoves-medium);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  padding: 2px 6px;
+  background: var(--color-live-wire);
+  color: var(--color-void-black);
+  border-radius: var(--radius-full);
+  line-height: 1.2;
+  box-shadow: var(--shadow-subtle-2);
 }
 
 .addBtn {
@@ -99,4 +154,10 @@
 
 .card:hover .addBtn:hover {
   background: #9a8aff;
+}
+
+@media (max-width: 768px) {
+  .info {
+    padding: var(--spacing-12);
+  }
 }
