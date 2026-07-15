@@ -14,13 +14,14 @@ interface Products {
   discountPercentage: number;
   category: string;
   brand: string;
+  rating: number;
 }
 
 export default function Catalog() {
   const { t } = useTranslation();
   const [products, setProducts] = useState<Products[]>([]);
   const [countOfProducts, setCountOfProducts] = useState(0);
-  const productsPerPage = 50;
+  const productsPerPage = 40;
   const [searchParams, setSearchParams] = useSearchParams();
   const { category } = useParams();
 
@@ -148,9 +149,9 @@ export default function Catalog() {
             productImage={p.images[0]}
             productId={p.id}
             productPrice={p.price}
-            discount={p.discountPercentage}
             category={p.category}
             brand={p.brand}
+            rating={p.rating}
           />
         ))}
       </div>

@@ -35,8 +35,6 @@
   transform: scale(1.03);
 }
 
-
-
 .card:hover .imageOverlay {
   opacity: 0.4;
 }
@@ -88,43 +86,15 @@
 
 .priceRow {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   margin-top: auto;
-}
-
-.prices {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: var(--spacing-8);
 }
 
 .price {
   font-family: var(--font-basis-grotesque-mono-pro);
   font-size: var(--text-body);
   color: var(--color-paper-white);
-  white-space: nowrap;
-}
-
-.oldPrice {
-  font-family: var(--font-basis-grotesque-mono-pro);
-  font-size: var(--text-body-sm);
-  color: var(--color-fog);
-  text-decoration: line-through;
-  white-space: nowrap;
-}
-
-.discountBadge {
-  font-family: var(--font-tt-hoves-medium);
-  font-size: 11px;
-  font-weight: var(--font-weight-medium);
-  padding: 2px 6px;
-  background: var(--color-live-wire);
-  color: var(--color-void-black);
-  border-radius: var(--radius-full);
-  line-height: 1.2;
-  box-shadow: var(--shadow-subtle-2);
 }
 
 .addBtn {
@@ -160,4 +130,18 @@
   .info {
     padding: var(--spacing-12);
   }
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.ratingValue {
+  font-family: var(--font-tt-hoves-regular);
+  font-size: var(--text-caption);
+  color: var(--color-cloud);
+  line-height: 1;
 }

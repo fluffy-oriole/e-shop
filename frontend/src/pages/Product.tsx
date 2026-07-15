@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import styles from "./Product.module.css";
 import { useTranslation } from "react-i18next";
-import { Star, Minus, Plus } from "lucide-react";
+import { Star, Minus, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { authClient } from "../lib/authClient";
 
 interface Dimensions {
@@ -44,6 +44,7 @@ export default function Product() {
 
     const [product, setProduct] = useState<Product | null>(null);
     const [cart, setCart] = useState<Product[]>([]);
+    const [currentImage, setCurrentImage] = useState(0); // новое состояние
 
     useEffect(() => {
         if (!session) return;
@@ -58,6 +59,7 @@ export default function Product() {
         .then((data) => setCart(Array.isArray(data) ? data : []));
     }, []);
 
+
     let isAddedToCart = false;
     if (product) {
         cart.forEach((element) => {
@@ -68,8 +70,20 @@ export default function Product() {
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/api/product/${id}`)
             .then((res) => res.json())
-            .then((data) => setProduct(data));
+            .then((data) => {
+                setProduct(data);
+                setCurrentImage(0);
+            });
     }, [id]);
+
+    const goToImage = (index: number) => {
+        if (!product?.images?.length) return;
+        const length = product.images.length;
+        setCurrentImage(((index % length) + length) % length);
+    };
+
+    const prevImage = () => goToImage(currentImage - 1);
+    const nextImage = () => goToImage(currentImage + 1);
 
     const handleAddToCart = async () => {
         await fetch(`${import.meta.env.VITE_API_URL}/api/cart/add`, {
@@ -110,15 +124,39 @@ export default function Product() {
 
             <div className={styles.mainGrid}>
                 <div className={styles.gallery}>
-                    <img
-                        className={styles.mainImage}
-                        src={product.images[0]}
-                        alt={product.title}
-                    />
+                    <div className={styles.imageContainer}>
+                        <img
+                            className={styles.mainImage}
+                            src={product.images[currentImage]}
+                            alt={product.title}
+                        />
+                        {product.images.length > 1 && (
+                            <>
+                                <button
+                                    className={`${styles.arrowBtn} ${styles.prevBtn}`}
+                                    onClick={prevImage}
+                                    aria-label="Предыдущее изображение"
+                                >
+                                    <ChevronLeft size={20} strokeWidth={2} />
+                                </button>
+                                <button
+                                    className={`${styles.arrowBtn} ${styles.nextBtn}`}
+                                    onClick={nextImage}
+                                    aria-label="Следующее изображение"
+                                >
+                                    <ChevronRight size={20} strokeWidth={2} />
+                                </button>
+                            </>
+                        )}
+                    </div>
                     {product.images.length > 1 && (
                         <div className={styles.thumbs}>
-                            {product.images.slice(1, 4).map((img, idx) => (
-                                <button key={idx} className={styles.thumb}>
+                            {product.images.map((img, idx) => (
+                                <button
+                                    key={idx}
+                                    className={`${styles.thumb} ${idx === currentImage ? styles.thumbActive : ''}`}
+                                    onClick={() => setCurrentImage(idx)}
+                                >
                                     <img src={img} alt="" />
                                 </button>
                             ))}

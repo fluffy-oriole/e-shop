@@ -1,18 +1,18 @@
 import styles from './ProductCard.module.css';
 import { useNavigate } from 'react-router-dom';
-import { Plus } from 'lucide-react';
+import { Plus, Star } from 'lucide-react';
 
 interface ProductCardProps {
   productTitle: string;
   productImage: string;
   productId: number;
   productPrice: number;
-  discount?: number;      // процент скидки
   category?: string;
   brand?: string;
+  rating?: number;
 }
 
-function ProductCard({ productTitle, productImage, productId, productPrice, discount, category, brand }: ProductCardProps) {
+function ProductCard({ productTitle, productImage, productId, productPrice, category, brand, rating }: ProductCardProps) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -29,9 +29,6 @@ function ProductCard({ productTitle, productImage, productId, productPrice, disc
     });
   };
 
-  // Вычисляем старую цену, если есть скидка
-  const oldPrice = discount ? Math.round(productPrice / (1 - discount / 100)) : null;
-
   return (
     <div className={styles.card} onClick={handleCardClick}>
       <div className={styles.imageWrapper}>
@@ -47,16 +44,14 @@ function ProductCard({ productTitle, productImage, productId, productPrice, disc
             {category && <span className={styles.categoryLabel}>{category}</span>}
           </div>
         )}
-        <div className={styles.priceRow}>
-          <div className={styles.prices}>
-            {discount && oldPrice && (
-              <>
-                <span className={styles.oldPrice}>{oldPrice} ₽</span>
-                <span className={styles.discountBadge}>-{discount}%</span>
-              </>
-            )}
-            <span className={styles.price}>{productPrice} ₽</span>
+        {rating !== undefined && rating !== null && (
+          <div className={styles.ratingRow}>
+            <Star size={12} fill="var(--color-signal-violet)" color="var(--color-signal-violet)" />
+            <span className={styles.ratingValue}>{rating.toFixed(1)}</span>
           </div>
+        )}
+        <div className={styles.priceRow}>
+          <span className={styles.price}>{productPrice} ₽</span>
           <button
             className={styles.addBtn}
             onClick={handleAddToCart}
