@@ -4,6 +4,7 @@ import { Plus, Minus, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { authClient } from "../lib/authClient";
 
 interface Product {
   id: number;
@@ -19,6 +20,12 @@ export default function Cart() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+
+  const data = authClient.useSession();
+  if (!data.data) {
+    return <div>{t("pleaseLogIn")}</div>
+  }
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {

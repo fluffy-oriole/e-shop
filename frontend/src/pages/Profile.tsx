@@ -18,12 +18,12 @@ export default function Profile() {
 
     if (data.isPending) {
         return (
-            <div>Загрузка...</div>
+            <div>{t("loading")}</div>
         )
     }
     
-    if (data.isPending) return <div>Загрузка...</div>;
-    if (!data.data) return <div>Вы не вошли в аккаунт</div>;
+    if (data.isPending) return <div>{t("loading")}</div>;
+    if (!data.data) return <div>{t("pleaseLogIn")}</div>;
 
     const userData = data.data.user;
     

@@ -1,6 +1,5 @@
 import styles from './ProductCard.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
 
 interface ProductCardProps {
@@ -11,7 +10,6 @@ interface ProductCardProps {
 }
 
 function ProductCard({ productTitle, productImage, productId, productPrice }: ProductCardProps) {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -32,6 +30,7 @@ function ProductCard({ productTitle, productImage, productId, productPrice }: Pr
     <div className={styles.card} onClick={handleCardClick}>
       <div className={styles.imageWrapper}>
         <img src={productImage} alt={productTitle} className={styles.image} />
+        <div className={styles.imageOverlay} /> {/* декоративная сетка */}
       </div>
       <div className={styles.info}>
         <h3 className={styles.title}>{productTitle}</h3>
@@ -41,7 +40,7 @@ function ProductCard({ productTitle, productImage, productId, productPrice }: Pr
             className={styles.addBtn}
             onClick={handleAddToCart}
             type="button"
-            aria-label={t('addToCart')}
+            aria-label="Добавить в корзину"
           >
             <Plus size={16} strokeWidth={2.5} />
           </button>

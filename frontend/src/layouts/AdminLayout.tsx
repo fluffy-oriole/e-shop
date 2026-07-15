@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { NavLink, Link } from 'react-router-dom';
 import { authClient } from '../lib/authClient';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, User } from 'lucide-react';
 import LanguageSelector from '../components/LandSelector';
 
 export default function AdminLayout() {
@@ -24,7 +24,15 @@ export default function AdminLayout() {
     if (!isLogged) {
         return (
             <div className={styles.container}>
-                <div className={styles.statusMessage}>{t("pleaseLogIn")}</div>
+                <div className={styles.statusMessage}>
+                    <div className={styles.row}>
+                        <Link className={styles.backLink} to="/">
+                            <User size={16} />
+                            {t("login")}
+                        </Link>
+                        {t("pleaseLogIn")}
+                        </div>
+                    </div>
             </div>
         );
     }
@@ -32,7 +40,15 @@ export default function AdminLayout() {
     if (!isAdmin) {
         return (
             <div className={styles.container}>
-                <div className={styles.statusMessage}>{t("adminOnly")}</div>
+                <div className={styles.statusMessage}>
+                    <div className={styles.row}>
+                        <Link className={styles.backLink} to="/">
+                            <ChevronLeft size={16} />
+                            {t("backToSite")}
+                        </Link>
+                        {t("adminOnly")}
+                    </div>
+                    </div>
             </div>
         );
     }
