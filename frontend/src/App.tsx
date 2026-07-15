@@ -12,7 +12,7 @@ import OrderSuccess from "./pages/OrderSucces";
 import AdminLayout from "./layouts/AdminLayout";
 import Users from "./pages/admin/Users";
 import Orders from "./pages/admin/Orders";
-import Carts from "./pages/admin/Users";
+import Carts from "./pages/admin/Carts";
 import { Routes, Route } from 'react-router-dom';
 
 

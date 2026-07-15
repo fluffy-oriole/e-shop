@@ -1,43 +1,33 @@
 import styles from './Admin.module.css';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { Check, X } from 'lucide-react';
 
-interface OrderItem {
+interface CartItem {
     productId: number;
     quantity: number;
-    price: number;
+    addedAt: string;
 }
 
-interface Order {
-    id: number;
-    date: string;
-    totalPrice: number;
-    status: string;
-
+interface Cart {
     user: {
         id: string;
         name: string;
         email: string;
     };
-
-    items: OrderItem[];
+    items: CartItem[];
 }
 
-interface OrdersResponse {
-    orders: Order[];
+interface CartsResponse {
+    carts: Cart[];
 }
 
 export default function Admin() {
-    const [orders, setUsers] = useState<OrdersResponse | null>(null);
+    const [carts, setCarts] = useState<CartsResponse | null>(null);
     const [error, setError] = useState("");
-    const { t } = useTranslation();
-
 
     useEffect(() => {
         const getAdminData = async () => {
             const response = await fetch(
-                `${import.meta.env.VITE_API_URL}/api/admin/orders`,
+                `${import.meta.env.VITE_API_URL}/api/admin/carts`,
                 {
                     method: "GET",
                     credentials: "include",
@@ -45,14 +35,13 @@ export default function Admin() {
             );
 
             const data = await response.json();
-            console.log("data" + data);
 
             if (!response.ok) {
                 setError(data.error);
                 return;
             }
 
-            setUsers(data);
+            setCarts(data);
         };
 
         getAdminData();
@@ -64,37 +53,41 @@ export default function Admin() {
 
     return (
         <div>
-            <h1 className={styles.title}>Заказы</h1>
-            {orders && (
+            <h1 className={styles.title}>Корзины</h1>
+            {carts && (
                 <table className={styles.table}>
                     <thead>
                         <tr className={styles.tableHead}>
-                            <th>ID</th>
-                            <th>Customer</th>
+                            <th>User ID</th>
+                            <th>Name</th>
                             <th>Email</th>
-                            <th>Date</th>
                             <th>Products</th>
-                            <th>Status</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {orders.orders.map((order) => (
-                            <tr key={order.id} className={styles.tableRow}>
-                                <td>{order.id}</td>
-                                <td>{order.user.name}</td>
-                                <td>{order.user.email}</td>
-                                <td>{new Date(order.date).toLocaleString()}</td>
+                        {carts.carts.map((cart) => (
+                            <tr key={cart.user.id} className={styles.tableRow}>
+                                <td>{cart.user.id}</td>
+                                <td>{cart.user.name}</td>
+                                <td>{cart.user.email}</td>
+
                                 <td>
-                                    {order.items.map((item) => (
+                                    {cart.items.map((item) => (
                                         <div key={item.productId}>
-                                            ID товара: {item.productId}
-                                            <br />
-                                            Количество: {item.quantity}
+                                            <p>
+                                                Product ID: {item.productId}
+                                            </p>
+                                            <p>
+                                                Quantity: {item.quantity}
+                                            </p>
+                                            <p>
+                                                Added: {new Date(item.addedAt).toLocaleString()}
+                                            </p>
+                                            <hr />
                                         </div>
                                     ))}
                                 </td>
-                                <td>{order.status}</td>
                             </tr>
                         ))}
                     </tbody>

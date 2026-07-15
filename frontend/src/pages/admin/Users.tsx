@@ -1,4 +1,4 @@
-import styles from './Users.module.css';
+import styles from './Admin.module.css';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { Check, X } from 'lucide-react';
@@ -57,6 +57,7 @@ export default function Admin() {
 
     return (
         <div>
+            <h1 className={styles.title}>Пользователи</h1>
             {users && (
                 <table className={styles.table}>
                     <thead>

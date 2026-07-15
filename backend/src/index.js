@@ -229,7 +229,6 @@ app.get('/api/admin/users', async (c) => {
     return c.json({users});
 });
 
-
 app.get('/api/admin/carts', async (c) => {
     const session = await auth.api.getSession({
         headers: c.req.raw.headers,
@@ -245,10 +244,50 @@ app.get('/api/admin/carts', async (c) => {
       return c.json({ error: 'Not admin' }, 401);
     }
 
-    const users = db.prepare('SELECT * FROM cart').all();
+    const carts = db.prepare(`
+        SELECT
+            cart.user_id,
+            cart.product_id,
+            cart.quantity,
+            cart.date,
+
+            user.name AS user_name,
+            user.email AS user_email
+
+        FROM cart
+
+        JOIN user
+            ON cart.user_id = user.id
+
+        ORDER BY cart.date DESC;
+    `).all();
+
+    const groupedCarts = Object.values(
+        carts.reduce((acc, item) => {
+
+            if (!acc[item.user_id]) {
+                acc[item.user_id] = {
+                    user: {
+                        id: item.user_id,
+                        name: item.user_name,
+                        email: item.user_email,
+                    },
+                    items: []
+                };
+            }
+
+            acc[item.user_id].items.push({
+                productId: item.product_id,
+                quantity: item.quantity,
+                addedAt: item.date,
+            });
+
+            return acc;
+        }, {})
+    );
 
 
-    return c.json({users});
+    return c.json({carts: groupedCarts});
 });
 
 app.get('/api/admin/orders', async (c) => {
