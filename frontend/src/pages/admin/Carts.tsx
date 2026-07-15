@@ -1,19 +1,11 @@
 import styles from './Admin.module.css';
 import { useEffect, useState } from 'react';
-
-interface CartItem {
-    productId: number;
-    quantity: number;
-    addedAt: string;
-}
-
+import { useNavigate } from 'react-router-dom';
 interface Cart {
-    user: {
-        id: string;
-        name: string;
-        email: string;
-    };
-    items: CartItem[];
+    user_id: string;
+    name: string;
+    email: string;
+    items_count: number;
 }
 
 interface CartsResponse {
@@ -23,6 +15,8 @@ interface CartsResponse {
 export default function Admin() {
     const [carts, setCarts] = useState<CartsResponse | null>(null);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const getAdminData = async () => {
@@ -47,13 +41,18 @@ export default function Admin() {
         getAdminData();
     }, []);
 
+
     if (error) {
         return <p>{error}</p>;
     }
 
+
     return (
         <div>
-            <h1 className={styles.title}>Корзины</h1>
+            <h1 className={styles.title}>
+                Корзины пользователей
+            </h1>
+
             {carts && (
                 <table className={styles.table}>
                     <thead>
@@ -61,33 +60,21 @@ export default function Admin() {
                             <th>User ID</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Products</th>
+                            <th>Products count</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {carts.carts.map((cart) => (
-                            <tr key={cart.user.id} className={styles.tableRow}>
-                                <td>{cart.user.id}</td>
-                                <td>{cart.user.name}</td>
-                                <td>{cart.user.email}</td>
-
-                                <td>
-                                    {cart.items.map((item) => (
-                                        <div key={item.productId}>
-                                            <p>
-                                                Product ID: {item.productId}
-                                            </p>
-                                            <p>
-                                                Quantity: {item.quantity}
-                                            </p>
-                                            <p>
-                                                Added: {new Date(item.addedAt).toLocaleString()}
-                                            </p>
-                                            <hr />
-                                        </div>
-                                    ))}
-                                </td>
+                            <tr 
+                                key={cart.user_id}
+                                className={styles.tableRow}
+                                onClick={() => navigate(`/admin/carts/${cart.user_id}`)}
+                            >
+                                <td>{cart.user_id}</td>
+                                <td>{cart.name}</td>
+                                <td>{cart.email}</td>
+                                <td>{cart.items_count}</td>
                             </tr>
                         ))}
                     </tbody>

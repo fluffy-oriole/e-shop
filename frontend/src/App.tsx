@@ -13,6 +13,8 @@ import AdminLayout from "./layouts/AdminLayout";
 import Users from "./pages/admin/Users";
 import Orders from "./pages/admin/Orders";
 import Carts from "./pages/admin/Carts";
+import UserCart from "./pages/admin/UserCart";
+import UserOrders from "./pages/admin/UserOrders";
 import { Routes, Route } from 'react-router-dom';
 
 
@@ -40,6 +42,8 @@ function App() {
           <Route path="/admin/users" element={<Users />} />
           <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/carts" element={<Carts />} />
+          <Route path="/admin/orders/:user_id" element={<UserOrders />} />
+          <Route path="/admin/carts/:user_id" element={<UserCart />} />
         </Route>
       </Routes>
   );

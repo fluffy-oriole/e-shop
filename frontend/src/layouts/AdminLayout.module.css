@@ -29,3 +29,9 @@
     color: var(--accent-color);
     text-decoration: none;
 }
+
+.active_link {
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    color: var(--main-text-color);
+}

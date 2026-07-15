@@ -238,56 +238,92 @@ app.get('/api/admin/carts', async (c) => {
         return c.json({ error: 'Not authorized' }, 401);
     }
 
-    const isAdmin = session.user.role === "admin";
-
-    if (!isAdmin) {
-      return c.json({ error: 'Not admin' }, 401);
+    if (session.user.role !== "admin") {
+        return c.json({ error: 'Not admin' }, 401);
     }
+
 
     const carts = db.prepare(`
         SELECT
-            cart.user_id,
+            user.id AS user_id,
+            user.name,
+            user.email,
+
+            COUNT(cart.id) AS items_count
+
+        FROM user
+
+        JOIN cart
+            ON user.id = cart.user_id
+
+        GROUP BY user.id
+
+        ORDER BY user.name;
+    `).all();
+
+
+    return c.json({ carts });
+});
+
+app.get('/api/admin/carts/:userId', async (c) => {
+    const session = await auth.api.getSession({
+        headers: c.req.raw.headers,
+    });
+
+    if (!session) {
+        return c.json({ error: 'Not authorized' }, 401);
+    }
+
+    if (session.user.role !== "admin") {
+        return c.json({ error: 'Not admin' }, 401);
+    }
+
+
+    const userId = c.req.param('userId');
+
+
+    const cart = db.prepare(`
+        SELECT
             cart.product_id,
             cart.quantity,
             cart.date,
 
-            user.name AS user_name,
-            user.email AS user_email
+            user.id AS user_id,
+            user.name,
+            user.email
 
         FROM cart
 
         JOIN user
             ON cart.user_id = user.id
 
+        WHERE cart.user_id = ?
+
         ORDER BY cart.date DESC;
-    `).all();
-
-    const groupedCarts = Object.values(
-        carts.reduce((acc, item) => {
-
-            if (!acc[item.user_id]) {
-                acc[item.user_id] = {
-                    user: {
-                        id: item.user_id,
-                        name: item.user_name,
-                        email: item.user_email,
-                    },
-                    items: []
-                };
-            }
-
-            acc[item.user_id].items.push({
-                productId: item.product_id,
-                quantity: item.quantity,
-                addedAt: item.date,
-            });
-
-            return acc;
-        }, {})
-    );
+    `).all(userId);
 
 
-    return c.json({carts: groupedCarts});
+    if (cart.length === 0) {
+        return c.json({
+            user: null,
+            items: []
+        });
+    }
+
+
+    return c.json({
+        user: {
+            id: cart[0].user_id,
+            name: cart[0].name,
+            email: cart[0].email
+        },
+
+        items: cart.map(item => ({
+            productId: item.product_id,
+            quantity: item.quantity,
+            addedAt: item.date
+        }))
+    });
 });
 
 app.get('/api/admin/orders', async (c) => {
@@ -299,13 +335,77 @@ app.get('/api/admin/orders', async (c) => {
         return c.json({ error: 'Not authorized' }, 401);
     }
 
-    const isAdmin = session.user.role === "admin";
-
-    if (!isAdmin) {
+    if (session.user.role !== "admin") {
         return c.json({ error: 'Not admin' }, 401);
     }
 
+
     const orders = db.prepare(`
+        SELECT
+            orders.id,
+            orders.date,
+            orders.status,
+
+            user.id AS user_id,
+            user.name AS user_name,
+            user.email AS user_email,
+
+            COUNT(order_items.id) AS items_count,
+            SUM(order_items.price * order_items.quantity) AS total_price
+
+        FROM orders
+
+        JOIN user
+            ON orders.user_id = user.id
+
+        JOIN order_items
+            ON orders.id = order_items.order_id
+
+        GROUP BY orders.id
+
+        ORDER BY orders.date DESC;
+    `).all();
+
+
+    const result = orders.map(order => ({
+        id: order.id,
+        date: order.date,
+        status: order.status,
+
+        totalPrice: order.total_price,
+        itemsCount: order.items_count,
+
+        user: {
+            id: order.user_id,
+            name: order.user_name,
+            email: order.user_email,
+        }
+    }));
+
+
+    return c.json({
+        orders: result
+    });
+});
+
+app.get('/api/admin/orders/:orderId', async (c) => {
+    const session = await auth.api.getSession({
+        headers: c.req.raw.headers,
+    });
+
+    if (!session) {
+        return c.json({ error: 'Not authorized' }, 401);
+    }
+
+    if (session.user.role !== "admin") {
+        return c.json({ error: 'Not admin' }, 401);
+    }
+
+
+    const orderId = c.req.param('orderId');
+
+
+    const orderItems = db.prepare(`
         SELECT
             orders.id AS order_id,
             orders.date,
@@ -317,7 +417,7 @@ app.get('/api/admin/orders', async (c) => {
 
             order_items.product_id,
             order_items.quantity,
-            order_items.price AS product_price
+            order_items.price
 
         FROM orders
 
@@ -327,44 +427,46 @@ app.get('/api/admin/orders', async (c) => {
         JOIN order_items
             ON orders.id = order_items.order_id
 
-        ORDER BY orders.date DESC;
-    `).all();
+        WHERE orders.id = ?;
+
+    `).all(orderId);
 
 
-    const groupedOrders = Object.values(
-    orders.reduce((acc, order) => {
-        if (!acc[order.order_id]) {
-            acc[order.order_id] = {
-                id: order.order_id,
-                date: order.date,
-                status: order.status,
-
-                user: {
-                    id: order.user_id,
-                    name: order.user_name,
-                    email: order.user_email,
-                },
-
-                totalPrice: 0,
-                items: []
-            };
-        }
-
-        acc[order.order_id].items.push({
-            productId: order.product_id,
-            quantity: order.quantity,
-            price: order.product_price,
-        });
-
-        acc[order.order_id].totalPrice += 
-            order.product_price * order.quantity;
-
-        return acc;
-    }, {})
-);
+    if (orderItems.length === 0) {
+        return c.json({ error: "Order not found" }, 404);
+    }
 
 
-    return c.json({ orders: groupedOrders });
+    const order = {
+        id: orderItems[0].order_id,
+        date: orderItems[0].date,
+        status: orderItems[0].status,
+
+        user: {
+            id: orderItems[0].user_id,
+            name: orderItems[0].user_name,
+            email: orderItems[0].user_email,
+        },
+
+        totalPrice: 0,
+        items: []
+    };
+
+
+    order.items = orderItems.map(item => {
+        const itemTotal = item.price * item.quantity;
+
+        order.totalPrice += itemTotal;
+
+        return {
+            productId: item.product_id,
+            quantity: item.quantity,
+            price: item.price,
+        };
+    });
+
+
+    return c.json(order);
 });
 
 

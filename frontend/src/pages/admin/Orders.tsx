@@ -1,37 +1,30 @@
 import styles from './Admin.module.css';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { Check, X } from 'lucide-react';
-
-interface OrderItem {
-    productId: number;
-    quantity: number;
-    price: number;
-}
+import { useNavigate } from 'react-router-dom';
 
 interface Order {
     id: number;
     date: string;
-    totalPrice: number;
     status: string;
+    totalPrice: number;
+    itemsCount: number;
 
     user: {
         id: string;
         name: string;
         email: string;
     };
-
-    items: OrderItem[];
 }
 
 interface OrdersResponse {
     orders: Order[];
 }
 
+
 export default function Admin() {
-    const [orders, setUsers] = useState<OrdersResponse | null>(null);
+    const [orders, setOrders] = useState<OrdersResponse | null>(null);
     const [error, setError] = useState("");
-    const { t } = useTranslation();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -45,26 +38,30 @@ export default function Admin() {
             );
 
             const data = await response.json();
-            console.log("data" + data);
 
             if (!response.ok) {
                 setError(data.error);
                 return;
             }
 
-            setUsers(data);
+            setOrders(data);
         };
 
         getAdminData();
     }, []);
 
+
     if (error) {
         return <p>{error}</p>;
     }
 
+
     return (
         <div>
-            <h1 className={styles.title}>Заказы</h1>
+            <h1 className={styles.title}>
+                Заказы
+            </h1>
+
             {orders && (
                 <table className={styles.table}>
                     <thead>
@@ -74,27 +71,44 @@ export default function Admin() {
                             <th>Email</th>
                             <th>Date</th>
                             <th>Products</th>
+                            <th>Total price</th>
                             <th>Status</th>
                         </tr>
                     </thead>
 
+
                     <tbody>
                         {orders.orders.map((order) => (
-                            <tr key={order.id} className={styles.tableRow}>
+                            <tr 
+                                key={order.id}
+                                className={styles.tableRow}
+                                onClick={() => {navigate(`/admin/orders/${order.id}`)}}
+                            >
                                 <td>{order.id}</td>
-                                <td>{order.user.name}</td>
-                                <td>{order.user.email}</td>
-                                <td>{new Date(order.date).toLocaleString()}</td>
+
                                 <td>
-                                    {order.items.map((item) => (
-                                        <div key={item.productId}>
-                                            ID товара: {item.productId}
-                                            <br />
-                                            Количество: {item.quantity}
-                                        </div>
-                                    ))}
+                                    {order.user.name}
                                 </td>
-                                <td>{order.status}</td>
+
+                                <td>
+                                    {order.user.email}
+                                </td>
+
+                                <td>
+                                    {new Date(order.date).toLocaleString()}
+                                </td>
+
+                                <td>
+                                    {order.itemsCount}
+                                </td>
+
+                                <td>
+                                    {order.totalPrice} ₽
+                                </td>
+
+                                <td>
+                                    {order.status}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
