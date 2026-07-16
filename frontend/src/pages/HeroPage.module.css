@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    background: radial-gradient(ellipse at bottom, var(--color-steel) 0%, var(--color-void-black) 60%);
 }
 
 .content {
