@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard";
 import Pagination from "../components/Pagination";
 import styles from "./Catalog.module.css";
 import { ChevronDown } from "lucide-react";
+import Banner from "../components/Banner";
 
 interface Products {
   id: number;
@@ -139,6 +140,10 @@ export default function Catalog() {
             </div>
           )}
         </div>
+      )}
+
+      {(!category || !searchQuery) && (
+        <Banner />
       )}
 
       <div className={styles.productsGrid}>
