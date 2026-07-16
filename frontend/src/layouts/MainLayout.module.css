@@ -1,8 +1,9 @@
 .mainLayout {
     min-height: 100vh;
-
     display: flex;
     flex-direction: column;
+    position: relative;
+    background: radial-gradient(ellipse at bottom, var(--color-graphite) 0%, var(--color-void-black) 60%);
 }
 
 .page {
